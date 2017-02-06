@@ -46,7 +46,7 @@ class Sequence(object):
                 segments.append(DENTAL)
 
         regex_parts = [segment_to_regex(s) for s in segments]
-        self.regex = re.compile(r"\t".join(regex_parts))
+        self.regex = re.compile("^" + r"\t".join(regex_parts))
 
     def matches(self, tokens):
         m = self.regex.search("\t".join(tokens))
