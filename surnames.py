@@ -17,14 +17,20 @@ BTN_URL_PARAMS = {
 
 def _scrape_surnames():
     surnames = set()
-    for i in range(1, 6):
+    looping = True
+    i = 1
+    while looping:
         BTN_URL_PARAMS['page'] = i
         url = "{0}?{1}".format(BTN_URL, urllib.urlencode(BTN_URL_PARAMS))
         with contextlib.closing(urllib.urlopen(url)) as html:
             soup = BeautifulSoup(html.read(), 'html5lib')
-        for anchor in soup.find(id="div_results").find_next_sibling("table").find_all("a"):
-            surname = re.sub(DUPLICATE_SURNAME_REGEX, "", anchor.get_text())
-            surnames.add(surname.lower())
+        try:
+            for anchor in soup.find(id="div_results").find_next_sibling("table").find_all("a"):
+                surname = re.sub(DUPLICATE_SURNAME_REGEX, "", anchor.get_text())
+                surnames.add(surname.lower())
+        except AttributeError:
+            looping = False
+        i += 1
     return surnames
 
 try:
