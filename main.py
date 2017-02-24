@@ -8,8 +8,8 @@ if __name__ == "__main__":
     wordlist = words.words()
     results = []
     for word in d:
-        tokens = d[word][0]
-        if s.matches(tokens) and word in wordlist:
+        # check each pronunciation, if word has alternative pronunciations
+        if any([s.matches(tokens) for tokens in d[word]]) and word in wordlist:
             results.append(word)
 
     results.sort()
