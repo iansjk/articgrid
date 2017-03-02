@@ -1,6 +1,7 @@
 from __future__ import print_function, absolute_import
 import requests
 from urlparse import urlsplit, parse_qsl
+from collections import defaultdict
 from bs4 import BeautifulSoup
 
 _ARASAAC_URL = "http://www.arasaac.org"
@@ -14,7 +15,7 @@ _ARASAAC_IMAGE_DIR = "repositorio/originales"
 
 
 def find_images(query):
-    results = {}
+    results = defaultdict(list)
     params = _ARASAAC_SEARCH_PARAMS
     params['s'] = query
     page = 0
@@ -32,7 +33,7 @@ def find_images(query):
                 item_url_params = dict(parse_qsl(urlsplit(a['href']).query))
                 image_url = "/".join((_ARASAAC_URL, _ARASAAC_IMAGE_DIR,
                                       item_url_params["id"] + ".png"))
-                results[a.text] = image_url
+                results[a.text].append(image_url)
 
         pagination = soup.find(id="pagination")
         if max_pages == 0 and pagination is not None:
