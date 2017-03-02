@@ -19,13 +19,16 @@ def find_images(query):
     params['s'] = query
     r = requests.post("/".join((_ARASAAC_URL, _ARASAAC_SEARCH_ENDPOINT)),
                       params=params)
+    r.raise_for_status()
     soup = BeautifulSoup(r.content, "html.parser")
-    for li in soup.find(id="ultimas_imagenes").find_all("li"):
-        a = li.find("font").parent
-        item_url_params = dict(parse_qsl(urlsplit(a['href']).query))
-        image_url = "/".join((_ARASAAC_URL, _ARASAAC_IMAGE_DIR,
-                              item_url_params["id"] + ".png"))
-        results[a.text] = image_url
+    item_list = soup.find(id="ultimas_imagenes")
+    if item_list:
+        for li in item_list.find_all("li"):
+            a = li.find("font").parent
+            item_url_params = dict(parse_qsl(urlsplit(a['href']).query))
+            image_url = "/".join((_ARASAAC_URL, _ARASAAC_IMAGE_DIR,
+                                  item_url_params["id"] + ".png"))
+            results[a.text] = image_url
     return results
 
 
