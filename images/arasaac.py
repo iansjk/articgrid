@@ -22,8 +22,7 @@ def find_images(query):
     max_pages = 0
     while page <= max_pages:
         params["pg"] = page
-        r = requests.post("/".join((_ARASAAC_URL, _ARASAAC_SEARCH_ENDPOINT)),
-                          params=params)
+        r = requests.post("/".join((_ARASAAC_URL, _ARASAAC_SEARCH_ENDPOINT)), params=params)
         r.raise_for_status()
         soup = BeautifulSoup(r.content, "html.parser")
         item_list = soup.find(id="ultimas_imagenes")
@@ -31,19 +30,13 @@ def find_images(query):
             for li in item_list.find_all("li"):
                 a = li.find("font").parent
                 item_url_params = dict(parse_qsl(urlsplit(a['href']).query))
-                image_url = "/".join((_ARASAAC_URL, _ARASAAC_IMAGE_DIR,
-                                      item_url_params["id"] + ".png"))
+                image_url = "/".join((_ARASAAC_URL, _ARASAAC_IMAGE_DIR, item_url_params["id"] + ".png"))
                 results[a.text].append(image_url)
 
         pagination = soup.find(id="pagination")
         if max_pages == 0 and pagination is not None:
             last_page_url = pagination.find_all("a")[-1]["href"]
-            last_page_url_params = dict(parse_qsl(urlsplit(
-                last_page_url).query))
+            last_page_url_params = dict(parse_qsl(urlsplit(last_page_url).query))
             max_pages = int(last_page_url_params["pg"])
         page += 1
     return results
-
-
-if __name__ == "__main__":
-    print(find_images("hand"))
