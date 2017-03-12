@@ -1,6 +1,6 @@
-import nltk.corpus.cmudict as cmudict_corpus
-import nltk.corpus.words as unixwords
+from nltk.corpus import cmudict
+from nltk.corpus import words
 
-_cmudict = cmudict_corpus.dict()
-common_words = unixwords.words()
+_cmudict = cmudict.dict()
+common_words = words.words()
 common_cmudict = {key: _cmudict[key] for key in _cmudict.viewkeys() & common_words}

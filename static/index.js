@@ -10,7 +10,7 @@
             var query = $("#query").val();
             $.get(f.attr("action") + "/" + query, function (data) {
                 tbody = results.children("tbody").empty();
-                $.each(data, function (term, images) {
+                $.each(data.results, function (term, images) {
                     var tr = $("<tr>").appendTo(tbody);
                     tr.append($("<td>").text(term));
                     $.each(images, function (i, image) {

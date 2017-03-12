@@ -1,5 +1,5 @@
 from __future__ import absolute_import, print_function
-from . import corpus
+from .corpus import common_cmudict
 import re
 
 BILABIAL = ("P", "B", "M", "W")
@@ -66,7 +66,7 @@ def num_syllables(tokens):
 def search_sequences(sequence_string):
     s = Sequence(sequence_string)
     results = []
-    for word, pronunciations in corpus.common_cmudict.items():
+    for word, pronunciations in common_cmudict.items():
         # check each pronunciation, if word has alternative pronunciations
         if any([s.matches(tokens) for tokens in pronunciations]):
             results.append(word)
