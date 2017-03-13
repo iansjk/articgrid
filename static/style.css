@@ -5,3 +5,14 @@ html {
 #results td {
     text-align: center;
 }
+
+nav {
+    position: fixed;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+}
+
+body {
+    padding-top: 50px;
+}

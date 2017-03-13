@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% set active_page = "Images" %}
+
+{% block content %}
+<form action="/image-search" method="get" class="form-inline">
+    <div class="form-group">
+        <label for="query">Query:</label>
+        <input id="query" type="text" class="form-control">
+    </div>
+    <button class="btn" type="submit">Search</button>
+</form>
+<br>
+<table id="results" class="table table-bordered">
+    <thead>
+    <tr>
+        <th>Term</th>
+        <th>Image(s)</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+{% endblock %}
+
+{% block footer %}
+{{ super() }}
+<script src="/static/images.js"></script>
+{% endblock %}}

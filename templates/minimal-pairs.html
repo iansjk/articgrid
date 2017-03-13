@@ -1,0 +1,236 @@
+{% extends "base.html" %}
+{% set active_page = "Minimal Pairs" %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="/static/minimal-pairs.css">
+{% endblock %}
+
+{% block content %}
+<p class="lead">Automatically find minimal pairs based on chosen targets</p>
+
+<form class="form-inline" action="{{ url_for('minimal_pair_search') }}">
+  <label class="control-label">Target 1:</label>
+  <select class="form-control" id="target1" name="target1">
+    <option value="P">p</option>
+    <option value="B">b</option>
+    <option value="T">t</option>
+    <option value="D">d</option>
+    <option value="K">k</option>
+    <option value="G">g</option>
+    <option value="F">f</option>
+    <option value="V">v</option>
+    <option value="TH">&theta;</option>
+    <option value="DH">&eth;</option>
+    <option value="S">s</option>
+    <option value="Z">z</option>
+    <option value="SH">&#643;</option>
+    <option value="ZH">&#439;</option>
+    <option value="HH">h</option>
+    <option value="CH">&#116;​&#865;​&#643;</option>
+    <option value="JH">&#100;​&#865;​&#658;</option>
+    <option value="M">m</option>
+    <option value="N">n</option>
+    <option value="L">l</option>
+    <option value="R">&#633;</option>
+    <option value="W">w</option>
+    <option value="Y">j</option>
+  </select>
+
+  <label class="control-label">Target 2:</label>
+  <select class="form-control" id="target2" name="target2">
+    <option value="P">p</option>
+    <option value="B">b</option>
+    <option value="T">t</option>
+    <option value="D">d</option>
+    <option value="K">k</option>
+    <option value="G">g</option>
+    <option value="F">f</option>
+    <option value="V">v</option>
+    <option value="TH">&theta;</option>
+    <option value="S">s</option>
+    <option value="Z">z</option>
+    <option value="SH">&#643;</option>
+    <option value="ZH">&#439;</option>
+    <option value="CH">&#116;​&#865;​&#643;</option>
+    <option value="JH">&#100;​&#865;​&#658;</option>
+    <option value="M">m</option>
+    <option value="N">n</option>
+    <option value="NG">&#331;</option>
+    <option value="L">l</option>
+    <option value="R">&#633;</option>
+    <option value="W">w</option>
+    <option value="Y">j</option>
+  </select>
+
+  <label class="control-label" for="position">Position:</label>
+  <select class="form-control" id="position" name="position">
+    <option value="initial">Initial</option>
+    <option value="final">Final</option>
+  </select>
+  <button class="btn" type="submit">Search</button>
+</form>
+
+<!-- IPA chart for English: TODO make this into a popout for an input box
+<table class="table table-bordered">
+  <thead>
+  <tr>
+    <th></th>
+    <th colspan="2">Bilabial</th>
+    <th colspan="2">Labiodental</th>
+    <th colspan="2">(Inter)dental</th>
+    <th colspan="2">Alveolar</th>
+    <th colspan="2">Postalveolar</th>
+    <th colspan="2">Palatal</th>
+    <th colspan="2">Velar</th>
+    <th colspan="2">Glottal</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <th>Nasal</th>
+    <td></td>
+    <td>m</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>n</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>&#331;</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <th>Stop</th>
+    <td>p</td>
+    <td>b</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>t</td>
+    <td>d</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>k</td>
+    <td>g</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <th>Fricative</th>
+    <td></td>
+    <td></td>
+    <td>f</td>
+    <td>v</td>
+    <td>&theta;</td>
+    <td>&eth;</td>
+    <td>s</td>
+    <td>z</td>
+    <td>&#643;</td>
+    <td>&#439;</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>h</td>
+    <td></td>
+  </tr>
+  <tr>
+    <th>Affricate</th>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>&#116;​&#865;​&#643;</td>
+    <td>&#100;​&#865;​&#658;</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <th>Lateral</th>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>l</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <th>Rhotic</th>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>&#633;</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <th>Glide</th>
+    <td></td>
+    <td>w</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>j</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  </tbody>
+</table>
+-->
+
+<table id="results" class="table">
+  <thead><th>Word 1</th><th>Word 2</th></thead>
+  <tbody></tbody>
+</table>
+{% endblock %}
+
+{% block footer %}
+{{ super() }}
+<script src="/static/minimal-pairs.js"></script>
+{% endblock %}

@@ -1,27 +1,6 @@
 {% extends "base.html" %}
-{% block pagetitle %}ARASAAC Search {% endblock %}
+{% block pagetitle %}ArticGrid{% endblock %}
 
 {% block content %}
-<form action="/image-search" method="get" class="form-inline">
-    <div class="form-group">
-        <label for="query">Query:</label>
-        <input id="query" type="text" class="form-control">
-    </div>
-    <button class="btn" type="submit">Search</button>
-</form>
-<br>
-<table id="results" class="table table-bordered">
-    <thead>
-    <tr>
-        <th>Term</th>
-        <th>Image(s)</th>
-    </tr>
-    </thead>
-    <tbody></tbody>
-</table>
+Nothing to see here yet...
 {% endblock %}
-
-{% block footer %}
-{{ super() }}
-<script src="static/index.js"></script>
-{% endblock %}}

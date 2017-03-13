@@ -1,0 +1,23 @@
+table {
+    table-layout: fixed;
+}
+
+th, td {
+    text-align: center;
+}
+
+th:first-child {
+    width: 10%;
+}
+
+td:empty {
+    background: #eee;
+}
+
+.form-inline > select {
+    margin-right: 20px;
+}
+
+#results {
+    display: none;
+}
