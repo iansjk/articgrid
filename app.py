@@ -15,6 +15,7 @@ def inject_navigation():
             ("Images", url_for("images")),
             ("Minimal Pairs", url_for("minimal_pairs")),
             ("Moving Across Syllables", url_for("moving_across_syllables")),
+            ("About", url_for("about")),
         )}
 
 
@@ -54,6 +55,10 @@ def minimal_pair_search():
 def moving_across_syllables():
     return render_template("moving-across-syllables.html")
 
+
+@app.route("/about")
+def about():
+    return render_template("about.html")
 
 if __name__ == "__main__":
     app.run()
