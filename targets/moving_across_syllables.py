@@ -1,6 +1,8 @@
 from __future__ import absolute_import, print_function
-from .corpus import common_cmudict
+
 import re
+
+from .corpus import common_cmudict
 
 BILABIAL = ("P", "B", "M", "W")
 ALVEOLAR = ("T", "D", "S", "Z", "N", "L")

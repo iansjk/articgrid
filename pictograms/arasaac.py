@@ -1,7 +1,9 @@
 from __future__ import print_function, absolute_import
-import requests
-from urlparse import urlsplit, parse_qsl
+
 from collections import defaultdict
+from urlparse import urlsplit, parse_qsl
+
+import requests
 from bs4 import BeautifulSoup
 
 _ARASAAC_URL = "http://www.arasaac.org"
