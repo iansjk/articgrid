@@ -4,11 +4,11 @@
         var submit = $("button[type=submit]");
         var images_th = results.find('th').last();
         $("form").on("submit", function (e) {
-            var f = $(this);
+            var form = $(this);
             e.preventDefault();
             submit.text("Working...").prop("disabled", true);
             var query = $("#query").val();
-            $.get(f.attr("action") + "/" + query, function (data) {
+            $.post(form.attr("action"), form.serialize(), function (data) {
                 tbody = results.children("tbody").empty();
                 $.each(data.results, function (term, images) {
                     var tr = $("<tr>").appendTo(tbody);

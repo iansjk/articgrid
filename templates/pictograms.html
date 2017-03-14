@@ -3,10 +3,10 @@
 
 {% block content %}
 <p class="lead">Find pictograms based on a search term</p>
-<form action="/image-search" method="get" class="form-inline">
+<form action="{{ url_for('pictogram_search') }}" method="get" class="form-inline">
   <div class="form-group">
     <label for="query">Query:</label>
-    <input id="query" type="text" class="form-control">
+    <input id="query" name="query" class="form-control">
   </div>
   <button class="btn" type="submit">Search</button>
 </form>
@@ -24,5 +24,5 @@
 
 {% block footer %}
 {{ super() }}
-<script src="/static/images.js"></script>
+<script src="/static/pictograms.js"></script>
 {% endblock %}}

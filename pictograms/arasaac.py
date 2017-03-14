@@ -14,7 +14,7 @@ _ARASAAC_SEARCH_PARAMS = {
 _ARASAAC_IMAGE_DIR = "repositorio/originales"
 
 
-def find_images(query):
+def find_pictograms(query):
     results = defaultdict(list)
     params = _ARASAAC_SEARCH_PARAMS
     params['s'] = query

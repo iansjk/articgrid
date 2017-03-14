@@ -1,6 +1,6 @@
 from flask import Flask, render_template, json, request, url_for
 
-from images.arasaac import find_images
+from pictograms.arasaac import find_pictograms
 from targets.minimal_pairs import find_minimal_pairs
 
 app = Flask(__name__)
@@ -12,7 +12,7 @@ def inject_navigation():
         "active_page": "Home",
         "navigation": (
             ("Home", "/"),
-            ("Images", url_for("images")),
+            ("Pictograms", url_for("pictograms")),
             ("Minimal Pairs", url_for("minimal_pairs")),
             ("Moving Across Syllables", url_for("moving_across_syllables")),
             ("About", url_for("about")),
@@ -24,15 +24,16 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/images/")
-def images():
-    return render_template("images.html")
+@app.route("/pictograms/")
+def pictograms():
+    return render_template("pictograms.html")
 
 
-@app.route("/images/search/<query>")
-def image_search(query):
+@app.route("/pictograms/search", methods=["POST"])
+def pictogram_search():
+    query = request.form["query"]
     return json.jsonify({
-        "results": find_images(query),
+        "results": find_pictograms(query),
     })
 
 
