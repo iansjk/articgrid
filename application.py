@@ -3,10 +3,10 @@ from flask import Flask, render_template, json, request, url_for
 from pictograms.arasaac import find_pictograms
 from targets.minimal_pairs import find_minimal_pairs
 
-app = Flask(__name__)
+application = Flask(__name__)
 
 
-@app.context_processor
+@application.context_processor
 def inject_navigation():
     return {
         "active_page": "Home",
@@ -19,17 +19,17 @@ def inject_navigation():
         )}
 
 
-@app.route("/")
+@application.route("/")
 def index():
     return render_template("index.html")
 
 
-@app.route("/pictograms/")
+@application.route("/pictograms/")
 def pictograms():
     return render_template("pictograms.html")
 
 
-@app.route("/pictograms/search", methods=["POST"])
+@application.route("/pictograms/search", methods=["POST"])
 def pictogram_search():
     query = request.form["query"]
     return json.jsonify({
@@ -37,12 +37,12 @@ def pictogram_search():
     })
 
 
-@app.route("/minimal-pairs/")
+@application.route("/minimal-pairs/")
 def minimal_pairs():
     return render_template("minimal-pairs.html")
 
 
-@app.route("/minimal-pairs/search", methods=["POST"])
+@application.route("/minimal-pairs/search", methods=["POST"])
 def minimal_pair_search():
     target1 = request.form["target1"]
     target2 = request.form["target2"]
@@ -52,14 +52,15 @@ def minimal_pair_search():
     })
 
 
-@app.route("/moving-across-syllables/")
+@application.route("/moving-across-syllables/")
 def moving_across_syllables():
     return render_template("moving-across-syllables.html")
 
 
-@app.route("/about")
+@application.route("/about")
 def about():
     return render_template("about.html")
 
 if __name__ == "__main__":
-    app.run()
+    application.run()
+
