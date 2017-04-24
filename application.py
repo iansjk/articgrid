@@ -7,8 +7,9 @@ application = Flask(__name__)
 
 
 @application.context_processor
-def inject_navigation():
+def inject_constants():
     return {
+        "project_name": "ArticTools",
         "active_page": "Home",
         "navigation": (
             ("Home", "/"),
