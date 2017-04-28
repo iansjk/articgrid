@@ -16,6 +16,13 @@ class TestCorpus(TestCase):
             original, expected = tests[word]
             self.assertEquals(convert_schwar(original.split()), expected.split())
 
+    def test_common_cmudict_schwars(self):
+        """Test if all schwars have been converted in common_cmudict."""
+        for word in common_cmudict:
+            for pronunciation in common_cmudict[word]:
+                # convert_schwar is idempotent and should be a NOOP if has already been called
+                self.assertEquals(pronunciation, convert_schwar(pronunciation))
+
     def test_common_cmudict_case_insensitive_uniqueness(self):
         """Test if words in common_cmudict are case-insensitively unique."""
         duplicates_by_case = [word for word in common_cmudict if word.istitle() and word.lower() in common_cmudict]
