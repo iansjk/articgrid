@@ -1,5 +1,8 @@
-from nltk.corpus import cmudict
+from nltk.corpus import cmudict as raw_cmudict
 from nltk.corpus import words
+
+cmudict = raw_cmudict.dict()
+unix_words = set(words.words())
 
 
 def convert_schwar(pronunciation):
@@ -14,6 +17,6 @@ def convert_schwar(pronunciation):
     return new_pronunciation
 
 
-_cmudict = cmudict.dict()
-common_words = words.words()
-common_cmudict = {key: [convert_schwar(pron) for pron in _cmudict[key]] for key in _cmudict.viewkeys() & common_words}
+common_words = [word for word in unix_words if
+                word.lower() in cmudict and (word.istitle() or word.title() not in unix_words)]
+common_cmudict = {word: [convert_schwar(pron) for pron in cmudict[word.lower()]] for word in common_words}
