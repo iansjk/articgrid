@@ -235,5 +235,5 @@
 
 {% block footer %}
 {{ super() }}
-<script src="/static/minimal-pairs.js"></script>
+<script src="{{ url_for('static', filename='minimal-pairs.js') }}"></script>
 {% endblock %}
