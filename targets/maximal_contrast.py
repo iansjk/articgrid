@@ -1,6 +1,6 @@
 # coding=utf-8
 
-FEATURES = ("sonorant", "consonantal", "continuant", "nasal", "labial", "alveolar", "palatal", "velar", "anterior",
+features = ("sonorant", "consonantal", "continuant", "nasal", "labial", "alveolar", "palatal", "velar", "anterior",
             "coronal", "sibilant", "voiced", "lateral")
 
 segments = {
@@ -33,8 +33,15 @@ segments = {
 
 def calculate_feature_distance(s1, s2):
     dist = 0
-    for feature in FEATURES:
+    for feature in features:
         if (feature in segments[s1] and feature not in segments[s2]) or (
-                feature not in segments[s1] and feature in segments[s2]):
+                        feature not in segments[s1] and feature in segments[s2]):
             dist += 1
     return dist
+
+
+def calculate_feature_distances(s):
+    distances = {}
+    for segment in set(segments.keys()) - {s}:
+        distances[segment] = calculate_feature_distance(s, segment)
+    return distances
