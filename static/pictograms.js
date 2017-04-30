@@ -8,7 +8,7 @@
             e.preventDefault();
             submit.text("Working...").prop("disabled", true);
             var query = $("#query").val();
-            $.post(form.attr("action"), form.serialize(), function (data) {
+            $.get(form.attr("action"), form.serialize(), function (data) {
                 tbody = results.children("tbody").empty();
                 $.each(data.results, function (term, images) {
                     var tr = $("<tr>").appendTo(tbody);

@@ -9,8 +9,8 @@
 {% block content %}
 <p class="lead">Automatically find minimal pairs based on chosen targets</p>
 
-<form class="form-inline" action="{{ url_for('minimal_pair_search') }}">
-  <label class="control-label">Target 1:</label>
+<form class="form-inline" action="{{ url_for('minimal_pair_search') }}" method="get">
+  <label class="control-label" for="target1">Target 1:</label>
   <select class="form-control" id="target1" name="target1">
     <option value="P">p</option>
     <option value="B">b</option>
@@ -37,7 +37,7 @@
     <option value="Y">j</option>
   </select>
 
-  <label class="control-label">Target 2:</label>
+  <label class="control-label" for="target2">Target 2:</label>
   <select class="form-control" id="target2" name="target2">
     <option value="P">p</option>
     <option selected="selected" value="B">b</option>

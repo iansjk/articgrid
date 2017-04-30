@@ -30,7 +30,7 @@ def pictograms():
     return render_template("pictograms.html")
 
 
-@application.route("/pictograms/search", methods=["POST"])
+@application.route("/pictograms/search")
 def pictogram_search():
     query = request.form["query"]
     return json.jsonify({
@@ -43,7 +43,7 @@ def minimal_pairs():
     return render_template("minimal-pairs.html")
 
 
-@application.route("/minimal-pairs/search", methods=["POST"])
+@application.route("/minimal-pairs/search")
 def minimal_pair_search():
     target1 = request.form["target1"]
     target2 = request.form["target2"]
