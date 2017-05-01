@@ -21,6 +21,13 @@ def inject_constants():
         )}
 
 
+@application.after_request
+def add_cache_header(response):
+    response.cache_control.max_age = 300
+    response.cache_control.public = True
+    return response
+
+
 @application.route("/")
 def index():
     return render_template("index.html")
