@@ -12,9 +12,7 @@ DENTAL = ("F", "V", "TH", "DH")
 VOWEL = ("AA", "AE", "AH", "AO", "AW", "AY",
          "EH", "EY",
          "IH", "IY",
-         "OW", "OY", "UH", "UW", "ER")  # n.b. ER: should be a palatal
-SEQUENCE_REGEX = r"(?P<start>[BAPVD])-(?P<end>[BAPVD])(?P<syllables>\d)"
-SEQUENCE_MATCHER = re.compile(SEQUENCE_REGEX)
+         "OW", "OY", "UH", "UW")
 
 
 def segment_to_regex(segment):
@@ -25,11 +23,10 @@ def segment_to_regex(segment):
 
 
 class Sequence(object):
-    def __init__(self, sequence_string):
-        d = SEQUENCE_MATCHER.search(sequence_string).groupdict()
-        self.start = d['start']
-        self.end = d['end']
-        self.syllables = int(d['syllables'])
+    def __init__(self, start, end, syllables):
+        self.start = start
+        self.end = end
+        self.syllables = int(syllables)
 
         segments = []
         for s in (self.start, self.end):
@@ -65,8 +62,8 @@ def num_syllables(tokens):
     return count
 
 
-def search_sequences(sequence_string):
-    s = Sequence(sequence_string)
+def search_sequences(start, end, syllables):
+    s = Sequence(start, end, syllables)
     results = []
     for word, pronunciations in common_cmudict.items():
         # check each pronunciation, if word has alternative pronunciations

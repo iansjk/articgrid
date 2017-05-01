@@ -2,6 +2,7 @@ from flask import Flask, render_template, json, request, url_for
 
 from pictograms.arasaac import find_pictograms
 from targets.minimal_pairs import find_minimal_pairs
+from targets.moving_across_syllables import search_sequences
 
 application = Flask(__name__)
 
@@ -58,10 +59,17 @@ def moving_across_syllables():
     return render_template("moving-across-syllables.html")
 
 
+@application.route("/moving-across-syllables/search", methods=["GET"])
+def moving_across_syllables_search():
+    return json.jsonify({
+        "results": search_sequences(request.args["start"], request.args["end"], request.args["syllables"])
+    })
+
+
 @application.route("/about")
 def about():
     return render_template("about.html")
 
+
 if __name__ == "__main__":
     application.run()
-
