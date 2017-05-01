@@ -30,9 +30,9 @@ def pictograms():
     return render_template("pictograms.html")
 
 
-@application.route("/pictograms/search", methods=["POST"])
+@application.route("/pictograms/search", methods=["GET"])
 def pictogram_search():
-    query = request.form["query"]
+    query = request.args["query"]
     return json.jsonify({
         "results": find_pictograms(query),
     })
@@ -43,13 +43,13 @@ def minimal_pairs():
     return render_template("minimal-pairs.html")
 
 
-@application.route("/minimal-pairs/search", methods=["POST"])
+@application.route("/minimal-pairs/search", methods=["GET"])
 def minimal_pair_search():
-    target1 = request.form["target1"]
-    target2 = request.form["target2"]
-    position = request.form["position"]
+    target1 = request.args["target1"]
+    target2 = request.args["target2"]
+    position = request.args["position"]
     return json.jsonify({
-        "results": find_minimal_pairs(target1, target2, position),
+        "results": find_minimal_pairs(target1, target2, position)
     })
 
 
