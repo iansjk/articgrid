@@ -2,6 +2,7 @@ from flask import Flask, render_template, json, request, url_for
 
 from pictograms.arasaac import find_pictograms
 from targets.minimal_pairs import find_minimal_pairs
+from targets.moving_across_syllables import search_sequences
 
 application = Flask(__name__)
 
@@ -20,6 +21,13 @@ def inject_constants():
         )}
 
 
+@application.after_request
+def add_cache_header(response):
+    response.cache_control.max_age = 300
+    response.cache_control.public = True
+    return response
+
+
 @application.route("/")
 def index():
     return render_template("index.html")
@@ -30,9 +38,9 @@ def pictograms():
     return render_template("pictograms.html")
 
 
-@application.route("/pictograms/search")
+@application.route("/pictograms/search", methods=["GET"])
 def pictogram_search():
-    query = request.form["query"]
+    query = request.args["query"]
     return json.jsonify({
         "results": find_pictograms(query),
     })
@@ -43,13 +51,13 @@ def minimal_pairs():
     return render_template("minimal-pairs.html")
 
 
-@application.route("/minimal-pairs/search")
+@application.route("/minimal-pairs/search", methods=["GET"])
 def minimal_pair_search():
-    target1 = request.form["target1"]
-    target2 = request.form["target2"]
-    position = request.form["position"]
+    target1 = request.args["target1"]
+    target2 = request.args["target2"]
+    position = request.args["position"]
     return json.jsonify({
-        "results": find_minimal_pairs(target1, target2, position),
+        "results": find_minimal_pairs(target1, target2, position)
     })
 
 
@@ -58,10 +66,17 @@ def moving_across_syllables():
     return render_template("moving-across-syllables.html")
 
 
+@application.route("/moving-across-syllables/search", methods=["GET"])
+def moving_across_syllables_search():
+    return json.jsonify({
+        "results": search_sequences(request.args["start"], request.args["end"], request.args["syllables"])
+    })
+
+
 @application.route("/about")
 def about():
     return render_template("about.html")
 
+
 if __name__ == "__main__":
     application.run()
-
