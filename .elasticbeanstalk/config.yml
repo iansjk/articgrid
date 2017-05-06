@@ -1,4 +1,6 @@
 branch-defaults:
+  dev:
+    environment: artictools-env
   master:
     environment: artictools-env
     group_suffix: null
