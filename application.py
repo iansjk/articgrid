@@ -2,7 +2,6 @@ from flask import Flask, render_template, json, request, url_for
 
 from pictograms.arasaac import find_pictograms
 from targets.minimal_pairs import find_minimal_pairs
-from targets.moving_across_syllables import search_sequences
 
 application = Flask(__name__)
 
@@ -16,7 +15,6 @@ def inject_constants():
             ("Home", "/"),
             ("Pictograms", url_for("pictograms")),
             ("Minimal Pairs", url_for("minimal_pairs")),
-            ("Moving Across Syllables", url_for("moving_across_syllables")),
             ("About", url_for("about")),
         )}
 
@@ -58,18 +56,6 @@ def minimal_pair_search():
     position = request.args["position"]
     return json.jsonify({
         "results": find_minimal_pairs(target1, target2, position)
-    })
-
-
-@application.route("/moving-across-syllables/")
-def moving_across_syllables():
-    return render_template("moving-across-syllables.html")
-
-
-@application.route("/moving-across-syllables/search", methods=["GET"])
-def moving_across_syllables_search():
-    return json.jsonify({
-        "results": search_sequences(request.args["start"], request.args["end"], request.args["syllables"])
     })
 
 
