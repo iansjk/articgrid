@@ -40,7 +40,7 @@ def pictograms():
 def pictogram_search():
     query = request.args["query"]
     return json.jsonify({
-        "results": find_pictograms(query),
+        "data": find_pictograms(query),
     })
 
 
@@ -55,7 +55,7 @@ def minimal_pair_search():
     target2 = request.args["target2"]
     position = request.args["position"]
     return json.jsonify({
-        "results": find_minimal_pairs(target1, target2, position)
+        "data": find_minimal_pairs(target1, target2, position)
     })
 
 

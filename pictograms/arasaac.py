@@ -17,7 +17,7 @@ _ARASAAC_IMAGE_DIR = "repositorio/originales"
 
 
 def find_pictograms(query):
-    results = defaultdict(list)
+    resultdict = defaultdict(list)
     params = _ARASAAC_SEARCH_PARAMS
     params['s'] = query
     page = 0
@@ -33,7 +33,7 @@ def find_pictograms(query):
                 a = li.find("font").parent
                 item_url_params = dict(parse_qsl(urlsplit(a['href']).query))
                 image_url = "/".join((_ARASAAC_URL, _ARASAAC_IMAGE_DIR, item_url_params["id"] + ".png"))
-                results[a.text].append(image_url)
+                resultdict[a.text].append(image_url)
 
         pagination = soup.find(id="pagination")
         if max_pages == 0 and pagination is not None:
@@ -41,4 +41,5 @@ def find_pictograms(query):
             last_page_url_params = dict(parse_qsl(urlsplit(last_page_url).query))
             max_pages = int(last_page_url_params["pg"])
         page += 1
+    results = [[term, resultdict[term]] for term in resultdict.viewkeys()]
     return results
