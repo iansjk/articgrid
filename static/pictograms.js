@@ -1,7 +1,7 @@
 "use strict";
 
 $(document).ready(function () {
-    var results = $("#results").DataTable({
+    var results = $("#results").DataTable($.extend(DATATABLE_OPTIONS, {
         "columns": [
             null,
             {
@@ -21,5 +21,5 @@ $(document).ready(function () {
                 }
             }
         ]
-    });
+    }));
 });
