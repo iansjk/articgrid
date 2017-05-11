@@ -7,9 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ project_name }}</title>
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="stylesheet" type="text/css"
-          href="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/dt-1.10.15/datatables.min.css"/>
   {% endblock %}
 </head>
 <body>
@@ -42,7 +41,9 @@
 </section>
 <footer>
   {% block footer %}
-    <script src="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/dt-1.10.15/datatables.min.js"></script>
+    <script src="{{ url_for('static', filename='vendor/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='common.js') }}"></script>
   {% endblock %}
 </footer>
