@@ -1,0 +1,25 @@
+{
+  "name": "artictools",
+  "homepage": "http://www.artic.tools",
+  "authors": [
+    "Ian Kim <iansjk@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "GPLv3",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "datatables.net-dt": "^3.2.2",
+    "jquery": "^3.2.1",
+    "datatables.net": "^1.10.15"
+  }
+}
+
