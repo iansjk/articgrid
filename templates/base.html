@@ -3,46 +3,47 @@
 <head>
   {% block head %}
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{{ project_name }}</title>
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   {% endblock %}
 </head>
 <body>
 <header>
-  <nav class="navbar navbar-inverse navbar-fixed-top">
+  <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
     <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                aria-expanded="false" aria-controls="navbar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="/">{{ project_name }}</a>
-      </div>
-      <div id="navbar" class="collapse navbar-collapse">
-        <ul class="nav navbar-nav">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+              data-target="#navbar-links" aria-controls="navbar-links" aria-expanded="false"
+              aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="/">{{ project_name }}&nbsp;<sup>beta</sup></a>
+
+      <div class="collapse navbar-collapse" id="navbar-links">
+        <ul class="navbar-nav mr-auto">
           {% for page, url in navigation %}
-            <li {% if active_page == page %}class="active" {% endif %}><a href="{{ url }}">{{ page }}</a></li>
+            <li class="nav-item {% if active_page == page %}active{% endif %}">
+              <a class="nav-link" href="{{ url }}">{{ page }}</a>
+            </li>
           {% endfor %}
         </ul>
       </div>
     </div>
   </nav>
 </header>
-<section class="container">
-  <h1>{{ active_page }}</h1>
-  {% block content %}{% endblock %}
-</section>
+<main>
+  {% block main %}
+  {% endblock %}
+</main>
 <footer>
   {% block footer %}
     <script src="{{ url_for('static', filename='vendor/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='vendor/jquery.dataTables.min.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
+    <script src="{{ url_for('static', filename='vendor/tether.min.js') }}"></script>
     <script src="{{ url_for('static', filename='vendor/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='common.js') }}"></script>
   {% endblock %}

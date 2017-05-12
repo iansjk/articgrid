@@ -1,13 +1,18 @@
 {% extends "base.html" %}
 {% block pagetitle %}{{ project_name }}{% endblock %}
 
-{% block content %}
-  <p class="lead">Welcome!</p>
+{% block main %}
+  <div class="jumbotron">
+    <section class="container">
+      <h1 class="display-3">Welcome!</h1>
 
-  <p><strong>ArticTools</strong> is a collection of free tools for use in speech therapy for articulation. You can use
-    the links above to find lists of words for sounds you want to target. You can also find <a
-        href="{{ url_for('pictograms') }}">pictograms</a> for words to create worksheets for home practice or to use in
-    therapy without verbal modeling.</p>
+      <p><strong>ArticTools</strong> is a collection of free tools for use in speech therapy for articulation. You can
+        use
+        the links above to find lists of words for sounds you want to target. You can also find <a
+            href="{{ url_for('pictograms') }}">pictograms</a> for words to create worksheets for home practice or to use
+        in therapy without verbal modeling.</p>
 
-  <p>A grid building tool is coming soon that will automate creation of those worksheets. Stay tuned!</p>
+      <p>A grid building tool is coming soon that will automate creation of those worksheets. Stay tuned!</p>
+    </section>
+  </div>
 {% endblock %}

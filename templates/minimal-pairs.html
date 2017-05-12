@@ -1,12 +1,12 @@
-{% extends "base.html" %}
+{% extends "page.html" %}
 {% set active_page = "Minimal Pairs" %}
 
 {% block content %}
   <p class="lead">Find minimal pairs based on chosen target sounds</p>
 
   <form class="form-inline" action="{{ url_for('minimal_pair_search') }}" method="get">
-    <label class="control-label" for="target1">Target 1:</label>
-    <select class="form-control" id="target1" name="target1">
+    <label class="form-control-label" for="target1">Target 1:</label>
+    <select class="form-control ml-2 mr-3" id="target1" name="target1">
       <option value="P">p</option>
       <option value="B">b</option>
       <option value="T">t</option>
@@ -32,8 +32,8 @@
       <option value="Y">j</option>
     </select>
 
-    <label class="control-label" for="target2">Target 2:</label>
-    <select class="form-control" id="target2" name="target2">
+    <label class="form-control-label" for="target2">Target 2:</label>
+    <select class="form-control ml-2 mr-3" id="target2" name="target2">
       <option value="P">p</option>
       <option selected="selected" value="B">b</option>
       <option value="T">t</option>
@@ -58,13 +58,14 @@
       <option value="Y">j</option>
     </select>
 
-    <label class="control-label" for="position">Position:</label>
-    <select class="form-control" id="position" name="position">
+    <label class="form-control-label" for="position">Position:</label>
+    <select class="form-control mx-2" id="position" name="position">
       <option value="initial">Initial</option>
       <option value="final">Final</option>
     </select>
-    <button class="btn" type="submit">Search</button>
+    <button class="btn btn-primary" type="submit">Search</button>
   </form>
+  <hr>
 
   <!-- IPA chart for English: TODO make this into a popout for an input box
   <table class="table table-bordered">
