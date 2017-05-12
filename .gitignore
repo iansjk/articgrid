@@ -3,6 +3,7 @@
 venv/
 bower_components/
 node_modules/
+static/vendor/
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
