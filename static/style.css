@@ -21,3 +21,20 @@ button, input, optgroup, select, textarea {
 ul.pagination > li.disabled {
     cursor: not-allowed;
 }
+
+.navbar-toggler-right {
+    right: 0;
+}
+
+@media (max-width: 992px) {
+    .navbar-toggleable-md > .container {
+        padding-left: inherit;
+    }
+}
+
+@media (max-width: 575px) {
+    .navbar-toggleable-md > .container {
+        padding: 0;
+        margin: 0;
+    }
+}
