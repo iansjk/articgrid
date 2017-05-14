@@ -15,6 +15,7 @@ def inject_constants():
             ("Home", "/"),
             ("Pictograms", url_for("pictograms")),
             ("Minimal Pairs", url_for("minimal_pairs")),
+            ("Grid Builder", url_for("grid_builder")),
             ("About", url_for("about")),
         )}
 
@@ -57,6 +58,11 @@ def minimal_pair_search():
     return json.jsonify({
         "data": find_minimal_pairs(target1, target2, position)
     })
+
+
+@application.route("/grid-builder")
+def grid_builder():
+    return render_template("grid-builder.html")
 
 
 @application.route("/about")
