@@ -12,7 +12,8 @@ module.exports = function(grunt) {
                     'jquery.min.js': 'jquery/dist/jquery.min.js',
                     'bootstrap.min.js': 'bootstrap/dist/js/bootstrap.min.js',
                     'jquery.dataTables.min.js': 'datatables.net/js/jquery.dataTables.min.js',
-                    'tether.min.js': 'tether/dist/js/tether.min.js'
+                    'tether.min.js': 'tether/dist/js/tether.min.js',
+                    'holder.min.js': 'holderjs/holder.min.js',
                 }
             },
             style: {
@@ -21,6 +22,15 @@ module.exports = function(grunt) {
                 },
                 files: {
                     'bootstrap.min.css': 'bootstrap/dist/css/bootstrap.min.css'
+                }
+            },
+            fontawesome: {
+                options: {
+                    destPrefix: 'static/vendor'
+                },
+                files: {
+                    'fontawesome/css': 'components-font-awesome/css',
+                    'fontawesome/fonts': 'components-font-awesome/fonts'
                 }
             }
         },

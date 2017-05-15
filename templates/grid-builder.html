@@ -3,10 +3,19 @@
 
 {% block head %}
   {{ super() }}
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/fontawesome/css/font-awesome.min.css') }}">
   <style>
+    #prototype {
+      display: none;
+    }
+
     #grid h2 {
       margin-bottom: 1.5rem;
       text-align: center;
+    }
+
+    .cell-title:hover, #grid-title:hover {
+      cursor: pointer;
     }
 
     .row {
@@ -38,10 +47,6 @@
       white-space: nowrap;
     }
 
-    .col img {
-      width: 100%;
-    }
-
     @media print {
       h1, .lead {
         display: none;
@@ -62,129 +67,57 @@
   <p class="lead">Build grid worksheets for practice</p>
 
   <form class="form-inline hidden-print">
-    <label for="size" class="form-control-label">Grid size: </label>
-    <select id="size" name="size" class="form-control mx-2">
+    <label for="grid-size" class="form-control-label">Grid size: </label>
+    <select id="grid-size" name="grid-size" class="form-control mx-2">
       <option value="3">3 x 3</option>
       <option value="4">4 x 4</option>
       <option value="5">5 x 5</option>
     </select>
-    <button id="update-size" class="btn mr-2">Update</button>
+    <button id="print" class="btn btn-primary mr-2"><i class="fa fa-print" aria-hidden="true"></i> Print</button>
   </form>
   <hr class="hidden-print">
 
+  <div id="prototype">
+    <div class="col">
+      <img class="img-fluid cell-image" data-src="holder.js/400x400?auto=yes&font=FontAwesome&text=&#xf03e;&size=100"
+           src="">
+      <h4 class="cell-title" contenteditable="true">Click to edit</h4>
+    </div>
+  </div>
+
   <section id="grid">
-    <h2>Example Grid</h2>
-    <div class="row">
-      <div class="col">
-        <img src="http://www.arasaac.org/repositorio/originales/2725.png">
-        <h4>Bucket of water</h4>
-      </div>
-      <div class="col">
-        <img src="http://www.arasaac.org/repositorio/originales/2725.png">
-        <h4>Bucket of water</h4>
-      </div>
-      <div class="col">
-        <img src="http://www.arasaac.org/repositorio/originales/2725.png">
-        <h4>Bucket of water</h4>
-      </div>
-      <div class="col">
-        <img src="http://www.arasaac.org/repositorio/originales/2725.png">
-        <h4>Bucket of water</h4>
-      </div>
-      <div class="col">
-        <img src="http://www.arasaac.org/repositorio/originales/2725.png">
-        <h4>Bucket of water</h4>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <img src="http://www.arasaac.org/repositorio/originales/2725.png">
-        <h4>Bucket of water</h4>
-      </div>
-      <div class="col">
-        <img src="http://www.arasaac.org/repositorio/originales/2725.png">
-        <h4>Bucket of water</h4>
-      </div>
-      <div class="col">
-        <img src="http://www.arasaac.org/repositorio/originales/2725.png">
-        <h4>Bucket of water</h4>
-      </div>
-      <div class="col">
-        <img src="http://www.arasaac.org/repositorio/originales/2725.png">
-        <h4>Bucket of water</h4>
-      </div>
-      <div class="col">
-        <img src="http://www.arasaac.org/repositorio/originales/2725.png">
-        <h4>Bucket of water</h4>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <img src="http://www.arasaac.org/repositorio/originales/2725.png">
-        <h4>Bucket of water</h4>
-      </div>
-      <div class="col">
-        <img src="http://www.arasaac.org/repositorio/originales/2725.png">
-        <h4>Bucket of water</h4>
-      </div>
-      <div class="col">
-        <img src="http://www.arasaac.org/repositorio/originales/2725.png">
-        <h4>Bucket of water</h4>
-      </div>
-      <div class="col">
-        <img src="http://www.arasaac.org/repositorio/originales/2725.png">
-        <h4>Bucket of water</h4>
-      </div>
-      <div class="col">
-        <img src="http://www.arasaac.org/repositorio/originales/2725.png">
-        <h4>Bucket of water</h4>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <img src="http://www.arasaac.org/repositorio/originales/2725.png">
-        <h4>Bucket of water</h4>
-      </div>
-      <div class="col">
-        <img src="http://www.arasaac.org/repositorio/originales/2725.png">
-        <h4>Bucket of water</h4>
-      </div>
-      <div class="col">
-        <img src="http://www.arasaac.org/repositorio/originales/2725.png">
-        <h4>Bucket of water</h4>
-      </div>
-      <div class="col">
-        <img src="http://www.arasaac.org/repositorio/originales/2725.png">
-        <h4>Bucket of water</h4>
-      </div>
-      <div class="col">
-        <img src="http://www.arasaac.org/repositorio/originales/2725.png">
-        <h4>Bucket of water</h4>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <img src="http://www.arasaac.org/repositorio/originales/2725.png">
-        <h4>Bucket of water</h4>
-      </div>
-      <div class="col">
-        <img src="http://www.arasaac.org/repositorio/originales/2725.png">
-        <h4>Bucket of water</h4>
-      </div>
-      <div class="col">
-        <img src="http://www.arasaac.org/repositorio/originales/2725.png">
-        <h4>Bucket of water</h4>
-      </div>
-      <div class="col">
-        <img src="http://www.arasaac.org/repositorio/originales/2725.png">
-        <h4>Bucket of water</h4>
-      </div>
-      <div class="col">
-        <img src="http://www.arasaac.org/repositorio/originales/2725.png">
-        <h4>Bucket of water</h4>
-      </div>
-    </div>
+    <h2 id="grid-title" contenteditable="true">Click to add title</h2>
+    <div id="grid-cells"></div>
   </section>
 
   <br>
+{% endblock %}
+
+{% block footer %}
+  {{ super() }}
+  <script src="{{ url_for('static', filename='vendor/holder.min.js') }}"></script>
+  <script>
+      "use strict";
+
+      $(document).ready(function () {
+          var $prototype = $("#prototype").children();
+          var $gridsize = $("#grid-size");
+          var $gridcells = $("#grid-cells");
+          $gridsize.change(function () {
+              $gridcells.empty();
+              for (var i = 0; i < $gridsize.val(); i++) {
+                  var $row = $('<div class="row">');
+                  for (var j = 0; j < $gridsize.val(); j++) {
+                      $prototype.clone().appendTo($row);
+                  }
+                  $row.appendTo($gridcells);
+              }
+          }).trigger("change");
+
+          $("#print").click(function(e) {
+              e.preventDefault();
+              window.print();
+          });
+      });
+  </script>
 {% endblock %}
