@@ -63,6 +63,11 @@ def minimal_pair_search():
     })
 
 
+@application.route("/maximal-contrast/")
+def maximal_contrast():
+    return ""  # todo
+
+
 @application.route("/grid-builder")
 def grid_builder():
     return render_template("grid-builder.html")
