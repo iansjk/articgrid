@@ -4,9 +4,6 @@
     "undef": true,
     "unused": true,
     "browser": true,
-    "jquery": true,
-    "globals": {
-        "DATATABLE_OPTIONS": true
-    }
+    "jquery": true
 }
 

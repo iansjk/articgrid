@@ -2,7 +2,7 @@
     "use strict";
 
     $(document).ready(function () {
-        $("#results").DataTable($.extend(DATATABLE_OPTIONS, {
+        $("#results").DataTable($.extend(window.DATATABLE_OPTIONS, {
             "columns": [
                 null,
                 {
