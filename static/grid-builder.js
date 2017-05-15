@@ -20,8 +20,8 @@ $(document).ready(function () {
         window.print();
     });
 
-    // disallow newline (enter key) in grid title
-    $("#grid-title").keypress(function (e) {
+    // disallow newline (enter key)
+    $("#grid-title, .cell-title").keypress(function (e) {
         return e.which !== 13;
     });
 
