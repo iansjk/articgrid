@@ -17,6 +17,9 @@ _ARASAAC_IMAGE_DIR = "repositorio/originales"
 
 
 def find_pictograms(query):
+    if not query:
+        raise ValueError("Empty query")
+
     resultdict = defaultdict(list)
     params = _ARASAAC_SEARCH_PARAMS
     params['s'] = query

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, json, request, url_for
+from flask import Flask, render_template, json, request, url_for, abort
 
 from pictograms.arasaac import find_pictograms
 from targets.minimal_pairs import find_minimal_pairs
@@ -39,10 +39,13 @@ def pictograms():
 
 @application.route("/pictograms/search", methods=["GET"])
 def pictogram_search():
-    query = request.args["query"]
-    return json.jsonify({
-        "data": find_pictograms(query),
-    })
+    try:
+        query = request.args["query"]
+        return json.jsonify({
+            "data": find_pictograms(query),
+        })
+    except ValueError:
+        return abort(400)
 
 
 @application.route("/minimal-pairs/")
