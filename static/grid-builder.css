@@ -1,9 +1,8 @@
-
 #prototype {
     display: none;
 }
 
-#grid h2 {
+#grid-title {
     padding: .5rem 0 .5rem;
     text-align: center;
     margin: -1rem 0 .5rem;
@@ -40,7 +39,7 @@
     border-left: 0;
 }
 
-.col h4 {
+.cell-title {
     margin: 0;
     padding: 0.5rem 0 0.75rem;
     font-size: 1.5vw;
@@ -52,11 +51,11 @@
         display: none;
     }
 
-    .col h4 {
+    .cell-title {
         font-size: 1rem;
     }
 
-    h4::first-letter {
+    .cell-title::first-letter {
         margin-top: 0;
     }
 }
