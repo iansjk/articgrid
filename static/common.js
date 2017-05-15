@@ -12,9 +12,13 @@ $(document).ready(function () {
         e.preventDefault();
         var $form = $(this);
         var url = $form.attr("action");
-        var $submit = $form.find('button[type="submit"]').prop("disabled", true).text("Working...");
-        $("#results").DataTable().ajax.url(url + "?" + $form.serialize()).load(function () {
-            $submit.prop("disabled", false).text("Search");
-        });
-    })
+        var $submit = $form.find('button[type="submit"]');
+        var origText = $submit.text();
+        $submit.width($submit.width()).html('<i class="fa fa-circle-o-notch fa-spin"></i><span class="sr-only">Loading...</span>').prop("disabled", true);
+        $("#results").DataTable().on("xhr.dt", function (_, __, ___, xhr) {
+            xhr.always(function () {
+                $submit.prop("disabled", false).text(origText);
+            });
+        }).ajax.url(url + "?" + $form.serialize()).load();
+    });
 });
