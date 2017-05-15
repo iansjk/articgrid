@@ -25,15 +25,27 @@ $(document).ready(function () {
         return e.which !== 13;
     });
 
-    $("#grid").on("focusin", "h2, h4", function () {
+    $("#grid").on("focusin", "#grid-title, .cell-title", function () {
         var $this = $(this);
         if ($this.text().trim() === $this.attr("data-placeholder")) {
             $this.removeClass("text-muted").text("");
         }
-    }).on("focusout", "h2, h4", function () {
+    }).on("focusout", "#grid-title, .cell-title", function () {
         var $this = $(this);
         if ($this.text().trim() === "") {
             $this.addClass("text-muted").text($this.attr("data-placeholder"));
+        }
+    });
+
+    var $imagePicker = $("#image-picker");
+    $imagePicker.on("show.bs.modal", function(e) {
+        var $cellTitle = $(e.relatedTarget).siblings(".cell-title");
+        var cellTitleText = $cellTitle.text().trim();
+        var $imageSearchQuery = $imagePicker.find("#image-search-query");
+        if (cellTitleText !== "" && cellTitleText !== $cellTitle.attr("data-placeholder")) {
+            $imageSearchQuery.val(cellTitleText);
+        } else {
+            $imageSearchQuery.val("");
         }
     });
 });
