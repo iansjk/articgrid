@@ -17,17 +17,17 @@
     background: none;
 }
 
-.row {
+#grid .row {
     margin: 0;
     border-top: 1px solid rgba(0, 0, 0, .5);
     flex-wrap: nowrap;
 }
 
-.row + .row {
+#grid .row + .row {
     border: 0;
 }
 
-.col {
+#grid .col {
     text-align: center;
     border-style: solid;
     border-color: rgba(0, 0, 0, .5);
@@ -35,7 +35,7 @@
     padding: 0;
 }
 
-.col + .col {
+#grid .col + .col {
     border-left: 0;
 }
 
@@ -44,6 +44,23 @@
     padding: 0.5rem 0 0.75rem;
     font-size: 1.5vw;
     white-space: nowrap;
+}
+
+#image-picker .modal-body {
+    max-height: 70vh;
+    overflow-y: scroll;
+}
+
+#image-picker .modal-body form {
+    margin-bottom: 1rem;
+}
+
+#image-picker .placeholder {
+    display: none;
+}
+
+#image-results .no-results {
+    margin: 0 auto;
 }
 
 @media print {

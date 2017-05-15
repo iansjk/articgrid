@@ -20,6 +20,7 @@
     "datatables.net": "^1.10.15",
     "bootstrap": "v4.0.0-alpha.6",
     "components-font-awesome": "^4.7.0",
-    "holderjs": "^2.9.4"
+    "holderjs": "^2.9.4",
+    "imgcheckbox": "^0.5.2"
   }
 }

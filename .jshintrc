@@ -3,11 +3,9 @@
     "eqeqeq": true,
     "undef": true,
     "unused": true,
+    "browser": true,
+    "jquery": true,
     "globals": {
-        "document": false,
-        "window": false,
-        "jQuery": false,
-        "$": false,
         "DATATABLE_OPTIONS": true
     }
 }
