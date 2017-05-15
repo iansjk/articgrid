@@ -61,7 +61,7 @@
                         var celldata = json.data[i];
                         for (var j = 0; j < celldata[1].length; j++) {
                             var $col = $('<div class="col-3">').appendTo($imageResults);
-                            $('<img class="img-fluid">').attr("alt", celldata[0]).attr("src", celldata[1][j]).appendTo($col).tooltip({
+                            $('<img class="img-fluid">').attr("alt", celldata[0]).attr("src", celldata[1][j]).attr("width", 80).attr("height", 80).appendTo($col).tooltip({
                                 "animation": false,
                                 "title": function () {
                                     return this.alt;
