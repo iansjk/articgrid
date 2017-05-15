@@ -1,0 +1,14 @@
+{
+    "curly": true,
+    "eqeqeq": true,
+    "undef": true,
+    "unused": true,
+    "globals": {
+        "document": false,
+        "window": false,
+        "jQuery": false,
+        "$": false,
+        "DATATABLE_OPTIONS": true
+    }
+}
+
