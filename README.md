@@ -3,7 +3,7 @@
 
 ## Features
 - Browse color pictograms by keywords
-- Generate wordlists by minimal pairs or maximal contrasts
+- Generate wordlists by minimal pairs
 - Create worksheets for therapy or home practice
 
 ## Acknowledgements
