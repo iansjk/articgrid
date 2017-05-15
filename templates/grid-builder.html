@@ -16,6 +16,11 @@
 
     .cell-title:hover, #grid-title:hover {
       cursor: pointer;
+      background: yellow;
+    }
+
+    .cell-title:focus, #grid-title:focus {
+      background: none;
     }
 
     .row {
@@ -42,7 +47,7 @@
 
     .col h4 {
       padding: 0;
-      margin-bottom: 0.75rem;
+      margin: 0.5rem 0 0.75rem;
       font-size: 1.5vw;
       white-space: nowrap;
     }
@@ -78,15 +83,17 @@
   <hr class="hidden-print">
 
   <div id="prototype">
-    <div class="col">
+    <div class="col empty-cell">
       <img class="img-fluid cell-image" data-src="holder.js/400x400?auto=yes&font=FontAwesome&text=&#xf03e;&size=100"
            src="">
-      <h4 class="cell-title" contenteditable="true">Click to edit</h4>
+      <h4 class="cell-title text-muted" contenteditable="true" data-placeholder="(Click to edit)">
+        (Click to edit)</h4>
     </div>
   </div>
 
   <section id="grid">
-    <h2 id="grid-title" contenteditable="true">Click to add title</h2>
+    <h2 id="grid-title" class="text-muted" contenteditable="true" data-placeholder="(Click to add title)">
+      (Click to add title)</h2>
     <div id="grid-cells"></div>
   </section>
 
@@ -114,9 +121,26 @@
               }
           }).trigger("change");
 
-          $("#print").click(function(e) {
+          $("#print").click(function (e) {
               e.preventDefault();
               window.print();
+          });
+
+          // disallow newline (enter key) in grid title
+          $("#grid-title").keypress(function(e) {
+              return e.which !== 13;
+          });
+
+          $("h2, h4").focusin(function() {
+              var $this = $(this);
+              if ($this.text().trim() === $this.attr("data-placeholder")) {
+                  $this.text("");
+              }
+          }).focusout(function() {
+              var $this = $(this);
+              if ($this.text().trim() === "") {
+                  $this.text($this.attr("data-placeholder"));
+              }
           });
       });
   </script>
