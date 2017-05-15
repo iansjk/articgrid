@@ -3,12 +3,12 @@
 
     $.fn.dataTable.ext.errorMode = "throw";
 
-    var DATATABLE_OPTIONS = {
+    window.DATATABLE_OPTIONS = {
         "language": {"emptyTable": "No results to display."}
     };
 
     $(document).ready(function () {
-        $("#results").not('[data-defer-init="true"]').DataTable(DATATABLE_OPTIONS);
+        $("#results").not('[data-defer-init="true"]').DataTable(window.DATATABLE_OPTIONS);
         $("form[action]").submit(function (e) {
             e.preventDefault();
             var $form = $(this);
