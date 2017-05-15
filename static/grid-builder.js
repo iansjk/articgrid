@@ -25,12 +25,12 @@ $(document).ready(function () {
         return e.which !== 13;
     });
 
-    $("h2, h4").focusin(function () {
+    $("#grid").on("focusin", "h2, h4", function () {
         var $this = $(this);
         if ($this.text().trim() === $this.attr("data-placeholder")) {
             $this.removeClass("text-muted").text("");
         }
-    }).focusout(function () {
+    }).on("focusout", "h2, h4", function () {
         var $this = $(this);
         if ($this.text().trim() === "") {
             $this.addClass("text-muted").text($this.attr("data-placeholder"));
