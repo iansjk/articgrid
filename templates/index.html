@@ -6,13 +6,33 @@
     <section class="container">
       <h1 class="display-3">Welcome!</h1>
 
-      <p><strong>ArticTools</strong> is a collection of free tools for use in speech therapy for articulation. You can
-        use
-        the links above to find lists of words for sounds you want to target. You can also find <a
-            href="{{ url_for('pictograms') }}">pictograms</a> for words to create worksheets for home practice or to use
-        in therapy without verbal modeling.</p>
-
-      <p>A grid building tool is coming soon that will automate creation of those worksheets. Stay tuned!</p>
+      <p class="lead"><strong>ArticTools</strong> is a collection of free tools for use in speech therapy for
+        articulation.</p>
     </section>
+  </div>
+  <div class="container">
+    <div class="row">
+      <section class="col-md-4">
+        <h2>Find Pictograms</h2>
+
+        <p>Search for <a href="{{ url_for("pictogram_search") }}">color pictograms</a> using keywords. This lets you
+          avoid using verbal modeling and focus on spontaneous production.</p>
+      </section>
+
+      <section class="col-md-4">
+        <h2>Generate Wordlists</h2>
+
+        <p>Generate target word lists using different phonological approaches by using <a
+            href="{{ url_for("minimal_pairs") }}">minimal pairs</a> or a <a href="{{ url_for("maximal_contrast") }}">maximal
+          contrast approach</a>.</p>
+      </section>
+
+      <section class="col-md-4">
+        <h2>Create Worksheets</h2>
+
+        <p>Combine pictograms with target words to <a href="{{ url_for("grid_builder") }}">create worksheets</a> for
+          therapy sessions or home practice.</p>
+      </section>
+    </div>
   </div>
 {% endblock %}
