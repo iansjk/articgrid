@@ -29,12 +29,12 @@
         $("#grid").on("focusin", "#grid-title, .cell-title", function () {
             var $this = $(this);
             if ($this.text().trim() === $this.attr("data-placeholder")) {
-                $this.removeClass("text-muted").text("");
+                $this.removeClass("text-muted").text("").removeClass("hidden-print");
             }
         }).on("focusout", "#grid-title, .cell-title", function () {
             var $this = $(this);
             if ($this.text().trim() === "") {
-                $this.addClass("text-muted").text($this.attr("data-placeholder"));
+                $this.addClass("text-muted").text($this.attr("data-placeholder")).addClass("hidden-print");
             }
         });
 
@@ -63,7 +63,7 @@
                             var $col = $('<div class="col-3">').appendTo($imageResults);
                             $('<img class="img-fluid">').attr("alt", celldata[0]).attr("src", celldata[1][j]).appendTo($col).tooltip({
                                 "animation": false,
-                                "title": function() {
+                                "title": function () {
                                     return this.alt;
                                 }
                             });
@@ -72,10 +72,7 @@
                 }
                 $imageResults.find("img").imgCheckbox({
                     "radio": true,
-                    "graySelected": false,
-                    "onclick": function(e) {
-                        console.log(e);
-                    }
+                    "graySelected": false
                 });
             });
         }
@@ -87,18 +84,18 @@
             var cellTitleText = $cellTitle.text().trim();
             var $imageSearchQuery = $imagePicker.find("#image-search-query");
             if (cellTitleText !== "" && cellTitleText !== $cellTitle.attr("data-placeholder")) {
-                $imageSearchQuery.val(cellTitleText).trigger("input");
+                $imageSearchQuery.val(cellTitleText).trigger("");
             } else {
                 $imageSearchQuery.val("");
             }
         });
 
-        $("#save").click(function(e) {
+        $("#save").click(function (e) {
             e.preventDefault();
             var $target = $("#target");
             var selectedImgUrl = $imageResults.find(".imgChked").children("img").attr("src");
             if (selectedImgUrl) {
-                $target.attr("src", selectedImgUrl);
+                $target.attr("src", selectedImgUrl).removeClass("hidden-print");
             }
             $target.removeAttr("id");
             $imagePicker.modal("hide");

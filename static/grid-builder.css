@@ -64,7 +64,7 @@
 }
 
 @media print {
-    h1, .lead {
+    h1, .lead, .empty {
         display: none;
     }
 
