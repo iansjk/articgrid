@@ -28,12 +28,12 @@ $(document).ready(function () {
     $("h2, h4").focusin(function () {
         var $this = $(this);
         if ($this.text().trim() === $this.attr("data-placeholder")) {
-            $this.text("");
+            $this.removeClass("text-muted").text("");
         }
     }).focusout(function () {
         var $this = $(this);
         if ($this.text().trim() === "") {
-            $this.text($this.attr("data-placeholder"));
+            $this.addClass("text-muted").text($this.attr("data-placeholder"));
         }
     });
 });
