@@ -4,8 +4,9 @@
 }
 
 #grid h2 {
-    margin-bottom: 1.5rem;
+    padding: .5rem 0 .5rem;
     text-align: center;
+    margin: -1rem 0 .5rem;
 }
 
 .cell-title:hover, #grid-title:hover {
@@ -40,8 +41,8 @@
 }
 
 .col h4 {
-    padding: 0;
-    margin: 0.5rem 0 0.75rem;
+    margin: 0;
+    padding: 0.5rem 0 0.75rem;
     font-size: 1.5vw;
     white-space: nowrap;
 }
