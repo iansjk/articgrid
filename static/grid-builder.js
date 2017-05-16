@@ -100,5 +100,13 @@
             $target.removeAttr("id");
             $imagePicker.modal("hide");
         });
+
+        $("#reset-image").click(function (e) {
+            e.preventDefault();
+            var $target = $("#target").removeAttr("src");
+            Holder.run({images: document.getElementById("target")});
+            $target.removeAttr("id").addClass("hidden-print");
+            $imagePicker.modal("hide");
+        })
     });
 }());
