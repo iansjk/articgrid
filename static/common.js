@@ -1,7 +1,7 @@
 (function () {
     "use strict";
 
-    $.fn.dataTable.ext.errorMode = "throw";
+    $.fn.dataTable.ext.errMode = "throw";
 
     window.DATATABLE_OPTIONS = {
         "language": {"emptyTable": "No results to display."}
