@@ -4,11 +4,15 @@
   "license": "GPL-3.0",
   "repository": "https://github.com/iansjk/artictools",
   "version": "0.1.0",
-  "devDependencies": {
+  "dependencies": {
     "grunt": "^0.4.5",
     "grunt-bowercopy": "^1.2.4",
+    "grunt-cli": "^1.2.0",
     "grunt-contrib-jshint": "^1.1.0",
     "grunt-replace": "^1.0.1",
     "load-grunt-tasks": "^3.5.2"
+  },
+  "scripts": {
+    "postinstall": "grunt"
   }
 }
