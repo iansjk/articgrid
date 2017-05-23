@@ -41,7 +41,7 @@
         var $imageResults = $("#image-results");
         var $imageSearchQuery = $("#image-search-query");
         var typingTimer;
-        var doneTypingInterval = 2000;
+        var doneTypingInterval = 500;
 
         $imageSearchQuery.on("input propertychange paste", function () {
             clearTimeout(typingTimer);
