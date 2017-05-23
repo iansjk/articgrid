@@ -1,5 +1,7 @@
 .idea
 *.pyc
+desktop.ini
+
 venv/
 bower_components/
 node_modules/
