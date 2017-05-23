@@ -4,18 +4,16 @@ from collections import defaultdict
 from urlparse import urlsplit, parse_qsl
 
 import requests
-import requests_cache
 from bs4 import BeautifulSoup
 
-ARASAAC_URL = "http://www.arasaac.org"
-ARASAAC_SEARCH_ENDPOINT = "buscar.php"
-ARASAAC_SEARCH_PARAMS = {
+_ARASAAC_URL = "http://www.arasaac.org"
+_ARASAAC_SEARCH_ENDPOINT = "buscar.php"
+_ARASAAC_SEARCH_PARAMS = {
     "id_tipo": 10,
     "buscar_por": 3,
     "idiomasearch": 7,
 }
-ARASAAC_IMAGE_DIR = "repositorio/originales"
-requests_cache.install_cache(backend="sqlite", allowable_methods=("GET", "POST"))
+_ARASAAC_IMAGE_DIR = "repositorio/originales"
 
 
 def find_pictograms(query):
@@ -23,13 +21,13 @@ def find_pictograms(query):
         raise ValueError("Empty query")
 
     resultdict = defaultdict(list)
-    params = ARASAAC_SEARCH_PARAMS
+    params = _ARASAAC_SEARCH_PARAMS
     params['s'] = query
     page = 0
     max_pages = 0
     while page <= max_pages:
         params["pg"] = page
-        r = requests.post("/".join((ARASAAC_URL, ARASAAC_SEARCH_ENDPOINT)), params=params)
+        r = requests.post("/".join((_ARASAAC_URL, _ARASAAC_SEARCH_ENDPOINT)), params=params)
         r.raise_for_status()
         soup = BeautifulSoup(r.content, "html.parser")
         item_list = soup.find(id="ultimas_imagenes")
@@ -37,7 +35,7 @@ def find_pictograms(query):
             for li in item_list.find_all("li"):
                 a = li.find("font").parent
                 item_url_params = dict(parse_qsl(urlsplit(a['href']).query))
-                image_url = "/".join((ARASAAC_URL, ARASAAC_IMAGE_DIR, item_url_params["id"] + ".png"))
+                image_url = "/".join((_ARASAAC_URL, _ARASAAC_IMAGE_DIR, item_url_params["id"] + ".png"))
                 resultdict[a.text].append(image_url)
 
         pagination = soup.find(id="pagination")
