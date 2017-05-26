@@ -1,10 +1,10 @@
 from __future__ import print_function, absolute_import
 
 from collections import defaultdict
-from urlparse import urlsplit, parse_qsl
 
 import requests
 from bs4 import BeautifulSoup
+from six.moves.urllib.parse import urlsplit, parse_qsl
 
 _ARASAAC_URL = "http://www.arasaac.org"
 _ARASAAC_SEARCH_ENDPOINT = "buscar.php"
