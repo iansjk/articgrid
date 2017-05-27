@@ -61,12 +61,17 @@
                         var celldata = json.data[i];
                         for (var j = 0; j < celldata[1].length; j++) {
                             var $col = $('<div class="col-3">').appendTo($imageResults);
-                            $('<img class="img-fluid">').attr("alt", celldata[0]).attr("src", celldata[1][j]).attr("width", 80).attr("height", 80).appendTo($col).tooltip({
-                                "animation": false,
-                                "title": function () {
-                                    return this.alt;
-                                }
-                            });
+                            $('<img class="img-fluid">')
+                                .attr("alt", celldata[0])
+                                .attr("src", Flask.url_for("static_pictogram", {"pictogram_id": celldata[1][j]}))
+                                .attr("width", 80)
+                                .attr("height", 80).appendTo($col).tooltip(
+                                {
+                                    "animation": false,
+                                    "title": function () {
+                                        return this.alt;
+                                    }
+                                });
                         }
                     }
                 }

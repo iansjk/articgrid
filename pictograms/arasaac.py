@@ -3,6 +3,7 @@ from __future__ import print_function, absolute_import
 from collections import defaultdict
 
 import requests
+import re
 from bs4 import BeautifulSoup
 from six.moves.urllib.parse import urlsplit, parse_qsl
 
@@ -14,6 +15,7 @@ _ARASAAC_SEARCH_PARAMS = {
     "idiomasearch": 7,
 }
 _ARASAAC_IMAGE_DIR = "repositorio/originales"
+_PICTOGRAM_ID_REGEX = re.compile(r"\/(?P<pictogram_id>\d+)\.png$")
 
 
 def find_pictograms(query):
@@ -33,10 +35,9 @@ def find_pictograms(query):
         item_list = soup.find(id="ultimas_imagenes")
         if item_list is not None:
             for li in item_list.find_all("li"):
-                a = li.find("font").parent
-                item_url_params = dict(parse_qsl(urlsplit(a['href']).query))
-                image_url = "/".join((_ARASAAC_URL, _ARASAAC_IMAGE_DIR, item_url_params["id"] + ".png"))
-                resultdict[a.text].add(image_url)
+                term = li.img["title"]
+                pictogram_id = _PICTOGRAM_ID_REGEX.search(li.img["src"]).group("pictogram_id")
+                resultdict[term].add(pictogram_id)
 
         pagination = soup.find(id="pagination")
         if max_pages == 0 and pagination is not None:

@@ -1,9 +1,13 @@
-from flask import Flask, render_template, json, request, url_for, abort
+from flask import Flask, render_template, json, request, url_for, abort, redirect
+from flask_jsglue import JSGlue
 
 from pictograms.arasaac import find_pictograms
 from targets.minimal_pairs import find_minimal_pairs
 
-app = Flask(__name__)
+STATIC_FOLDER = "static"
+app = Flask(__name__, static_folder=STATIC_FOLDER)
+app.config["PICTOGRAM_S3_BUCKET"] = "artictools-pictograms"
+JSGlue(app)
 
 
 @app.context_processor
@@ -71,6 +75,11 @@ def grid_builder():
 @app.route("/about")
 def about():
     return render_template("about.html")
+
+
+@app.route("/%s/pictograms/<int:pictogram_id>" % STATIC_FOLDER)
+def static_pictogram(pictogram_id):
+    return redirect("https://s3.amazonaws.com/%s/%d.png" % (app.config["PICTOGRAM_S3_BUCKET"], pictogram_id))
 
 
 if __name__ == "__main__":
