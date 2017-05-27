@@ -1,9 +1,8 @@
 .idea
 *.pyc
-venv/
 desktop.ini
-cache.sqlite
 
+venv/
 bower_components/
 node_modules/
 static/vendor/
