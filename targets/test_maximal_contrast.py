@@ -1,6 +1,8 @@
 # coding=utf-8
 from unittest import TestCase
 
+import six
+
 from .maximal_contrast import segments, calculate_feature_distance
 
 
@@ -27,7 +29,7 @@ class TestMaximalContrast(TestCase):
             u"ʃ": u"ʒ",
             u"t͡ʃ": u"d͡ʒ",
         }
-        lookup_T = dict((v, k) for (k, v) in lookup_oneway.iteritems())
+        lookup_T = dict((v, k) for (k, v) in six.iteritems(lookup_oneway))
         self.voice_lookup = dict(lookup_T, **lookup_oneway)
 
     def _test_feature_for_class(self, feature, klass):
