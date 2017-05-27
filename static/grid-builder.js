@@ -41,15 +41,15 @@
         var $imageResults = $("#image-results");
         var $imageSearchQuery = $("#image-search-query");
         var typingTimer;
-        var doneTypingInterval = 500;
+        var doneTypingInterval = 500; // ms
 
         $imageSearchQuery.on("input propertychange paste", function () {
             clearTimeout(typingTimer);
-            typingTimer = setTimeout(doneTyping, doneTypingInterval);
+            typingTimer = setTimeout(search, doneTypingInterval);
             $imageResults.empty().siblings(".placeholder").show();
         });
 
-        function doneTyping() {
+        function search() {
             var $form = $imageSearchQuery.parents("form");
             var url = $form.attr("action");
             $.get(url + "?" + $form.serialize(), function (json) {
@@ -89,7 +89,9 @@
             var cellTitleText = $cellTitle.text().trim();
             var $imageSearchQuery = $imagePicker.find("#image-search-query");
             if (cellTitleText !== "" && cellTitleText !== $cellTitle.attr("data-placeholder")) {
-                $imageSearchQuery.val(cellTitleText).trigger("");
+                $imageSearchQuery.val(cellTitleText);
+                $imageResults.empty().siblings(".placeholder").show();
+                search();
             } else {
                 $imageSearchQuery.val("");
             }
