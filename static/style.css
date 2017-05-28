@@ -1,7 +1,5 @@
-@media print {
-    header {
-        display: none;
-    }
+html {
+    overflow-y: scroll;
 }
 
 header {
@@ -32,6 +30,15 @@ ul.pagination > li.disabled {
     right: 0;
 }
 
+/* fix for modal moving page to left when open */
+body.modal-open {
+    padding-right: 0 !important;
+}
+
+body.modal-open .navbar.fixed-top {
+    padding-right: 16px !important;
+}
+
 @media (max-width: 992px) {
     .navbar-toggleable-md > .container {
         padding-left: inherit;
@@ -42,5 +49,11 @@ ul.pagination > li.disabled {
     .navbar-toggleable-md > .container {
         padding: 0;
         margin: 0;
+    }
+}
+
+@media print {
+    header {
+        display: none;
     }
 }
