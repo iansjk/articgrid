@@ -51,8 +51,9 @@
             updateUrl();
         });
 
+        var savedGrid;
         try {
-            var savedGrid = JSON.parse(window.location.hash.slice(1));
+            savedGrid = JSON.parse(window.location.hash.slice(1));
         } catch (e) {
             // noop
         }
@@ -179,6 +180,6 @@
             Holder.run({images: document.getElementById("target-image")});
             $targetImage.removeAttr("id").closest(".cell").trigger("cellChanged");
             $imagePicker.modal("hide");
-        })
+        });
     });
 }());

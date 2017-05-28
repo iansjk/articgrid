@@ -4,6 +4,10 @@
     "undef": true,
     "unused": true,
     "browser": true,
-    "jquery": true
+    "jquery": true,
+    "globals": {
+        "Flask": true,
+        "Holder": true
+    }
 }
 
