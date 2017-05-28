@@ -2,19 +2,81 @@
     "use strict";
 
     $(document).ready(function () {
-        var $prototype = $("#prototype").children();
         var $gridsize = $("#grid-size");
-        var $gridcells = $("#grid-cells");
+        var $cellContainer = $("#cell-container");
+
+        function updateUrl() {
+            var currentState = {
+                "size": parseInt($gridsize.val()),
+                "cells": []
+            };
+            var $cells = $cellContainer.find(".cell");
+            for (var i = 0; i < $cells.length; i++) {
+                var $cell = $($cells[i]);
+                if ($cell.hasClass("empty")) {
+                    currentState.cells.push({});
+                } else {
+                    currentState.cells.push({
+                        "id": parseInt($cell.find(".cell-image").attr("data-pictogram-id")) || 0,
+                        "label": $cell.find(".cell-title").text().trim()
+                    });
+                }
+            }
+            window.location.hash = JSON.stringify(currentState);
+        }
+
+        var $prototype = $("#prototype").children().on("cellChanged", function (_, params) {
+            var $cell = $(this);
+            var $cellTitle = $cell.find(".cell-title");
+            var $cellImage = $cell.find(".cell-image");
+            $cellTitle.toggleClass("empty text-muted", $cellTitle.text().trim() === $cellTitle.attr("data-placeholder"));
+            $cellImage.toggleClass("empty", $cellImage.attr("src") === undefined || $cellImage.attr("src").startsWith("data:"));
+            $cell.toggleClass("empty", $cellTitle.hasClass("empty") && $cellImage.hasClass("empty"));
+            if (!params || params.deferUpdateUrl !== true) {
+                updateUrl();
+            }
+        });
+
         $gridsize.change(function () {
-            $gridcells.empty();
+            $cellContainer.empty();
             for (var i = 0; i < $gridsize.val(); i++) {
                 var $row = $('<div class="row">');
                 for (var j = 0; j < $gridsize.val(); j++) {
-                    $prototype.clone().appendTo($row);
+                    var $cell = $prototype.clone(true, true);
+                    $cell.appendTo($row);
                 }
-                $row.appendTo($gridcells);
+                $row.appendTo($cellContainer);
             }
-        }).trigger("change");
+            $cellContainer.find(".cell").trigger("cellChanged", {"deferUpdateUrl": true});
+            updateUrl();
+        });
+
+        try {
+            var savedGrid = JSON.parse(window.location.hash.slice(1));
+        } catch (e) {
+            // noop
+        }
+        if (savedGrid === undefined) {
+            $gridsize.trigger("change"); // initialize the grid
+        } else {
+            var $row = $('<div class="row">').appendTo($cellContainer);
+            for (var i = 0; i < savedGrid.cells.length; i++) {
+                if (i % savedGrid.size === 0) {
+                    $row = $row.clone().empty().appendTo($cellContainer);
+                }
+                var celldata = savedGrid.cells[i];
+                var $cell = $prototype.clone(true, true);
+                if (celldata.id) {
+                    $cell.find(".cell-image")
+                        .attr("src", Flask.url_for("static_pictogram", {"pictogram_id": celldata.id}))
+                        .attr("data-pictogram-id", celldata.id);
+                }
+                if (celldata.label) {
+                    $cell.find(".cell-title").text(celldata.label);
+                }
+                $row.append($cell.trigger("cellChanged", {"deferUpdateUrl": true}));
+            }
+        }
 
         $("#print").click(function (e) {
             e.preventDefault();
@@ -29,13 +91,14 @@
         $("#grid").on("focusin", "#grid-title, .cell-title", function () {
             var $this = $(this);
             if ($this.text().trim() === $this.attr("data-placeholder")) {
-                $this.removeClass("text-muted").text("").removeClass("hidden-print");
+                $this.removeClass("text-muted").text("");
             }
         }).on("focusout", "#grid-title, .cell-title", function () {
             var $this = $(this);
             if ($this.text().trim() === "") {
-                $this.addClass("text-muted").text($this.attr("data-placeholder")).addClass("hidden-print");
+                $this.addClass("text-muted").text($this.attr("data-placeholder"));
             }
+            $this.closest(".cell").trigger("cellChanged");
         });
 
         var $imageResults = $("#image-results");
@@ -63,6 +126,7 @@
                             var $col = $('<div class="col-3">').appendTo($imageResults);
                             $('<img class="img-fluid">')
                                 .attr("alt", celldata[0])
+                                .attr("data-pictogram-id", celldata[1][j])
                                 .attr("src", Flask.url_for("static_pictogram", {"pictogram_id": celldata[1][j]}))
                                 .attr("width", 80)
                                 .attr("height", 80).appendTo($col).tooltip(
@@ -84,7 +148,7 @@
 
         var $imagePicker = $("#image-picker");
         $imagePicker.on("show.bs.modal", function (e) {
-            var $target = $(e.relatedTarget).attr("id", "target");
+            var $target = $(e.relatedTarget).attr("id", "target-image");
             var $cellTitle = $target.siblings(".cell-title");
             var cellTitleText = $cellTitle.text().trim();
             var $imageSearchQuery = $imagePicker.find("#image-search-query");
@@ -99,20 +163,21 @@
 
         $("#save").click(function (e) {
             e.preventDefault();
-            var $target = $("#target");
-            var selectedImgUrl = $imageResults.find(".imgChked").children("img").attr("src");
-            if (selectedImgUrl) {
-                $target.attr("src", selectedImgUrl).removeClass("hidden-print");
+            var $targetImage = $("#target-image");
+            var selectedImage = $imageResults.find(".imgChked").children("img");
+            if (selectedImage) {
+                $targetImage.attr("src", selectedImage.attr("src"))
+                    .attr("data-pictogram-id", selectedImage.attr("data-pictogram-id"));
             }
-            $target.removeAttr("id");
+            $targetImage.removeAttr("id").closest(".cell").trigger("cellChanged");
             $imagePicker.modal("hide");
         });
 
         $("#reset-image").click(function (e) {
             e.preventDefault();
-            var $target = $("#target").removeAttr("src");
-            Holder.run({images: document.getElementById("target")});
-            $target.removeAttr("id").addClass("hidden-print");
+            var $targetImage = $("#target-image").removeAttr("src");
+            Holder.run({images: document.getElementById("target-image")});
+            $targetImage.removeAttr("id").closest(".cell").trigger("cellChanged");
             $imagePicker.modal("hide");
         })
     });
