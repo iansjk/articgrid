@@ -27,7 +27,7 @@
             window.location.hash = JSON.stringify(currentState);
         }
 
-        var $prototype = $("#prototype").children().on("cellChanged", function (_, params) {
+        $("#grid").on("cellChanged", ".cell", function (_, params) {
             var $cell = $(this);
             var $cellTitle = $cell.find(".cell-title");
             var $cellImage = $cell.find(".cell-image");
@@ -37,14 +37,29 @@
             if (!params || params.deferUpdateUrl !== true) {
                 updateUrl();
             }
+        }).on("focusin", "#grid-title, .cell-title", function () {
+            var $this = $(this);
+            if ($this.text().trim() === $this.attr("data-placeholder")) {
+                $this.removeClass("text-muted").text("");
+            }
+        }).on("focusout", "#grid-title, .cell-title", function () {
+            var $this = $(this);
+            if ($this.text().trim() === "") {
+                $this.addClass("text-muted").text($this.attr("data-placeholder"));
+            }
+            $this.closest(".cell").trigger("cellChanged");
+        }).on("keypress", "#grid-title, .cell-title", function (e) {
+            // disallow newline (enter key)
+            return e.which !== 13;
         });
 
+        var $prototype = $("#prototype").children();
         $gridsize.change(function () {
             $cellContainer.empty();
             for (var i = 0; i < $gridsize.val(); i++) {
                 var $row = $('<div class="row">');
                 for (var j = 0; j < $gridsize.val(); j++) {
-                    var $cell = $prototype.clone(true, true);
+                    var $cell = $prototype.clone();
                     $cell.appendTo($row);
                 }
                 $row.appendTo($cellContainer);
@@ -68,7 +83,7 @@
                     $row = $row.clone().empty().appendTo($cellContainer);
                 }
                 var celldata = savedGrid.cells[i];
-                var $cell = $prototype.clone(true, true);
+                var $cell = $prototype.clone();
                 if (celldata.id) {
                     $cell.find(".cell-image")
                         .attr("src", Flask.url_for("static_pictogram", {"pictogram_id": celldata.id}))
@@ -84,24 +99,6 @@
         $("#print").click(function (e) {
             e.preventDefault();
             window.print();
-        });
-
-        // disallow newline (enter key)
-        $("#grid-title, .cell-title").keypress(function (e) {
-            return e.which !== 13;
-        });
-
-        $("#grid").on("focusin", "#grid-title, .cell-title", function () {
-            var $this = $(this);
-            if ($this.text().trim() === $this.attr("data-placeholder")) {
-                $this.removeClass("text-muted").text("");
-            }
-        }).on("focusout", "#grid-title, .cell-title", function () {
-            var $this = $(this);
-            if ($this.text().trim() === "") {
-                $this.addClass("text-muted").text($this.attr("data-placeholder"));
-            }
-            $this.closest(".cell").trigger("cellChanged");
         });
 
         var $imageResults = $("#image-results");
