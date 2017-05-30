@@ -16,9 +16,11 @@
                 if ($cell.hasClass("empty")) {
                     currentState.cells.push({});
                 } else {
+                    var $cellTitle = $cell.find(".cell-title");
+                    var label = $cellTitle.text().trim();
                     currentState.cells.push({
                         "id": parseInt($cell.find(".cell-image").attr("data-pictogram-id")) || 0,
-                        "label": $cell.find(".cell-title").text().trim()
+                        "label": label === $cellTitle.attr("data-placeholder") ? "" : label
                     });
                 }
             }
