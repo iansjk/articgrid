@@ -4,9 +4,11 @@
     $(document).ready(function () {
         var $gridsize = $("#grid-size");
         var $cellContainer = $("#cell-container");
-
+        var $gridtitle = $("#grid-title");
         function updateUrl() {
+            var title = $gridtitle.text().trim();
             var currentState = {
+                "title": title === $gridtitle.attr("data-placeholder") ? "" : title,
                 "size": parseInt($gridsize.val()),
                 "cells": []
             };
