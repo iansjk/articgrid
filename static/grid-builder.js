@@ -1,10 +1,13 @@
 (function () {
     "use strict";
 
+    var MINIMUM_SEARCH_LENGTH = 3;
+
     $(document).ready(function () {
         var $gridsize = $("#grid-size");
         var $cellContainer = $("#cell-container");
         var $gridtitle = $("#grid-title");
+
         function updateUrl() {
             var title = $gridtitle.text().trim();
             var currentState = {
@@ -106,12 +109,14 @@
         var $imageResults = $("#image-results");
         var $imageSearchQuery = $("#image-search-query");
         var typingTimer;
-        var doneTypingInterval = 500; // ms
+        var doneTypingInterval = 100; // ms
 
         $imageSearchQuery.on("input propertychange paste", function () {
             clearTimeout(typingTimer);
-            typingTimer = setTimeout(search, doneTypingInterval);
-            $imageResults.empty().siblings(".placeholder").show();
+            if ($imageSearchQuery.val().length >= MINIMUM_SEARCH_LENGTH) {
+                typingTimer = setTimeout(search, doneTypingInterval);
+                $imageResults.empty().siblings(".placeholder").show();
+            }
         });
 
         function search() {
