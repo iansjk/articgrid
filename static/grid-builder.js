@@ -10,6 +10,7 @@
     var $imageResults = $("#image-results");
     var $imageSearchQuery = $("#image-search-query");
     var $prototype = $("#prototype").children();
+    var imageSearchXHR;
 
     function init(savedJson) {
         $gridtitle.trigger("titleChanged");
@@ -69,7 +70,7 @@
     function search() {
         var $form = $imageSearchQuery.parents("form");
         var url = $form.attr("action");
-        $.get(url + "?" + $form.serialize(), function (json) {
+        imageSearchXHR = $.get(url + "?" + $form.serialize(), function (json) {
             $imageResults.siblings(".placeholder").hide();
             if (json.data.length === 0) {
                 $imageResults.html('<span class="no-results">No image results found.</span>');
@@ -156,6 +157,9 @@
 
         var typingTimer;
         $imageSearchQuery.on("input propertychange paste", function () {
+            if (imageSearchXHR) {
+                imageSearchXHR.abort();
+            }
             clearTimeout(typingTimer);
             if ($imageSearchQuery.val().length >= MINIMUM_SEARCH_LENGTH) {
                 typingTimer = setTimeout(search, TYPING_TIMEOUT);
