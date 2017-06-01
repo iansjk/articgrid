@@ -19,24 +19,15 @@
 
 #grid .row {
     margin: 0;
-    border-top: 1px solid rgba(0, 0, 0, .5);
     flex-wrap: nowrap;
-}
-
-#grid .row + .row {
-    border: 0;
 }
 
 #grid .col {
     text-align: center;
-    border-style: solid;
-    border-color: rgba(0, 0, 0, .5);
-    border-width: 0 1px 1px 1px;
     padding: 0;
-}
-
-#grid .col + .col {
-    border-left: 0;
+    border: 1px solid rgba(0, 0, 0, .5);
+    margin-left: -1px;
+    margin-bottom: -1px;
 }
 
 .cell-title {

@@ -11,7 +11,7 @@ h1#page-title {
 }
 
 button, input, optgroup, select, textarea {
-    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: inherit;
 }
 
 .btn:hover {
