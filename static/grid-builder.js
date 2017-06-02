@@ -11,6 +11,7 @@
     var $imageSearchQuery = $("#image-search-query");
     var $prototype = $("#prototype").children();
     var imageSearchXHR;
+    var $targetImage;
 
     function init(savedJson) {
         $gridtitle.trigger("titleChanged");
@@ -169,8 +170,8 @@
 
         var $imagePicker = $("#image-picker");
         $imagePicker.on("show.bs.modal", function (e) {
-            var $target = $(e.relatedTarget).attr("id", "target-image");
-            var $cellTitle = $target.siblings(".cell-title");
+            $targetImage = $(e.relatedTarget);
+            var $cellTitle = $targetImage.siblings(".cell-title");
             var cellTitleText = $cellTitle.text().trim();
             var $imageSearchQuery = $imagePicker.find("#image-search-query");
             if (cellTitleText !== "" && cellTitleText !== $cellTitle.attr("data-placeholder")) {
@@ -184,21 +185,20 @@
 
         $("#save").click(function (e) {
             e.preventDefault();
-            var $targetImage = $("#target-image");
             var selectedImage = $imageResults.find(".imgChked").children("img");
             if (selectedImage) {
                 $targetImage.attr("src", selectedImage.attr("src"))
                     .attr("data-pictogram-id", selectedImage.attr("data-pictogram-id"));
             }
-            $targetImage.removeAttr("id").closest(".cell").trigger("cellChanged");
+            $targetImage.closest(".cell").trigger("cellChanged");
             $imagePicker.modal("hide");
         });
 
         $("#reset-image").click(function (e) {
             e.preventDefault();
-            var $targetImage = $("#target-image").removeAttr("src");
+            $targetImage.removeAttr("src");
             Holder.run({images: document.getElementById("target-image")});
-            $targetImage.removeAttr("id").closest(".cell").trigger("cellChanged");
+            $targetImage.closest(".cell").trigger("cellChanged");
             $imagePicker.modal("hide");
         });
 
