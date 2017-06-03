@@ -55,6 +55,20 @@ module.exports = function(grunt) {
                 files: {
                     'static/vendor/bootstrap.min.css': 'bower_components/bootstrap/dist/css/bootstrap.min.css'
                 }
+            },
+            datatables_cache: {
+                options: {
+                    patterns: [
+                        {
+                            match: 'cache:!1',
+                            replacement: 'cache:!0'
+                        }
+                    ],
+                    usePrefix: false
+                },
+                files: {
+                    'static/vendor/jquery.dataTables.min.js': 'bower_components/datatables.net/js/jquery.dataTables.min.js'
+                }
             }
         }
     });
