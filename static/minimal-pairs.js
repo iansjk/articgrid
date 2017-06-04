@@ -5,7 +5,9 @@
     var $wordbank = $("#wordbank");
 
     function removeWord(word) {
-        $wordbank.find(":contains(" + word + ")").remove();
+        $wordbank.find("li").filter(function () {
+            return $(this).find(".word").text().trim() === word;
+        }).remove();
         delete wordbank[word];
     }
 
@@ -23,7 +25,7 @@
             }
         });
 
-        $wordbank.on("click", ".close", function() {
+        $wordbank.on("click", ".close", function () {
             removeWord($(this).siblings(".word").text());
         });
     });
