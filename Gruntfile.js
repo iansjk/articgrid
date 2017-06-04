@@ -17,10 +17,11 @@ module.exports = function(grunt) {
                 files: {
                     'jquery.min.js': 'jquery/dist/jquery.min.js',
                     'bootstrap.min.js': 'bootstrap/dist/js/bootstrap.min.js',
-                    'jquery.dataTables.min.js': 'datatables.net/js/jquery.dataTables.min.js',
                     'jquery.imgcheckbox.js': 'imgcheckbox/jquery.imgcheckbox.js',
                     'tether.min.js': 'tether/dist/js/tether.min.js',
                     'holder.min.js': 'holderjs/holder.min.js',
+                    'jquery.dataTables.min.js': 'datatables.net/js/jquery.dataTables.min.js',
+                    'dataTables.select.min.js': 'datatables.net-select/js/dataTables.select.min.js',
                 }
             },
             style: {

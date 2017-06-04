@@ -26,6 +26,14 @@ ul.pagination > li.disabled {
     right: 0;
 }
 
+#prototype {
+    display: none;
+}
+
+table[data-selectable="true"] > tbody > tr {
+    cursor: pointer;
+}
+
 /* fix for modal moving page to left when open */
 body.modal-open {
     padding-right: 17px !important;

@@ -1,0 +1,14 @@
+#wordbank > :not(#prototype) {
+    font-size: 1.2rem;
+    height: 2.2rem;
+    line-height: 2.2rem;
+    border-radius: 0.5rem;
+    background-color: #e4e4e4;
+    padding: 0 0.8rem;
+    margin: 0 0.5rem 0.5rem 0;
+}
+
+#wordbank .close {
+    line-height: 2rem;
+    padding-left: 0.75rem;
+}

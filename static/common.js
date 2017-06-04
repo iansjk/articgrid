@@ -8,7 +8,14 @@
     };
 
     $(document).ready(function () {
-        $("#results").not('[data-defer-init="true"]').DataTable(window.DATATABLE_OPTIONS);
+        var $results = $("#results");
+        if ($results.attr("data-selectable") === "true") {
+            window.DATATABLE_OPTIONS.select = {
+                "className": "selected table-info",
+                "style": "multi"
+            };
+        }
+        $results.not('[data-defer-init="true"]').DataTable(window.DATATABLE_OPTIONS);
         $("form[action]").submit(function (e) {
             e.preventDefault();
             var $form = $(this);

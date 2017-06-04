@@ -1,8 +1,20 @@
 {% extends "page.html" %}
 {% set active_page = "Minimal Pairs" %}
 
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ url_for('static', filename='minimal-pairs.css') }}">
+{% endblock %}
+
 {% block content %}
   <p class="lead">Find minimal pairs based on chosen target sounds</p>
+
+  <section>
+    <h3>Word Bank</h3>
+    <ul id="wordbank" class="list-inline">
+      <li id="prototype" class="list-inline-item"><span class="word"></span><span class="close">&times;</span></li>
+    </ul>
+  </section>
 
   <form class="form-inline" action="{{ url_for('minimal_pair_search') }}" method="get">
     <label class="form-control-label" for="target1">Target 1:</label>
@@ -220,7 +232,7 @@
   </table>
   -->
 
-  <table id="results" class="table">
+  <table id="results" class="table" data-selectable="true">
     <thead>
     <tr>
       <th>Word 1</th>
@@ -229,4 +241,9 @@
     </thead>
     <tbody></tbody>
   </table>
+{% endblock %}
+
+{% block footer %}
+  {{ super() }}
+  <script src="{{ url_for('static', filename='minimal-pairs.js') }}"></script>
 {% endblock %}

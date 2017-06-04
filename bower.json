@@ -21,6 +21,7 @@
     "bootstrap": "v4.0.0-alpha.6",
     "components-font-awesome": "^4.7.0",
     "holderjs": "^2.9.4",
-    "imgcheckbox": "^0.5.2"
+    "imgcheckbox": "^0.5.2",
+    "datatables.net-select": "^1.2.2"
   }
 }
