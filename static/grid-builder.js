@@ -197,7 +197,7 @@
         $("#reset-image").click(function (e) {
             e.preventDefault();
             $targetImage.removeAttr("src");
-            Holder.run({images: document.getElementById("target-image")});
+            Holder.run({images: $targetImage[0]});
             $targetImage.closest(".cell").trigger("cellChanged");
             $imagePicker.modal("hide");
         });
