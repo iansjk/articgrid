@@ -8,7 +8,7 @@ from targets.minimal_pairs import find_minimal_pairs
 STATIC_FOLDER = "static"
 app = Flask(__name__, static_folder=STATIC_FOLDER)
 app.config["PICTOGRAM_S3_BUCKET"] = "artictools-pictograms"
-app.config["MINIMUM_PICTOGRAM_QUERY_LENGTH"] = 2
+app.config["MINIMUM_PICTOGRAM_QUERY_LENGTH"] = 3
 JSGlue(app)
 
 

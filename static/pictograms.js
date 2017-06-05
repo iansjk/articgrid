@@ -29,7 +29,7 @@
 
 
         var $query = $("#query").on("input paste propertychange", function() {
-            $query.siblings("button").toggleClass("disabled", $query.val().trim().length <= MINIMUM_QUERY_LENGTH);
+            $query.siblings("button").prop("disabled", $query.val().trim().length < MINIMUM_QUERY_LENGTH);
         });
 
         var $form = $("form");

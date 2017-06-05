@@ -6,7 +6,7 @@
   <form action="{{ url_for('pictogram_search') }}" method="get" class="form-inline">
     <label class="form-control-label" for="query">Query:</label>
     <input id="query" name="query" class="form-control mx-2" placeholder="Enter search query...">
-    <button class="btn btn-primary disabled" type="submit">Search</button>
+    <button class="btn btn-primary" type="submit" disabled>Search</button>
     <input type="hidden" id="minimum-query-length" value="{{ config["MINIMUM_PICTOGRAM_QUERY_LENGTH"] }}">
   </form>
   <hr>
