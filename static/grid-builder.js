@@ -12,7 +12,7 @@
         var $imageSearchQuery = $("#image-search-query");
         var $prototype = $("#prototype").children();
         var $targetImage;
-        var MINIMUM_QUERY_LENGTH = $("#minimum-query-length").val();
+        var MINIMUM_QUERY_LENGTH = parseInt($("#minimum-query-length").val());
 
         function init(savedJson) {
             $gridtitle.trigger("titleChanged");

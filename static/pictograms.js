@@ -2,7 +2,7 @@
     "use strict";
 
     $(document).ready(function () {
-        var MINIMUM_QUERY_LENGTH = $("#minimum-query-length").val();
+        var MINIMUM_QUERY_LENGTH = parseInt($("#minimum-query-length").val());
         var $results = $("#results");
         var dt = $results.DataTable($.extend(window.DATATABLE_OPTIONS, {
             "columns": [
