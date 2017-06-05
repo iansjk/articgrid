@@ -54,6 +54,44 @@
     margin: 0 auto;
 }
 
+#image-results input[name="pictogram"] {
+    display: none;
+}
+
+label {
+    border: 1px solid #fff;
+}
+
+label:before {
+    background-size: 100% 100%;
+    content: "";
+    position: absolute;
+    z-index: 1;
+    transition-duration: 300ms;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCI+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAtMzQ2LjM4NCkiPjxwYXRoIGZpbGw9IiMxZWM4MWUiIGZpbGwtb3BhY2l0eT0iLjgiIGQ9Ik0zMiAzNDYuNGEzMiAzMiAwIDAgMC0zMiAzMiAzMiAzMiAwIDAgMCAzMiAzMiAzMiAzMiAwIDAgMCAzMi0zMiAzMiAzMiAwIDAgMC0zMi0zMnptMjEuMyAxMC4zbC0yNC41IDQxTDkuNSAzNzVsMTcuNyA5LjYgMjYtMjh6Ii8+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTkuNSAzNzUuMmwxOS4zIDIyLjQgMjQuNS00MS0yNiAyOC4yeiIvPjwvZz48L3N2Zz4=);
+    width: 30px;
+    height: 30px;
+    transform: scale(0);
+    border-radius: 50%;
+}
+
+label img {
+    transition-duration: 0.2s;
+}
+
+:checked + label {
+    border-color: #ddd;
+}
+
+:checked + label:before {
+    transform: scale(1);
+}
+
+:checked + label img {
+    transform: scale(0.8);
+    z-index: -1;
+}
+
 @media print {
     h1, .lead, .empty {
         display: none;

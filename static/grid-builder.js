@@ -6,6 +6,7 @@
     var imageSearchXHR;
     var currentPage = 0;
     var maxPages;
+    var imageSearchReady = true;
 
     $(document).ready(function () {
         var $cellContainer = $("#cell-container");
@@ -16,6 +17,7 @@
         var $prototype = $("#prototype").children();
         var $targetImage;
         var MINIMUM_QUERY_LENGTH = parseInt($("#minimum-query-length").val());
+        var pictogramIndex = 0; // this is never reset to 0, even after new searches
 
         function init(savedJson) {
             $gridtitle.trigger("titleChanged");
@@ -73,27 +75,27 @@
         }
 
         function renderPictogramResponse(json) {
-            for (var i = 0; i < json.data.length; i++) {
+            for (var i = 0; i < json.data.length; i++, pictogramIndex++) {
                 var celldata = json.data[i];
-                for (var j = 0; j < celldata[1].length; j++) {
+                for (var j = 0; j < celldata[1].length; j++, pictogramIndex++) {
                     var $col = $('<div class="col-3">').appendTo($imageResults);
-                    $('<img class="img-fluid">')
+                    $('<input type="radio" name="pictogram" id="pictogram' + pictogramIndex + '">').appendTo($col);
+                    $('<label for="pictogram' + pictogramIndex + '">').append($('<img class="img-fluid">')
                         .attr("alt", celldata[0])
                         .attr("data-pictogram-id", celldata[1][j])
-                        .attr("src", Flask.url_for("static_pictogram", {"pictogram_id": celldata[1][j]}))
+                        .attr("data-original", Flask.url_for("static_pictogram", {"pictogram_id": celldata[1][j]}))
                         .attr("width", 80)
-                        .attr("height", 80).appendTo($col).tooltip(
-                        {
+                        .attr("height", 80).appendTo($col).tooltip({
                             "animation": false,
                             "title": function () {
                                 return this.alt;
                             }
-                        });
+                        })
+                    ).appendTo($col);
                 }
             }
-            $imageResults.find("img").imgCheckbox({
-                "radio": true,
-                "graySelected": false
+            $imageResults.find("img").lazyload({
+                "container": $imageResults
             });
         }
 
@@ -113,27 +115,34 @@
                     currentPage = 1;
                     maxPages = json.maxPages;
 
-                    $imageResults.parent().on("scroll", function () {
-                        if (this.scrollHeight - this.scrollTop <= this.clientHeight + SCROLL_PADDING) {
-                            var $this = $(this);
+                    var $modalBody = $imageResults.parent().on("scroll", function () {
+                        console.log("scroll fired");
+                        if (imageSearchReady === false) {
+                            return false;
+                        }
+
+                        var elem = this;
+                        if (elem.scrollHeight - elem.scrollTop <= elem.clientHeight + SCROLL_PADDING) {
                             if (currentPage > maxPages) {
-                                $this.off("scroll");
+                                $(elem).off("scroll");
                             } else {
                                 params.page++;
                                 $imageResults.siblings(".placeholder").show();
-                                $.get($form.attr("action") + "?" + $.param(params), function(json) {
-                                    if (json.data.length === 0) {
-                                        $this.off("scroll");
-                                    } else {
-                                        renderPictogramResponse(json);
-                                    }
-                                }).done(function() {
+                                $.get($form.attr("action") + "?" + $.param(params), function (json) {
+                                    renderPictogramResponse(json);
+                                }).done(function () {
                                     $imageResults.siblings(".placeholder").hide();
                                 });
                                 currentPage++;
                             }
                         }
+                        imageSearchReady = true;
                     });
+
+                    // immediately load more if not scrollable + still more to fetch
+                    if ($modalBody[0].scrollHeight <= $modalBody[0].clientHeight && !(currentPage > maxPages)) {
+                        $modalBody.trigger("scroll");
+                    }
                 }
             });
         }
@@ -220,12 +229,13 @@
 
         $("#save").click(function (e) {
             e.preventDefault();
-            var selectedImage = $imageResults.find(".imgChked").children("img");
-            if (selectedImage) {
-                $targetImage.attr("src", selectedImage.attr("src"))
-                    .attr("data-pictogram-id", selectedImage.attr("data-pictogram-id"));
+            var $selectedRadio = $imageResults.find('input[name="pictogram"]:checked');
+            var $selectedImage = $selectedRadio.siblings("label").children("img");
+            if ($selectedImage) {
+                $targetImage.attr("src", $selectedImage.attr("src"))
+                    .attr("data-pictogram-id", $selectedImage.attr("data-pictogram-id"));
+                $targetImage.closest(".cell").trigger("cellChanged");
             }
-            $targetImage.closest(".cell").trigger("cellChanged");
             $imagePicker.modal("hide");
         });
 
