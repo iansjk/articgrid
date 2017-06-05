@@ -2,7 +2,10 @@
     "use strict";
 
     var TYPING_TIMEOUT = 100; // ms
+    var SCROLL_PADDING = 50; // px
     var imageSearchXHR;
+    var currentPage = 0;
+    var maxPages;
 
     $(document).ready(function () {
         var $cellContainer = $("#cell-container");
@@ -69,37 +72,69 @@
             window.location.hash = JSON.stringify(currentState);
         }
 
+        function renderPictogramResponse(json) {
+            for (var i = 0; i < json.data.length; i++) {
+                var celldata = json.data[i];
+                for (var j = 0; j < celldata[1].length; j++) {
+                    var $col = $('<div class="col-3">').appendTo($imageResults);
+                    $('<img class="img-fluid">')
+                        .attr("alt", celldata[0])
+                        .attr("data-pictogram-id", celldata[1][j])
+                        .attr("src", Flask.url_for("static_pictogram", {"pictogram_id": celldata[1][j]}))
+                        .attr("width", 80)
+                        .attr("height", 80).appendTo($col).tooltip(
+                        {
+                            "animation": false,
+                            "title": function () {
+                                return this.alt;
+                            }
+                        });
+                }
+            }
+            $imageResults.find("img").imgCheckbox({
+                "radio": true,
+                "graySelected": false
+            });
+        }
+
         function search() {
             var $form = $imageSearchQuery.parents("form");
-            var url = $form.attr("action");
-            imageSearchXHR = $.get(url + "?" + $form.serialize(), function (json) {
+            var params = {
+                "query": $("#image-search-query").val().trim(),
+                "page": 0
+            };
+            imageSearchXHR = $.get($form.attr("action") + "?" + $.param(params), function (json) {
                 $imageResults.siblings(".placeholder").hide();
                 if (json.data.length === 0) {
                     $imageResults.html('<span class="no-results">No image results found.</span>');
                 } else {
-                    for (var i = 0; i < json.data.length; i++) {
-                        var celldata = json.data[i];
-                        for (var j = 0; j < celldata[1].length; j++) {
-                            var $col = $('<div class="col-3">').appendTo($imageResults);
-                            $('<img class="img-fluid">')
-                                .attr("alt", celldata[0])
-                                .attr("data-pictogram-id", celldata[1][j])
-                                .attr("src", Flask.url_for("static_pictogram", {"pictogram_id": celldata[1][j]}))
-                                .attr("width", 80)
-                                .attr("height", 80).appendTo($col).tooltip(
-                                {
-                                    "animation": false,
-                                    "title": function () {
-                                        return this.alt;
+                    $imageResults.empty();
+                    renderPictogramResponse(json);
+                    currentPage = 1;
+                    maxPages = json.maxPages;
+
+                    $imageResults.parent().on("scroll", function () {
+                        if (this.scrollHeight - this.scrollTop <= this.clientHeight + SCROLL_PADDING) {
+                            var $this = $(this);
+                            if (currentPage > maxPages) {
+                                $this.off("scroll");
+                            } else {
+                                params.page++;
+                                $imageResults.siblings(".placeholder").show();
+                                $.get($form.attr("action") + "?" + $.param(params), function(json) {
+                                    if (json.data.length === 0) {
+                                        $this.off("scroll");
+                                    } else {
+                                        renderPictogramResponse(json);
                                     }
+                                }).done(function() {
+                                    $imageResults.siblings(".placeholder").hide();
                                 });
+                                currentPage++;
+                            }
                         }
-                    }
+                    });
                 }
-                $imageResults.find("img").imgCheckbox({
-                    "radio": true,
-                    "graySelected": false
-                });
             });
         }
 
