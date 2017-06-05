@@ -14,6 +14,10 @@ button, input, optgroup, select, textarea {
     font-family: inherit;
 }
 
+.btn:disabled:hover {
+    cursor: not-allowed;
+}
+
 .btn:hover {
     cursor: pointer;
 }
@@ -24,6 +28,10 @@ ul.pagination > li.disabled {
 
 .navbar-toggler-right {
     right: 0;
+}
+
+table#results td, table#results th {
+    vertical-align: middle;
 }
 
 /* fix for modal moving page to left when open */

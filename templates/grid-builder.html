@@ -17,6 +17,7 @@
       <option value="5">5 x 5</option>
     </select>
     <button id="print" class="btn btn-primary mr-2"><i class="fa fa-print" aria-hidden="true"></i> Print</button>
+    <input type="hidden" id="minimum-query-length" value="{{ config["MINIMUM_PICTOGRAM_QUERY_LENGTH"] }}">
   </form>
   <hr class="hidden-print">
 
@@ -43,10 +44,10 @@
         <div class="modal-body">
           <form action="{{ url_for('pictogram_search') }}" method="get" class="form">
             <label for="image-search-query" class="sr-only">Query:</label>
-            <input id="image-search-query" name="query" class="form-control" placeholder="Enter search keywords...">
+            <input id="image-search-query" name="query" class="form-control" placeholder="Enter search keywords..." autofocus>
           </form>
-          <div class="placeholder text-center text-muted"><i class="fa fa-spin fa-spinner fa-5x"></i></div>
           <div id="image-results" class="row"></div>
+          <div class="placeholder text-center text-muted"><i class="fa fa-spin fa-spinner fa-5x"></i></div>
         </div>
         <div class="modal-footer">
           <button id="reset-image" type="button" class="btn btn-secondary">Reset</button>
@@ -69,6 +70,6 @@
 {% block footer %}
   {{ super() }}
   <script src="{{ url_for('static', filename='vendor/holder.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='vendor/jquery.imgcheckbox.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/jquery.lazyload.js') }}"></script>
   <script src="{{ url_for('static', filename='grid-builder.js') }}"></script>
 {% endblock %}

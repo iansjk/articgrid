@@ -1,108 +1,152 @@
 (function () {
     "use strict";
 
-    var MINIMUM_SEARCH_LENGTH = 3;
     var TYPING_TIMEOUT = 100; // ms
-
-    var $cellContainer = $("#cell-container");
-    var $gridsize = $("#grid-size");
-    var $gridtitle = $("#grid-title");
-    var $imageResults = $("#image-results");
-    var $imageSearchQuery = $("#image-search-query");
-    var $prototype = $("#prototype").children();
+    var SCROLL_PADDING = 50; // px
     var imageSearchXHR;
-    var $targetImage;
-
-    function init(savedJson) {
-        $gridtitle.trigger("titleChanged");
-        if (savedJson === undefined) {
-            $gridsize.trigger("change");
-        } else {
-            $gridsize.find('option[value="' + savedJson.size + '"]').prop("selected", true);
-            if (savedJson.title) {
-                $gridtitle.text(savedJson.title).trigger("titleChanged");
-            }
-            var $row = $('<div class="row">').appendTo($cellContainer);
-            for (var i = 0; i < savedJson.cells.length; i++) {
-                if (i % savedJson.size === 0) {
-                    $row = $row.clone().empty().appendTo($cellContainer);
-                }
-                var celldata = savedJson.cells[i];
-                var $cell = $prototype.clone();
-                if (celldata.id) {
-                    $cell.find(".cell-image")
-                        .attr("src", Flask.url_for("static_pictogram", {"pictogram_id": celldata.id}))
-                        .attr("data-pictogram-id", celldata.id);
-                }
-                if (celldata.label) {
-                    $cell.find(".cell-title").text(celldata.label);
-                }
-                $row.append($cell);
-            }
-            $cellContainer.find(".cell").trigger("cellChanged");
-            updateUrl();
-        }
-    }
-
-    function updateUrl() {
-        var title = $gridtitle.text().trim();
-        var currentState = {
-            "title": title === $gridtitle.attr("data-placeholder") ? "" : title,
-            "size": parseInt($gridsize.val()),
-            "cells": []
-        };
-        var $cells = $cellContainer.find(".cell");
-        for (var i = 0; i < $cells.length; i++) {
-            var $cell = $($cells[i]);
-            if ($cell.hasClass("empty")) {
-                currentState.cells.push({});
-            } else {
-                var $cellTitle = $cell.find(".cell-title");
-                var label = $cellTitle.text().trim();
-                currentState.cells.push({
-                    "id": parseInt($cell.find(".cell-image").attr("data-pictogram-id")) || 0,
-                    "label": label === $cellTitle.attr("data-placeholder") ? "" : label
-                });
-            }
-        }
-        window.location.hash = JSON.stringify(currentState);
-    }
-
-    function search() {
-        var $form = $imageSearchQuery.parents("form");
-        var url = $form.attr("action");
-        imageSearchXHR = $.get(url + "?" + $form.serialize(), function (json) {
-            $imageResults.siblings(".placeholder").hide();
-            if (json.data.length === 0) {
-                $imageResults.html('<span class="no-results">No image results found.</span>');
-            } else {
-                for (var i = 0; i < json.data.length; i++) {
-                    var celldata = json.data[i];
-                    for (var j = 0; j < celldata[1].length; j++) {
-                        var $col = $('<div class="col-3">').appendTo($imageResults);
-                        $('<img class="img-fluid">')
-                            .attr("alt", celldata[0])
-                            .attr("data-pictogram-id", celldata[1][j])
-                            .attr("src", Flask.url_for("static_pictogram", {"pictogram_id": celldata[1][j]}))
-                            .attr("width", 80)
-                            .attr("height", 80).appendTo($col).tooltip(
-                            {
-                                "animation": false,
-                                "title": function () {
-                                    return this.alt;
-                                }
-                            });
-                    }
-                }
-            }
-            $imageResults.find("img").imgCheckbox({
-                "radio": true,
-                "graySelected": false
-            });
-        });
-    }
+    var currentPage = 0;
+    var maxPages;
+    var imageSearchReady = true;
 
     $(document).ready(function () {
+        var $cellContainer = $("#cell-container");
+        var $gridsize = $("#grid-size");
+        var $gridtitle = $("#grid-title");
+        var $imageResults = $("#image-results");
+        var $imageSearchQuery = $("#image-search-query");
+        var $prototype = $("#prototype").children();
+        var $targetImage;
+        var MINIMUM_QUERY_LENGTH = parseInt($("#minimum-query-length").val());
+        var pictogramIndex = 0; // this is never reset to 0, even after new searches
+
+        function init(savedJson) {
+            $gridtitle.trigger("titleChanged");
+            if (savedJson === undefined) {
+                $gridsize.trigger("change");
+            } else {
+                $gridsize.find('option[value="' + savedJson.size + '"]').prop("selected", true);
+                if (savedJson.title) {
+                    $gridtitle.text(savedJson.title).trigger("titleChanged");
+                }
+                var $row = $('<div class="row">').appendTo($cellContainer);
+                for (var i = 0; i < savedJson.cells.length; i++) {
+                    if (i % savedJson.size === 0) {
+                        $row = $row.clone().empty().appendTo($cellContainer);
+                    }
+                    var celldata = savedJson.cells[i];
+                    var $cell = $prototype.clone();
+                    if (celldata.id) {
+                        $cell.find(".cell-image")
+                            .attr("src", Flask.url_for("static_pictogram", {"pictogram_id": celldata.id}))
+                            .attr("data-pictogram-id", celldata.id);
+                    }
+                    if (celldata.label) {
+                        $cell.find(".cell-title").text(celldata.label);
+                    }
+                    $row.append($cell);
+                }
+                $cellContainer.find(".cell").trigger("cellChanged");
+                updateUrl();
+            }
+        }
+
+        function updateUrl() {
+            var title = $gridtitle.text().trim();
+            var currentState = {
+                "title": title === $gridtitle.attr("data-placeholder") ? "" : title,
+                "size": parseInt($gridsize.val()),
+                "cells": []
+            };
+            var $cells = $cellContainer.find(".cell");
+            for (var i = 0; i < $cells.length; i++) {
+                var $cell = $($cells[i]);
+                if ($cell.hasClass("empty")) {
+                    currentState.cells.push({});
+                } else {
+                    var $cellTitle = $cell.find(".cell-title");
+                    var label = $cellTitle.text().trim();
+                    currentState.cells.push({
+                        "id": parseInt($cell.find(".cell-image").attr("data-pictogram-id")) || 0,
+                        "label": label === $cellTitle.attr("data-placeholder") ? "" : label
+                    });
+                }
+            }
+            window.location.hash = JSON.stringify(currentState);
+        }
+
+        function renderPictogramResponse(json) {
+            for (var i = 0; i < json.data.length; i++, pictogramIndex++) {
+                var celldata = json.data[i];
+                for (var j = 0; j < celldata[1].length; j++, pictogramIndex++) {
+                    var $col = $('<div class="col-3">').appendTo($imageResults);
+                    $('<input type="radio" name="pictogram" id="pictogram' + pictogramIndex + '">').appendTo($col);
+                    $('<label for="pictogram' + pictogramIndex + '">').append($('<img class="img-fluid">')
+                        .attr("alt", celldata[0])
+                        .attr("data-pictogram-id", celldata[1][j])
+                        .attr("data-original", Flask.url_for("static_pictogram", {"pictogram_id": celldata[1][j]}))
+                        .attr("width", 80)
+                        .attr("height", 80).appendTo($col).tooltip({
+                            "animation": false,
+                            "title": function () {
+                                return this.alt;
+                            }
+                        })
+                    ).appendTo($col);
+                }
+            }
+            $imageResults.find("img").lazyload({
+                "container": $imageResults
+            });
+        }
+
+        function search() {
+            var $form = $imageSearchQuery.parents("form");
+            var params = {
+                "query": $("#image-search-query").val().trim(),
+                "page": 0
+            };
+            imageSearchXHR = $.get($form.attr("action") + "?" + $.param(params), function (json) {
+                $imageResults.siblings(".placeholder").hide();
+                if (json.data.length === 0) {
+                    $imageResults.html('<span class="no-results">No image results found.</span>');
+                } else {
+                    $imageResults.empty();
+                    renderPictogramResponse(json);
+                    currentPage = 1;
+                    maxPages = json.maxPages;
+
+                    var $modalBody = $imageResults.parent().on("scroll", function () {
+                        console.log("scroll fired");
+                        if (imageSearchReady === false) {
+                            return false;
+                        }
+
+                        var elem = this;
+                        if (elem.scrollHeight - elem.scrollTop <= elem.clientHeight + SCROLL_PADDING) {
+                            if (currentPage > maxPages) {
+                                $(elem).off("scroll");
+                            } else {
+                                params.page++;
+                                $imageResults.siblings(".placeholder").show();
+                                $.get($form.attr("action") + "?" + $.param(params), function (json) {
+                                    renderPictogramResponse(json);
+                                }).done(function () {
+                                    $imageResults.siblings(".placeholder").hide();
+                                });
+                                currentPage++;
+                            }
+                        }
+                        imageSearchReady = true;
+                    });
+
+                    // immediately load more if not scrollable + still more to fetch
+                    if ($modalBody[0].scrollHeight <= $modalBody[0].clientHeight && !(currentPage > maxPages)) {
+                        $modalBody.trigger("scroll");
+                    }
+                }
+            });
+        }
+
         $("#grid").on("cellChanged", ".cell", function (_, params) {
             var $cell = $(this);
             var $cellTitle = $cell.find(".cell-title");
@@ -162,7 +206,7 @@
                 imageSearchXHR.abort();
             }
             clearTimeout(typingTimer);
-            if ($imageSearchQuery.val().length >= MINIMUM_SEARCH_LENGTH) {
+            if ($imageSearchQuery.val().length >= MINIMUM_QUERY_LENGTH) {
                 typingTimer = setTimeout(search, TYPING_TIMEOUT);
                 $imageResults.empty().siblings(".placeholder").show();
             }
@@ -185,12 +229,13 @@
 
         $("#save").click(function (e) {
             e.preventDefault();
-            var selectedImage = $imageResults.find(".imgChked").children("img");
-            if (selectedImage) {
-                $targetImage.attr("src", selectedImage.attr("src"))
-                    .attr("data-pictogram-id", selectedImage.attr("data-pictogram-id"));
+            var $selectedRadio = $imageResults.find('input[name="pictogram"]:checked');
+            var $selectedImage = $selectedRadio.siblings("label").children("img");
+            if ($selectedImage) {
+                $targetImage.attr("src", $selectedImage.attr("src"))
+                    .attr("data-pictogram-id", $selectedImage.attr("data-pictogram-id"));
+                $targetImage.closest(".cell").trigger("cellChanged");
             }
-            $targetImage.closest(".cell").trigger("cellChanged");
             $imagePicker.modal("hide");
         });
 

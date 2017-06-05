@@ -18,7 +18,7 @@ module.exports = function(grunt) {
                     'jquery.min.js': 'jquery/dist/jquery.min.js',
                     'bootstrap.min.js': 'bootstrap/dist/js/bootstrap.min.js',
                     'jquery.dataTables.min.js': 'datatables.net/js/jquery.dataTables.min.js',
-                    'jquery.imgcheckbox.js': 'imgcheckbox/jquery.imgcheckbox.js',
+                    'jquery.lazyload.js': 'jquery_lazyload/jquery.lazyload.js',
                     'tether.min.js': 'tether/dist/js/tether.min.js',
                     'holder.min.js': 'holderjs/holder.min.js',
                 }

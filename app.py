@@ -1,12 +1,14 @@
-from flask import Flask, render_template, json, request, url_for, abort, redirect
+from flask import Flask, render_template, json, request, url_for, redirect, abort
 from flask_jsglue import JSGlue
 
 from pictograms.arasaac import find_pictograms
 from targets.minimal_pairs import find_minimal_pairs
 
+
 STATIC_FOLDER = "static"
 app = Flask(__name__, static_folder=STATIC_FOLDER)
 app.config["PICTOGRAM_S3_BUCKET"] = "artictools-pictograms"
+app.config["MINIMUM_PICTOGRAM_QUERY_LENGTH"] = 3
 JSGlue(app)
 
 
@@ -43,13 +45,15 @@ def pictograms():
 
 @app.route("/pictograms/search", methods=["GET"])
 def pictogram_search():
-    try:
-        query = request.args["query"]
-        return json.jsonify({
-            "data": find_pictograms(query),
-        })
-    except ValueError:
+    query = request.args["query"]
+    if len(query) < app.config["MINIMUM_PICTOGRAM_QUERY_LENGTH"]:
         return abort(400)
+
+    arasaac_response = find_pictograms(request.args["query"], request.args["page"])
+    return json.jsonify({
+        "data": arasaac_response.result,
+        "maxPages": arasaac_response.max_pages
+    })
 
 
 @app.route("/minimal-pairs/")

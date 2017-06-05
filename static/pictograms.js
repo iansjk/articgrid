@@ -2,7 +2,9 @@
     "use strict";
 
     $(document).ready(function () {
-        $("#results").DataTable($.extend(window.DATATABLE_OPTIONS, {
+        var MINIMUM_QUERY_LENGTH = parseInt($("#minimum-query-length").val());
+        var $results = $("#results");
+        var dt = $results.DataTable($.extend(window.DATATABLE_OPTIONS, {
             "columns": [
                 null,
                 {
@@ -24,5 +26,37 @@
                 }
             ]
         }));
+
+
+        var $query = $("#query").on("input paste propertychange", function() {
+            $query.siblings("button").prop("disabled", $query.val().trim().length < MINIMUM_QUERY_LENGTH);
+        });
+
+        var $form = $("form");
+        $form.submit(function(e) {
+            e.preventDefault();
+            var params = {
+                "query": $query.val().trim(),
+                "page": 0
+            };
+
+            $results.trigger("preXhr.dt");
+            var xhrs = [];
+            $.get($form.attr("action") + "?" + $.param(params), function(response) {
+                dt.rows.add(response.data).draw();
+                for (var i = 1; i <= response.maxPages; i++) {
+                    // jshint loopfunc: true
+                    params.page = i;
+                    xhrs.push($.get($form.attr("action") + "?" + $.param(params), function(response) {
+                        dt.rows.add(response.data).draw();
+                    }));
+                }
+                $.when.apply(this, xhrs).done(function() {
+                    $results.trigger("xhr.dt");
+                });
+            }).fail(function() {
+                $results.trigger("xhr.dt");
+            });
+        });
     });
 }());
