@@ -30,6 +30,10 @@ ul.pagination > li.disabled {
     right: 0;
 }
 
+table#results td, table#results th {
+    vertical-align: middle;
+}
+
 /* fix for modal moving page to left when open */
 body.modal-open {
     padding-right: 17px !important;
