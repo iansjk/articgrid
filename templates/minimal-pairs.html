@@ -230,3 +230,8 @@
     <tbody></tbody>
   </table>
 {% endblock %}
+
+{% block footer %}
+  {{ super() }}
+  <script src="{{ url_for('static', filename='minimal-pairs.js') }}"></script>
+{% endblock %}
