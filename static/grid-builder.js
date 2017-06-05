@@ -1,7 +1,6 @@
 (function () {
     "use strict";
 
-    var MINIMUM_SEARCH_LENGTH = 3;
     var TYPING_TIMEOUT = 100; // ms
     var imageSearchXHR;
 
@@ -13,6 +12,7 @@
         var $imageSearchQuery = $("#image-search-query");
         var $prototype = $("#prototype").children();
         var $targetImage;
+        var MINIMUM_QUERY_LENGTH = $("#minimum-query-length").val();
 
         function init(savedJson) {
             $gridtitle.trigger("titleChanged");
@@ -162,7 +162,7 @@
                 imageSearchXHR.abort();
             }
             clearTimeout(typingTimer);
-            if ($imageSearchQuery.val().length >= MINIMUM_SEARCH_LENGTH) {
+            if ($imageSearchQuery.val().length >= MINIMUM_QUERY_LENGTH) {
                 typingTimer = setTimeout(search, TYPING_TIMEOUT);
                 $imageResults.empty().siblings(".placeholder").show();
             }
