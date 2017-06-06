@@ -4,12 +4,13 @@ from arasaac import find_pictograms
 
 
 class TestArasaac(TestCase):
-    def test_find_pictograms_empty(self):
-        self.assertRaises(ValueError, find_pictograms, "")
-        self.assertRaises(ValueError, find_pictograms, None)
-
     def test_find_pictograms_unique(self):
-        result = find_pictograms("food")
-        self.assertGreater(len(result), 0)
-        for _, urls in result:
-            self.assertEqual(len(set(urls)), len(urls))
+        result = []
+        page1 = find_pictograms("food", 0)
+        self.assertGreater(len(page1.result), 0)
+        result += page1.result
+        max_pages = page1.max_pages
+        for i in range(1, max_pages):
+            result += find_pictograms("food", i)
+        for _, pictogram_ids in result:
+            self.assertEqual(len(set(pictogram_ids)), len(pictogram_ids))
