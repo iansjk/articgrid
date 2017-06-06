@@ -3,7 +3,7 @@ from flask_jsglue import JSGlue
 
 from pictograms.arasaac import find_pictograms
 from wordlists.minimal_pairs import find_minimal_pairs
-
+from wordlists.sound_search import find_sound_sequence
 
 STATIC_FOLDER = "static"
 app = Flask(__name__, static_folder=STATIC_FOLDER)
@@ -68,6 +68,20 @@ def minimal_pair_search():
     position = request.args["position"]
     return json.jsonify({
         "data": find_minimal_pairs(target1, target2, position)
+    })
+
+
+@app.route("/sounds/")
+def sounds():
+    return render_template("sounds.html")
+
+
+@app.route("/sounds/search", methods=["GET"])
+def sound_search():
+    targets = request.args["targets"].split()
+    position = request.args["position"]
+    return json.jsonify({
+        "data": find_sound_sequence(position, *targets)
     })
 
 
