@@ -2,7 +2,7 @@ from flask import Flask, render_template, json, request, url_for, redirect, abor
 from flask_jsglue import JSGlue
 
 from pictograms.arasaac import find_pictograms
-from targets.minimal_pairs import find_minimal_pairs
+from wordlists.minimal_pairs import find_minimal_pairs
 
 
 STATIC_FOLDER = "static"
