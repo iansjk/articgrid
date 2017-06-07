@@ -41,4 +41,7 @@ class TestSoundSearch(TestCase):
 
     def test_triple_onsets(self):
         for triple, example in self.TRIPLE_ONSETS.items():
-            self.assertIn(example, find_sound_sequence("initial", *triple))
+            result = find_sound_sequence("initial", *triple)
+            self.assertIn(example, result)
+            for word in result:
+                self.assertGreaterEqual(len(word), 3)
