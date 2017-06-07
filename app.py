@@ -21,6 +21,7 @@ def inject_constants():
         "navigation": (
             ("Home", "/"),
             ("Pictograms", url_for("pictograms")),
+            ("Search by Sounds", url_for("sounds")),
             ("Minimal Pairs", url_for("minimal_pairs")),
             ("Grid Builder", url_for("grid_builder")),
             ("About", url_for("about")),
