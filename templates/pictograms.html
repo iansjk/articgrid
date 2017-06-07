@@ -24,4 +24,5 @@
 {% block footer %}
   {{ super() }}
   <script src="{{ url_for('static', filename='pictograms.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/jquery.lazyload.js') }}"></script>
 {% endblock %}}

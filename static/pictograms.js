@@ -3,7 +3,9 @@
 
     $(document).ready(function () {
         var MINIMUM_QUERY_LENGTH = parseInt($("#minimum-query-length").val());
-        var $results = $("#results");
+        var $results = $("#results").on("draw.dt", function() {
+            $results.find("img").lazyload();
+        });
         var dt = $results.DataTable($.extend(window.DATATABLE_OPTIONS, {
             "columns": [
                 null,
@@ -16,7 +18,7 @@
                         if (type === "display") {
                             var r = "";
                             $.each(data, function (i, pictogram_id) {
-                                r += '<img width="100" height="100" src="' +
+                                r += '<img width="100" height="100" data-original="' +
                                     Flask.url_for("static_pictogram", {"pictogram_id": pictogram_id}) + '">';
                             });
                             return r;
@@ -26,7 +28,6 @@
                 }
             ]
         }));
-
 
         var $query = $("#query").on("input paste propertychange", function() {
             $query.siblings("button").prop("disabled", $query.val().trim().length < MINIMUM_QUERY_LENGTH);
