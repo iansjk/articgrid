@@ -116,7 +116,6 @@
                     maxPages = json.maxPages;
 
                     var $modalBody = $imageResults.parent().on("scroll", function () {
-                        console.log("scroll fired");
                         if (imageSearchReady === false) {
                             return false;
                         }
@@ -140,7 +139,7 @@
                     });
 
                     // immediately load more if not scrollable + still more to fetch
-                    if ($modalBody[0].scrollHeight <= $modalBody[0].clientHeight && !(currentPage > maxPages)) {
+                    if ($modalBody[0].scrollHeight <= $modalBody[0].clientHeight && currentPage <= maxPages) {
                         $modalBody.trigger("scroll");
                     }
                 }
