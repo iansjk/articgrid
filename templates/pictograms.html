@@ -1,6 +1,11 @@
 {% extends "page.html" %}
 {% set active_page = "Pictograms" %}
 
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ url_for('static', filename='pictograms.css') }}">
+{% endblock %}
+
 {% block content %}
   <p class="lead">Find pictograms based on a search term</p>
   <form action="{{ url_for('pictogram_search') }}" method="get" class="form-inline">
@@ -19,6 +24,26 @@
     </thead>
     <tbody></tbody>
   </table>
+
+  <div class="modal fade" id="full-size-image-modal" tabindex="-1" role="dialog" aria-labelledby="image-title"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="image-title"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <img id="full-size-image" src="">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 
 {% block footer %}

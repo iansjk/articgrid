@@ -1,0 +1,10 @@
+#full-size-image {
+    width: 100%;
+    height: 100%;
+}
+
+@media (min-width: 576px) {
+    #full-size-image-modal .modal-dialog {
+        max-width: calc(16px + 500px + 16px);
+    }
+}
