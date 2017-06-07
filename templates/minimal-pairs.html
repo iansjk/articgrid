@@ -1,4 +1,5 @@
 {% extends "page.html" %}
+{% from "consonant-select.html" import consonant_select with context %}
 {% set active_page = "Minimal Pairs" %}
 
 {% block content %}
@@ -6,57 +7,10 @@
 
   <form class="form-inline" action="{{ url_for('minimal_pair_search') }}" method="get">
     <label class="form-control-label" for="target1">Target 1:</label>
-    <select class="form-control ml-2 mr-3" id="target1" name="target1">
-      <option value="P">p</option>
-      <option value="B">b</option>
-      <option value="T">t</option>
-      <option value="D">d</option>
-      <option value="K">k</option>
-      <option value="G">g</option>
-      <option value="F">f</option>
-      <option value="V">v</option>
-      <option value="TH">&theta;</option>
-      <option value="DH">&eth;</option>
-      <option value="S">s</option>
-      <option value="Z">z</option>
-      <option value="SH">&#643;</option>
-      <option value="ZH">&#439;</option>
-      <option value="HH">h</option>
-      <option value="CH">&#116;​&#865;​&#643;</option>
-      <option value="JH">&#100;​&#865;​&#658;</option>
-      <option value="M">m</option>
-      <option value="N">n</option>
-      <option value="L">l</option>
-      <option value="R">&#633;</option>
-      <option value="W">w</option>
-      <option value="Y">j</option>
-    </select>
+    {{ consonant_select("target1") }}
 
     <label class="form-control-label" for="target2">Target 2:</label>
-    <select class="form-control ml-2 mr-3" id="target2" name="target2">
-      <option value="P">p</option>
-      <option selected="selected" value="B">b</option>
-      <option value="T">t</option>
-      <option value="D">d</option>
-      <option value="K">k</option>
-      <option value="G">g</option>
-      <option value="F">f</option>
-      <option value="V">v</option>
-      <option value="TH">&theta;</option>
-      <option value="S">s</option>
-      <option value="Z">z</option>
-      <option value="SH">&#643;</option>
-      <option value="ZH">&#439;</option>
-      <option value="CH">&#116;​&#865;​&#643;</option>
-      <option value="JH">&#100;​&#865;​&#658;</option>
-      <option value="M">m</option>
-      <option value="N">n</option>
-      <option value="NG">&#331;</option>
-      <option value="L">l</option>
-      <option value="R">&#633;</option>
-      <option value="W">w</option>
-      <option value="Y">j</option>
-    </select>
+    {{ consonant_select("target2", selected="P") }}
 
     <label class="form-control-label" for="position">Position:</label>
     <select class="form-control mx-2" id="position" name="position">

@@ -2,8 +2,8 @@
 from nltk.corpus import cmudict as raw_cmudict
 from nltk.corpus import words
 
-consonants = {"B", "CH", "D", "DH", "F", "G", "HH", "JH", "K", "L", "M", "N", "NG", "P", "R", "S", "SH", "T", "TH", "V",
-              "W", "Y", "Z", "ZH"}
+consonants = ("B", "CH", "D", "DH", "F", "G", "HH", "JH", "K", "L", "M", "N", "NG", "P", "R", "S", "SH", "T", "TH", "V",
+              "W", "Y", "Z", "ZH")
 arpabet_to_ipa = {
     "AA": u"ɑ",
     "AE": u"æ",

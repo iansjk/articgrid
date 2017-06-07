@@ -2,6 +2,7 @@ from flask import Flask, render_template, json, request, url_for, redirect, abor
 from flask_jsglue import JSGlue
 
 from pictograms.arasaac import find_pictograms
+from wordlists.corpus import consonants, arpabet_to_ipa
 from wordlists.minimal_pairs import find_minimal_pairs
 from wordlists.sound_search import find_sound_sequence
 
@@ -23,7 +24,10 @@ def inject_constants():
             ("Minimal Pairs", url_for("minimal_pairs")),
             ("Grid Builder", url_for("grid_builder")),
             ("About", url_for("about")),
-        )}
+        ),
+        "consonants": consonants,
+        "arpabet_to_ipa": arpabet_to_ipa
+    }
 
 
 @app.after_request

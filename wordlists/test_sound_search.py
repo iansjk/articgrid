@@ -27,7 +27,7 @@ class TestSoundSearch(TestCase):
             self.assertFalse(find_sound_sequence("final", not_coda))
 
         # all other consonants can be either
-        for consonant in consonants - ({"NG"} | self.NOT_CODA):
+        for consonant in set(consonants) - ({"NG"} | self.NOT_CODA):
             self.assertTrue(find_sound_sequence("initial", consonant))
             self.assertTrue(find_sound_sequence("final", consonant))
 

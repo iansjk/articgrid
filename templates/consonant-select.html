@@ -1,0 +1,11 @@
+{% macro consonant_select(id) %}
+  <select class="form-control ml-2 mr-3" id="{{ id }}" name="{{ id }}">
+    {% if kwargs["allow_empty"] %}
+      <option value="">--</option>
+    {% endif %}
+    {% for consonant in consonants %}
+      <option value="{{ consonant }}"
+              {% if kwargs["selected"] == consonant %}selected{% endif %}>{{ arpabet_to_ipa[consonant] }}</option>
+    {% endfor %}
+  </select>
+{% endmacro %}
