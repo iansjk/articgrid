@@ -1,6 +1,9 @@
+# coding=utf-8
 from nltk.corpus import cmudict as raw_cmudict
 from nltk.corpus import words
 
+consonants = {"B", "CH", "D", "DH", "F", "G", "HH", "JH", "K", "L", "M", "N", "NG", "P", "R", "S", "SH", "T", "TH", "V",
+              "W", "Y", "Z", "ZH"}
 cmudict = raw_cmudict.dict()
 unix_words = set(words.words())
 
