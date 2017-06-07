@@ -41,6 +41,7 @@
             };
 
             $results.trigger("preXhr.dt");
+            dt.clear().draw();
             var xhrs = [];
             $.get($form.attr("action") + "?" + $.param(params), function(response) {
                 dt.rows.add(response.data).draw();
