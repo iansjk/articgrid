@@ -80,8 +80,9 @@ def sounds():
 def sound_search():
     targets = request.args["targets"].split()
     position = request.args["position"]
+    # the nested array is necessary for datatables to work
     return json.jsonify({
-        "data": find_sound_sequence(position, *targets)
+        "data": [[word] for word in find_sound_sequence(position, *targets)]
     })
 
 
