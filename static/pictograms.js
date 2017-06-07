@@ -3,8 +3,13 @@
 
     $(document).ready(function () {
         var MINIMUM_QUERY_LENGTH = parseInt($("#minimum-query-length").val());
-        var $results = $("#results").on("draw.dt", function() {
+        var $form = $("form");
+        var navHeight = $("nav")[0].getBoundingClientRect().bottom;
+        var formTop = $form[0].getBoundingClientRect().top - navHeight - 16; // 1 rem padding (16 px)
+
+        var $results = $("#results").on("draw.dt", function () {
             $results.find("img").lazyload();
+            window.scrollTo(0, formTop);
         });
         var dt = $results.DataTable($.extend(window.DATATABLE_OPTIONS, {
             "columns": [
@@ -33,8 +38,7 @@
             $query.siblings("button").prop("disabled", $query.val().trim().length < MINIMUM_QUERY_LENGTH);
         });
 
-        var $form = $("form");
-        $form.submit(function(e) {
+        $form.submit(function (e) {
             e.preventDefault();
             var params = {
                 "query": $query.val().trim(),
