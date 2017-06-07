@@ -34,7 +34,7 @@
             ]
         }));
 
-        var $query = $("#query").on("input paste propertychange", function() {
+        var $query = $("#query").on("input paste propertychange", function () {
             $query.siblings("button").prop("disabled", $query.val().trim().length < MINIMUM_QUERY_LENGTH);
         });
 
@@ -48,19 +48,19 @@
             $results.trigger("preXhr.dt");
             dt.clear().draw();
             var xhrs = [];
-            $.get($form.attr("action") + "?" + $.param(params), function(response) {
+            $.get($form.attr("action") + "?" + $.param(params), function (response) {
                 dt.rows.add(response.data).draw();
                 for (var i = 1; i <= response.maxPages; i++) {
                     // jshint loopfunc: true
                     params.page = i;
-                    xhrs.push($.get($form.attr("action") + "?" + $.param(params), function(response) {
+                    xhrs.push($.get($form.attr("action") + "?" + $.param(params), function (response) {
                         dt.rows.add(response.data).draw();
                     }));
                 }
-                $.when.apply(this, xhrs).done(function() {
+                $.when.apply(this, xhrs).done(function () {
                     $results.trigger("xhr.dt");
                 });
-            }).fail(function() {
+            }).fail(function () {
                 $results.trigger("xhr.dt");
             });
         });
