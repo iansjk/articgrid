@@ -158,7 +158,7 @@
             }
         }).on("titleChanged", "#grid-title", function () {
             var $this = $(this);
-            $this.toggleClass("text-muted", $this.text().trim() === $this.attr("data-placeholder"));
+            $this.toggleClass("text-muted hidden-print", $this.text().trim() === $this.attr("data-placeholder"));
             updateUrl();
         }).on("focusin", "#grid-title, .cell-title", function () {
             var $this = $(this);
