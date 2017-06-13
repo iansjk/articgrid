@@ -8,7 +8,6 @@ from wordlists.sound_search import find_sound_sequence
 
 STATIC_FOLDER = "static"
 app = Flask(__name__, static_folder=STATIC_FOLDER)
-app.config["PICTOGRAM_S3_BUCKET"] = "artictools-pictograms"
 app.config["MINIMUM_PICTOGRAM_QUERY_LENGTH"] = 3
 JSGlue(app)
 
@@ -103,7 +102,7 @@ def about():
 
 @app.route("/%s/pictograms/<int:pictogram_id>" % STATIC_FOLDER)
 def static_pictogram(pictogram_id):
-    return redirect("https://s3.amazonaws.com/%s/%d.png" % (app.config["PICTOGRAM_S3_BUCKET"], pictogram_id))
+    return redirect("https://images.artic.tools/pictograms/%d.png" % pictogram_id)
 
 
 if __name__ == "__main__":
