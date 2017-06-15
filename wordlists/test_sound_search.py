@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from .sound_search import find_sound_sequence
-from .corpus import consonants
+
 
 class TestSoundSearch(TestCase):
     TRIPLE_ONSETS = {
@@ -25,12 +25,6 @@ class TestSoundSearch(TestCase):
         for not_coda in self.NOT_CODA:
             self.assertTrue(find_sound_sequence("initial", not_coda))
             self.assertFalse(find_sound_sequence("final", not_coda))
-
-        # all other consonants can be either
-        for consonant in set(consonants) - ({"NG"} | self.NOT_CODA):
-            self.assertTrue(find_sound_sequence("initial", consonant))
-            self.assertTrue(find_sound_sequence("final", consonant))
-
 
     def test_double(self):
         # make sure schwar + L words are returned
