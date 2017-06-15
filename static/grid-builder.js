@@ -60,7 +60,7 @@
             var $cells = $cellContainer.find(".cell");
             for (var i = 0; i < $cells.length; i++) {
                 var $cell = $($cells[i]);
-                if ($cell.hasClass("empty")) {
+                if ($cell.hasClass("hidden-print")) {
                     currentState.cells.push({});
                 } else {
                     var $cellTitle = $cell.find(".cell-title");
@@ -150,15 +150,15 @@
             var $cell = $(this);
             var $cellTitle = $cell.find(".cell-title");
             var $cellImage = $cell.find(".cell-image");
-            $cellTitle.toggleClass("empty text-muted", $cellTitle.text().trim() === $cellTitle.attr("data-placeholder"));
-            $cellImage.toggleClass("empty", $cellImage.attr("src") === undefined || $cellImage.attr("src").startsWith("data:"));
-            $cell.toggleClass("empty", $cellTitle.hasClass("empty") && $cellImage.hasClass("empty"));
+            $cellTitle.toggleClass("hidden-print text-muted", $cellTitle.text().trim() === $cellTitle.attr("data-placeholder"));
+            $cellImage.toggleClass("hidden-print", $cellImage.attr("src") === undefined || $cellImage.attr("src").startsWith("data:"));
+            $cell.toggleClass("hidden-print", $cellTitle.hasClass("hidden-print") && $cellImage.hasClass("hidden-print"));
             if (!params || params.deferUpdateUrl !== true) {
                 updateUrl();
             }
         }).on("titleChanged", "#grid-title", function () {
             var $this = $(this);
-            $this.toggleClass("text-muted", $this.text().trim() === $this.attr("data-placeholder"));
+            $this.toggleClass("text-muted hidden-print", $this.text().trim() === $this.attr("data-placeholder"));
             updateUrl();
         }).on("focusin", "#grid-title, .cell-title", function () {
             var $this = $(this);

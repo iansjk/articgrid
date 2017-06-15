@@ -93,7 +93,7 @@ label img {
 }
 
 @media print {
-    h1, .lead, .empty {
+    h1, .lead {
         display: none;
     }
 
