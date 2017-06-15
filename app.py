@@ -20,8 +20,11 @@ def inject_constants():
         "navigation": (
             ("Home", "/"),
             ("Pictograms", url_for("pictograms")),
-            ("Search by Sounds", url_for("sounds")),
-            ("Minimal Pairs", url_for("minimal_pairs")),
+            ("Wordlists", (
+                ("By Syllable Count", url_for("syllables")),
+                ("By Sounds", url_for("sounds")),
+                ("Minimal Pairs", url_for("minimal_pairs")),
+            )),
             ("Grid Builder", url_for("grid_builder")),
             ("About", url_for("about")),
         ),
@@ -75,12 +78,12 @@ def minimal_pair_search():
     })
 
 
-@app.route("/sounds/")
+@app.route("/wordlists/sounds/")
 def sounds():
     return render_template("sounds.html")
 
 
-@app.route("/sounds/search", methods=["GET"])
+@app.route("/wordlists/sounds/search", methods=["GET"])
 def sound_search():
     targets = request.args["targets"].split()
     position = request.args["position"]
@@ -88,6 +91,11 @@ def sound_search():
     return json.jsonify({
         "data": [[word] for word in find_sound_sequence(position, *targets)]
     })
+
+
+@app.route("/wordlists/syllables")
+def syllables():
+    return render_template("syllables.html")
 
 
 @app.route("/grid-builder")

@@ -1,9 +1,10 @@
 {% extends "page.html" %}
+{% set active_page = "Wordlists" %}
+{% set subpage = "Minimal Pairs" %}
 {% from "consonant-select.html" import consonant_select with context %}
-{% set active_page = "Minimal Pairs" %}
 
 {% block content %}
-  <p class="lead">Find minimal pairs based on chosen target sounds</p>
+  <p class="lead">Create a wordlist based on minimal pairs</p>
 
   <form class="form-inline" action="{{ url_for('minimal_pair_search') }}" method="get">
     <label class="form-control-label" for="target1">Target 1:</label>
