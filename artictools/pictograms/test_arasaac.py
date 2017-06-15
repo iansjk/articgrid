@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from arasaac import find_pictograms
+from artictools.pictograms.arasaac import find_pictograms
 
 
 class TestArasaac(TestCase):

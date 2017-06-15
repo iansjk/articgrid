@@ -1,6 +1,6 @@
 from __future__ import absolute_import, print_function
 
-from .corpus import common_cmudict
+from artictools.wordlists.corpus import common_cmudict
 
 
 def find_sound_sequence(position, *targets):

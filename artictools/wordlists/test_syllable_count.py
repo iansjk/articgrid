@@ -2,8 +2,8 @@ from unittest import TestCase
 
 import six
 
-from .corpus import common_cmudict
-from .syllable_count import num_syllables, find_by_syllable_count
+from artictools.wordlists.corpus import common_cmudict
+from artictools.wordlists.syllable_count import num_syllables, find_by_syllable_count
 
 
 class TestSyllableCount(TestCase):

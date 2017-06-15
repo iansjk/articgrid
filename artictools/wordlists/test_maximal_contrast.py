@@ -3,7 +3,7 @@ from unittest import TestCase
 
 import six
 
-from .maximal_contrast import segments, calculate_feature_distance
+from artictools.wordlists.maximal_contrast import segments, calculate_feature_distance
 
 
 class TestMaximalContrast(TestCase):

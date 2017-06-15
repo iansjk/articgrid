@@ -1,4 +1,4 @@
-from .corpus import common_cmudict
+from artictools.wordlists.corpus import common_cmudict
 
 
 def num_syllables(tokens):

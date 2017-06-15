@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from .corpus import convert_schwar, common_cmudict, unix_words, cmudict
+from artictools.wordlists.corpus import convert_schwar, common_cmudict, unix_words, cmudict
 
 
 class TestCorpus(TestCase):

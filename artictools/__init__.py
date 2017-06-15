@@ -1,7 +1,7 @@
 from flask import Flask, url_for
 from flask_jsglue import JSGlue
 
-from .wordlists.corpus import consonants, arpabet_to_ipa
+from artictools.wordlists.corpus import consonants, arpabet_to_ipa
 
 STATIC_FOLDER = "static"
 app = Flask(__name__, static_folder=STATIC_FOLDER)

@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from .sound_search import find_sound_sequence
+from artictools.wordlists.sound_search import find_sound_sequence
 
 
 class TestSoundSearch(TestCase):

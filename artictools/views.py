@@ -1,9 +1,9 @@
 from flask import render_template, json, request, redirect, abort
 
-from . import app, STATIC_FOLDER
-from .pictograms.arasaac import find_pictograms
-from .wordlists.minimal_pairs import find_minimal_pairs
-from .wordlists.sound_search import find_sound_sequence
+from artictools import app, STATIC_FOLDER
+from artictools.pictograms.arasaac import find_pictograms
+from artictools.wordlists.minimal_pairs import find_minimal_pairs
+from artictools.wordlists.sound_search import find_sound_sequence
 
 
 @app.route("/")
