@@ -9,6 +9,14 @@ module.exports = function(grunt) {
             },
             all: ['static/*.js']
         },
+        pylint: {
+            options: {
+                rcfile: '.pylintrc'
+            },
+            all: {
+                src: ['artictools/', 'run.py']
+            }
+        },
         bowercopy: {
             scripts: {
                 options: {
