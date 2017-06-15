@@ -1,43 +1,9 @@
-from flask import Flask, render_template, json, request, url_for, redirect, abort
-from flask_jsglue import JSGlue
+from flask import render_template, json, request, redirect, abort
 
-from pictograms.arasaac import find_pictograms
-from wordlists.corpus import consonants, arpabet_to_ipa
-from wordlists.minimal_pairs import find_minimal_pairs
-from wordlists.sound_search import find_sound_sequence
-
-STATIC_FOLDER = "static"
-app = Flask(__name__, static_folder=STATIC_FOLDER)
-app.config["MINIMUM_PICTOGRAM_QUERY_LENGTH"] = 3
-JSGlue(app)
-
-
-@app.context_processor
-def inject_constants():
-    return {
-        "project_name": "ArticTools",
-        "active_page": "Home",
-        "navigation": (
-            ("Home", "/"),
-            ("Pictograms", url_for("pictograms")),
-            ("Wordlists", (
-                ("By Syllable Count", url_for("syllables")),
-                ("By Sounds", url_for("sounds")),
-                ("Minimal Pairs", url_for("minimal_pairs")),
-            )),
-            ("Grid Builder", url_for("grid_builder")),
-            ("About", url_for("about")),
-        ),
-        "consonants": consonants,
-        "arpabet_to_ipa": arpabet_to_ipa
-    }
-
-
-@app.after_request
-def add_cache_header(response):
-    response.cache_control.max_age = 300
-    response.cache_control.public = True
-    return response
+from . import app, STATIC_FOLDER
+from .pictograms.arasaac import find_pictograms
+from .wordlists.minimal_pairs import find_minimal_pairs
+from .wordlists.sound_search import find_sound_sequence
 
 
 @app.route("/")
@@ -111,7 +77,3 @@ def about():
 @app.route("/%s/pictograms/<int:pictogram_id>" % STATIC_FOLDER)
 def static_pictogram(pictogram_id):
     return redirect("https://images.artic.tools/pictograms/%d.png" % pictogram_id)
-
-
-if __name__ == "__main__":
-    app.run()
