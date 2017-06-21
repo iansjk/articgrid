@@ -3,6 +3,7 @@
 
     $(document).ready(function () {
         var MINIMUM_QUERY_LENGTH = parseInt($("#minimum-query-length").val());
+        var S3_PICTOGRAM_URL = $("#s3-pictogram-url").val();
         var $form = $("form");
         var navHeight = $("nav")[0].getBoundingClientRect().bottom;
         var formTop = $form[0].getBoundingClientRect().top - navHeight - 16; // 1 rem padding (16 px)
@@ -36,7 +37,7 @@
                             $.each(data, function (_, pictogram_id) {
                                 r += '<a href="#" data-toggle="modal" data-target="#full-size-image-modal">';
                                 r += '<img width="100" height="100" alt="' + row[0] + '" data-original="' +
-                                    Flask.url_for("general.static_pictogram", {"pictogram_id": pictogram_id}) + '">';
+                                    S3_PICTOGRAM_URL + "/" + pictogram_id + ".png" + '">';
                                 r += "</a>";
                             });
                             return r;

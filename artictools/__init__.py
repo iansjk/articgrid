@@ -1,12 +1,10 @@
 from flask import Flask, url_for
-from flask_jsglue import JSGlue
 
 from artictools.wordlists.corpus import consonants, arpabet_to_ipa
 
-STATIC_FOLDER = "static"
-app = Flask(__name__, static_folder=STATIC_FOLDER)
+app = Flask(__name__)
 app.config["MINIMUM_PICTOGRAM_QUERY_LENGTH"] = 3
-JSGlue(app)
+app.config["S3_PICTOGRAM_URL"] = "https://images.artic.tools/pictograms"
 
 from views import general
 from views import pictograms

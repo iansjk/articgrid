@@ -13,6 +13,7 @@
     <input id="query" name="query" class="form-control mx-2" placeholder="Enter search query..." autofocus>
     <button class="btn btn-primary" type="submit" disabled>Search</button>
     <input type="hidden" id="minimum-query-length" value="{{ config["MINIMUM_PICTOGRAM_QUERY_LENGTH"] }}">
+    <input type="hidden" id="s3-pictogram-url" value="{{ config["S3_PICTOGRAM_URL"] }}">
   </form>
   <hr>
   <table id="results" class="table">

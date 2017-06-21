@@ -17,6 +17,7 @@
         var $prototype = $("#prototype").children();
         var $targetImage;
         var MINIMUM_QUERY_LENGTH = parseInt($("#minimum-query-length").val());
+        var S3_PICTOGRAM_URL = $("#s3-pictogram-url").val();
         var pictogramIndex = 0; // this is never reset to 0, even after new searches
 
         function init(savedJson) {
@@ -37,7 +38,7 @@
                     var $cell = $prototype.clone();
                     if (celldata.id) {
                         $cell.find(".cell-image")
-                            .attr("src", Flask.url_for("general.static_pictogram", {"pictogram_id": celldata.id}))
+                            .attr("src", S3_PICTOGRAM_URL + "/" + celldata.id + ".png")
                             .attr("data-pictogram-id", celldata.id);
                     }
                     if (celldata.label) {
@@ -83,7 +84,7 @@
                     $('<label for="pictogram' + pictogramIndex + '">').append($('<img class="img-fluid">')
                         .attr("alt", celldata[0])
                         .attr("data-pictogram-id", celldata[1][j])
-                        .attr("data-original", Flask.url_for("general.static_pictogram", {"pictogram_id": celldata[1][j]}))
+                        .attr("data-original", S3_PICTOGRAM_URL + "/" + celldata[1][j] + ".png")
                         .attr("width", 80)
                         .attr("height", 80).appendTo($col).tooltip({
                             "animation": false,
