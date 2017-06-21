@@ -37,7 +37,7 @@
                     var $cell = $prototype.clone();
                     if (celldata.id) {
                         $cell.find(".cell-image")
-                            .attr("src", Flask.url_for("static_pictogram", {"pictogram_id": celldata.id}))
+                            .attr("src", Flask.url_for("general.static_pictogram", {"pictogram_id": celldata.id}))
                             .attr("data-pictogram-id", celldata.id);
                     }
                     if (celldata.label) {
@@ -83,7 +83,7 @@
                     $('<label for="pictogram' + pictogramIndex + '">').append($('<img class="img-fluid">')
                         .attr("alt", celldata[0])
                         .attr("data-pictogram-id", celldata[1][j])
-                        .attr("data-original", Flask.url_for("static_pictogram", {"pictogram_id": celldata[1][j]}))
+                        .attr("data-original", Flask.url_for("general.static_pictogram", {"pictogram_id": celldata[1][j]}))
                         .attr("width", 80)
                         .attr("height", 80).appendTo($col).tooltip({
                             "animation": false,

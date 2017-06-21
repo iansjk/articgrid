@@ -8,7 +8,7 @@
 
 {% block content %}
   <p class="lead">Find pictograms based on a search term</p>
-  <form action="{{ url_for('pictogram_search') }}" method="get" class="form-inline">
+  <form action="{{ url_for('pictograms.search') }}" method="get" class="form-inline">
     <label class="form-control-label" for="query">Query:</label>
     <input id="query" name="query" class="form-control mx-2" placeholder="Enter search query..." autofocus>
     <button class="btn btn-primary" type="submit" disabled>Search</button>

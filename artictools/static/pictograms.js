@@ -36,7 +36,7 @@
                             $.each(data, function (_, pictogram_id) {
                                 r += '<a href="#" data-toggle="modal" data-target="#full-size-image-modal">';
                                 r += '<img width="100" height="100" alt="' + row[0] + '" data-original="' +
-                                    Flask.url_for("static_pictogram", {"pictogram_id": pictogram_id}) + '">';
+                                    Flask.url_for("general.static_pictogram", {"pictogram_id": pictogram_id}) + '">';
                                 r += "</a>";
                             });
                             return r;

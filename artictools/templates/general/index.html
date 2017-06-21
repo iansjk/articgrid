@@ -15,22 +15,22 @@
       <section class="col-md-4">
         <h2><i class="fa fa-file-image-o" aria-hidden="true"></i> Find Pictograms</h2>
 
-        <p>Search for <a href="{{ url_for("pictograms") }}">color pictograms</a> using keywords. This lets you
+        <p>Search for <a href="{{ url_for("pictograms.index") }}">color pictograms</a> using keywords. This lets you
           avoid using verbal modeling and focus on spontaneous production.</p>
       </section>
 
       <section class="col-md-4">
         <h2><i class="fa fa-list" aria-hidden="true"></i> Generate Wordlists</h2>
 
-        <p>Generate target word lists based on <a href="{{ url_for("minimal_pairs") }}">minimal pairs</a> for your
-          target sounds.</p>
+        <p>Generate target word lists based on <a href="{{ url_for("wordlists.minimal_pairs") }}">minimal pairs</a> for
+          your target sounds.</p>
       </section>
 
       <section class="col-md-4">
         <h2><i class="fa fa-table" aria-hidden="true"></i> Create Worksheets</h2>
 
-        <p>Combine pictograms with target words to <a href="{{ url_for("grid_builder") }}">create worksheets</a> for
-          therapy sessions or home practice.</p>
+        <p>Combine pictograms with target words to <a href="{{ url_for("general.grid_builder") }}">create worksheets</a>
+          for therapy sessions or home practice.</p>
       </section>
     </div>
   </div>
