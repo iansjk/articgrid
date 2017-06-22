@@ -39,3 +39,9 @@ class TestSoundSearch(TestCase):
             self.assertIn(example, result)
             for word in result:
                 self.assertGreaterEqual(len(word), 3)
+
+    def test_medial(self):
+        edh_medial_words = find_sound_sequence("medial", "DH")
+        self.assertGreater(len(edh_medial_words), 0)
+        self.assertIn("brother", edh_medial_words)
+        self.assertNotIn("there", edh_medial_words)
