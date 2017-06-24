@@ -11,7 +11,7 @@ def minimal_pairs():
     return render_template("wordlists/minimal-pairs.html")
 
 
-@bp.route("/minimal-pairs/search", methods=["GET"])
+@bp.route("/minimal-pairs/search")
 def minimal_pair_search():
     target1 = request.args["target1"]
     target2 = request.args["target2"]
@@ -26,7 +26,7 @@ def sounds():
     return render_template("wordlists/sounds.html")
 
 
-@bp.route("/sounds/search", methods=["GET"])
+@bp.route("/sounds/search")
 def sound_search():
     targets = request.args["targets"].split()
     position = request.args["position"]

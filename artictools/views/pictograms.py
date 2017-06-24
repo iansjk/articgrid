@@ -11,13 +11,13 @@ def index():
     return render_template("pictograms/pictograms.html")
 
 
-@bp.route("/search", methods=["GET"])
+@bp.route("/search")
 def search():
     query = request.args["query"]
     if len(query) < app.config["MINIMUM_PICTOGRAM_QUERY_LENGTH"]:
         return abort(400)
 
-    arasaac_response = find_pictograms(request.args["query"], request.args["page"])
+    arasaac_response = find_pictograms(query, request.args["page"])
     return json.jsonify({
         "data": arasaac_response.result,
         "maxPages": arasaac_response.max_pages
