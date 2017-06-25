@@ -3,11 +3,12 @@
 
 ## Features
 - Browse color pictograms by keywords
-- Generate wordlists by minimal pairs
+- Generate wordlists by minimal pairs, syllable counts, and sounds
 - Create worksheets for therapy or home practice
 
 ## Acknowledgements
 - Word finding powered by [nltk](https://github.com/nltk/nltk) and [cmudict](http://www.speech.cs.cmu.edu/cgi-bin/cmudict)
+- Word frequency data provided by the [American National Corpus](http://www.anc.org)
 - Pictogram search powered by [ARASAAC](http://www.arasaac.org)
 
 ## License
