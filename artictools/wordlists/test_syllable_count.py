@@ -2,8 +2,8 @@ from unittest import TestCase
 
 import six
 
-from artictools.wordlists.corpus import common_cmudict
-from artictools.wordlists.syllable_count import num_syllables, find_by_syllable_count
+from artictools.wordlists.corpus import common_cmudict, num_syllables
+from artictools.wordlists.syllable_count import find_by_syllable_count
 
 
 class TestSyllableCount(TestCase):
@@ -13,7 +13,7 @@ class TestSyllableCount(TestCase):
             2: {"eighty", "event", "unit"},
             3: {"syllable", "projection", "computer"},
             4: {"adorable", "assertiveness", "comprehension"},
-            5: {"collaboration", "dispassionately", "debilitated"},
+            5: {"collaboration", "abbreviation", "appropriation"},
         }
 
         self.different_syllable_count_prons = [

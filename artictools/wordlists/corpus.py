@@ -1,7 +1,9 @@
 # coding=utf-8
 from nltk.corpus import cmudict as raw_cmudict
-from nltk.corpus import words
 
+from artictools.wordlists.frequency import build_frequency_dict
+
+CUTOFF = 10
 consonants = ("B", "CH", "D", "DH", "F", "G", "HH", "JH", "K", "L", "M", "N", "NG", "P", "R", "S", "SH", "T", "TH", "V",
               "W", "Y", "Z", "ZH")
 arpabet_to_ipa = {
@@ -46,8 +48,13 @@ arpabet_to_ipa = {
     "ZH": u"ʒ"
 }
 
-cmudict = raw_cmudict.dict()
-unix_words = set(words.words())
+
+def num_syllables(tokens):
+    count = 0
+    for token in tokens:
+        if token[-1].isdigit():
+            count += 1
+    return count
 
 
 def convert_schwar(pronunciation):
@@ -62,6 +69,11 @@ def convert_schwar(pronunciation):
     return new_pronunciation
 
 
-common_words = [word for word in unix_words if
-                word.lower() in cmudict and (word.istitle() or word.title() not in unix_words)]
-common_cmudict = {word: [convert_schwar(pron) for pron in cmudict[word.lower()]] for word in common_words}
+cmudict = raw_cmudict.dict()
+frequency = build_frequency_dict()
+common_words = [word for word in cmudict if word in frequency and frequency[word] >= CUTOFF]
+common_cmudict = {}
+for word in common_words:
+    pronunciations = [convert_schwar(pron) for pron in cmudict[word.lower()] if num_syllables(pron) > 0]
+    if pronunciations:
+        common_cmudict[word] = pronunciations

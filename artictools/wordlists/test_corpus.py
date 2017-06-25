@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from artictools.wordlists.corpus import convert_schwar, common_cmudict, unix_words, cmudict
+from artictools.wordlists.corpus import convert_schwar, common_cmudict
 
 
 class TestCorpus(TestCase):
@@ -27,11 +27,3 @@ class TestCorpus(TestCase):
         """Test if words in common_cmudict are case-insensitively unique."""
         duplicates_by_case = [word for word in common_cmudict if word.istitle() and word.lower() in common_cmudict]
         self.assertFalse(duplicates_by_case)
-
-    def test_common_cmudict_case_preserved(self):
-        """Test if case is preserved for words in common_cmudict."""
-        for word in unix_words:
-            if word.istitle() and word.lower() in cmudict:
-                self.assertIn(word, common_cmudict, "%s not found in common_cmudict" % repr(word))
-                lc_word = word.lower()
-                self.assertNotIn(lc_word, common_cmudict, "Lowercase word %s found in common_cmudict" % repr(lc_word))

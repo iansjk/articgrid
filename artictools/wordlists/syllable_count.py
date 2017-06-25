@@ -1,12 +1,4 @@
-from artictools.wordlists.corpus import common_cmudict
-
-
-def num_syllables(tokens):
-    count = 0
-    for token in tokens:
-        if token[-1].isdigit():
-            count += 1
-    return count
+from artictools.wordlists.corpus import common_cmudict, num_syllables
 
 
 def find_by_syllable_count(count):

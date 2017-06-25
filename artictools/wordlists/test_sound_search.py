@@ -6,10 +6,10 @@ from artictools.wordlists.sound_search import find_sound_sequence
 class TestSoundSearch(TestCase):
     TRIPLE_ONSETS = {
         ("S", "P", "L"): "split",
-        ("S", "P", "R"): "spry",
+        ("S", "P", "R"): "spring",
         ("S", "P", "Y"): "spew",
         ("S", "T", "R"): "strip",
-        ("S", "T", "Y"): "Stuart",
+        ("S", "T", "Y"): "stuart",
         ("S", "K", "L"): "sclerosis",
         ("S", "K", "R"): "screen",
         ("S", "K", "W"): "squad",
