@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, json
 
 from artictools.wordlists.minimal_pairs import find_minimal_pairs
 from artictools.wordlists.sound_search import find_sound_sequence
+from artictools.wordlists.syllable_count import find_by_syllable_count
 
 bp = Blueprint("wordlists", __name__, url_prefix="/wordlists")
 
@@ -39,3 +40,10 @@ def sound_search():
 @bp.route("/syllables")
 def syllables():
     return render_template("wordlists/syllables.html")
+
+@bp.route("/syllables/search")
+def syllable_search():
+    count = int(request.args["count"])
+    return json.jsonify({
+        "data": [[word] for word in find_by_syllable_count(count)]
+    })
