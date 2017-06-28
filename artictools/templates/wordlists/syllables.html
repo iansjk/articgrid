@@ -1,0 +1,28 @@
+{% extends "page.html" %}
+{% set active_page = "Wordlists" %}
+{% set subpage = "By Syllable Count" %}
+
+{% block content %}
+<p class="lead">Create a wordlist based on word syllable count</p>
+
+  <form class="form-inline" action="{{ url_for('wordlists.syllable_search') }}" method="get">
+    <label class="form-control-label" for="count">Syllable count:</label>
+    <input id="count" name="count" class="form-control mx-2" autofocus>
+    <button class="btn btn-primary" type="submit">Search</button>
+  </form>
+  <hr>
+
+  <table id="results" class="table">
+    <thead>
+    <tr>
+      <th>Word</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+{% endblock %}
+
+{% block footer %}
+  {{ super() }}
+  <script src="{{ url_for('static', filename='basic-search.js') }}"></script>
+{% endblock %}

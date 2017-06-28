@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block pagetitle %}{{ project_name }}{% endblock %}
+
+{% block main %}
+  <section class="container">
+    <h1 id="page-title">{{ active_page }}{% if subpage %}: {{ subpage }}{% endif %}</h1>
+    {% block content %}{% endblock %}
+  </section>
+{% endblock %}

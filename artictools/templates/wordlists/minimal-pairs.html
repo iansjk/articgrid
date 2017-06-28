@@ -1,0 +1,192 @@
+{% extends "page.html" %}
+{% set active_page = "Wordlists" %}
+{% set subpage = "Minimal Pairs" %}
+{% from "consonant-select.html" import consonant_select with context %}
+
+{% block content %}
+  <p class="lead">Create a wordlist based on minimal pairs</p>
+
+  <form class="form-inline" action="{{ url_for('wordlists.minimal_pair_search') }}" method="get">
+    <label class="form-control-label" for="target1">Target 1:</label>
+    {{ consonant_select("target1") }}
+
+    <label class="form-control-label" for="target2">Target 2:</label>
+    {{ consonant_select("target2", selected="P") }}
+
+    <label class="form-control-label" for="position">Position:</label>
+    <select class="form-control mx-2" id="position" name="position">
+      <option value="initial">Initial</option>
+      <option value="final">Final</option>
+    </select>
+    <button class="btn btn-primary" type="submit">Search</button>
+  </form>
+  <hr>
+
+  <!-- IPA chart for English: TODO make this into a popout for an input box
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th></th>
+      <th colspan="2">Bilabial</th>
+      <th colspan="2">Labiodental</th>
+      <th colspan="2">(Inter)dental</th>
+      <th colspan="2">Alveolar</th>
+      <th colspan="2">Postalveolar</th>
+      <th colspan="2">Palatal</th>
+      <th colspan="2">Velar</th>
+      <th colspan="2">Glottal</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th>Nasal</th>
+      <td></td>
+      <td>m</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>n</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>&#331;</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>Stop</th>
+      <td>p</td>
+      <td>b</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>t</td>
+      <td>d</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>k</td>
+      <td>g</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>Fricative</th>
+      <td></td>
+      <td></td>
+      <td>f</td>
+      <td>v</td>
+      <td>&theta;</td>
+      <td>&eth;</td>
+      <td>s</td>
+      <td>z</td>
+      <td>&#643;</td>
+      <td>&#439;</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>h</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>Affricate</th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>&#116;​&#865;​&#643;</td>
+      <td>&#100;​&#865;​&#658;</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>Lateral</th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>l</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>Rhotic</th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>&#633;</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>Glide</th>
+      <td></td>
+      <td>w</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>j</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    </tbody>
+  </table>
+  -->
+
+  <table id="results" class="table">
+    <thead>
+    <tr>
+      <th>Word 1</th>
+      <th>Word 2</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+{% endblock %}
+
+{% block footer %}
+  {{ super() }}
+  <script src="{{ url_for('static', filename='basic-search.js') }}"></script>
+{% endblock %}

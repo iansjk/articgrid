@@ -1,0 +1,54 @@
+{% extends "page.html" %}
+{% set active_page = "Pictograms" %}
+
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ url_for('static', filename='pictograms.css') }}">
+{% endblock %}
+
+{% block content %}
+  <p class="lead">Find pictograms based on a search term</p>
+  <form action="{{ url_for('pictograms.search') }}" method="get" class="form-inline">
+    <label class="form-control-label" for="query">Query:</label>
+    <input id="query" name="query" class="form-control mx-2" placeholder="Enter search query..." autofocus>
+    <button class="btn btn-primary" type="submit" disabled>Search</button>
+    <input type="hidden" id="minimum-query-length" value="{{ config["MINIMUM_PICTOGRAM_QUERY_LENGTH"] }}">
+    <input type="hidden" id="s3-pictogram-url" value="{{ config["S3_PICTOGRAM_URL"] }}">
+  </form>
+  <hr>
+  <table id="results" class="table">
+    <thead>
+    <tr>
+      <th>Term</th>
+      <th data-orderable="false">Image(s)</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <div class="modal fade" id="full-size-image-modal" tabindex="-1" role="dialog" aria-labelledby="image-title"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="image-title"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <img id="full-size-image" src="">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block footer %}
+  {{ super() }}
+  <script src="{{ url_for('static', filename='pictograms.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/jquery.lazyload.js') }}"></script>
+{% endblock %}}
