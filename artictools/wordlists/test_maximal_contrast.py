@@ -14,10 +14,10 @@ class TestMaximalContrast(TestCase):
         self.nasals = {"m", "n", "ŋ"}
         self.semivowels = {"j", "w"}
         self.liquids = {"l", "ɹ"}
-        self.affricates = {"t͡ʃ", "d͡ʒ"}
+        self.affricates = {"tʃ", "dʒ"}
         self.labials = {"p", "b", "f", "v", "m"}
         self.alveolars = {"t", "d", "s", "z", "n", "l", "ɹ"}
-        self.palatals = {"ʃ", "ʒ", "t͡ʃ", "d͡ʒ", "j"}
+        self.palatals = {"ʃ", "ʒ", "tʃ", "dʒ", "j"}
         self.alveolopalatals = self.palatals - {"j"}
         self.interdentals = {"θ", "ð"}
         self.sonorants = self.nasals | self.semivowels | self.liquids
@@ -29,7 +29,7 @@ class TestMaximalContrast(TestCase):
             "θ": "ð",
             "s": "z",
             "ʃ": "ʒ",
-            "t͡ʃ": "d͡ʒ",
+            "tʃ": "dʒ",
         }
         lookup_T = dict((v, k) for (k, v) in six.iteritems(lookup_oneway))
         self.voice_lookup = dict(lookup_T, **lookup_oneway)
@@ -44,7 +44,7 @@ class TestMaximalContrast(TestCase):
 
     def test_sonorants_voiced(self):
         self._test_feature_for_class("sonorant", self.sonorants)
-        voiced = self.sonorants | {"b", "d", "g", "v", "d͡ʒ", "z", "ʒ", "ð"}
+        voiced = self.sonorants | {"b", "d", "g", "v", "dʒ", "z", "ʒ", "ð"}
         self._test_feature_for_class("voiced", voiced)
 
     def test_consonantal(self):
