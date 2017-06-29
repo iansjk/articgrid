@@ -1,6 +1,6 @@
 from __future__ import absolute_import, print_function
 
-from artictools.wordlists.corpus import common_cmudict
+from artictools.wordlists.corpus import words
 
 
 def sublist_in_list(sublist, full_list):
@@ -12,8 +12,8 @@ def sublist_in_list(sublist, full_list):
 
 def find_sound_sequence(position, *targets):
     results = []
-    for word, pronunciations in common_cmudict.items():
-        for pronunciation in pronunciations:
+    for word, entry in words.items():
+        for pronunciation in entry.pronunciations:
             # ensure word is at least as long as the target sequence; this prevents weirdness like "str" initial
             # returning the word "st" (an abbreviation for "street" which does start with the "str" sequence)
             if len(pronunciation) >= len(targets) and len(word) >= len(targets):

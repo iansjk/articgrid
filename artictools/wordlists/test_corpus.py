@@ -1,6 +1,8 @@
 from unittest import TestCase
 
-from artictools.wordlists.corpus import convert_schwar, common_cmudict
+import six
+
+from artictools.wordlists.corpus import convert_schwar, words
 
 
 class TestCorpus(TestCase):
@@ -16,14 +18,14 @@ class TestCorpus(TestCase):
             original, expected = tests[word]
             self.assertEquals(convert_schwar(original.split()), expected.split())
 
-    def test_common_cmudict_schwars(self):
-        """Test if all schwars have been converted in common_cmudict."""
-        for word in common_cmudict:
-            for pronunciation in common_cmudict[word]:
+    def test_words_schwars(self):
+        """Test if all schwars have been converted in the words dictionary."""
+        for word, entry in six.iteritems(words):
+            for pronunciation in entry.pronuncations:
                 # convert_schwar is idempotent and should be a NOOP if has already been called
                 self.assertEquals(pronunciation, convert_schwar(pronunciation))
 
-    def test_common_cmudict_case_insensitive_uniqueness(self):
-        """Test if words in common_cmudict are case-insensitively unique."""
-        duplicates_by_case = [word for word in common_cmudict if word.istitle() and word.lower() in common_cmudict]
+    def test_words_case_insensitive_uniqueness(self):
+        """Test if words in the words dictionray are case-insensitively unique."""
+        duplicates_by_case = [word for word in words if word.istitle() and word.lower() in words]
         self.assertFalse(duplicates_by_case)

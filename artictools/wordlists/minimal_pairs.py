@@ -1,18 +1,18 @@
 from __future__ import absolute_import, print_function
 
-from artictools.wordlists.corpus import common_cmudict
+from artictools.wordlists.corpus import words
 
 
 def find_minimal_pairs(target1, target2, position):
     subset1 = {}
     subset2 = {}
-    for word, pronunciations in common_cmudict.items():
+    for word, entry in words.items():
         if position == "initial":
             index = 0
         elif position == "final":
             index = -1
 
-        for pronunciation in pronunciations:
+        for pronunciation in entry.pronunciations:
             if pronunciation[index] == target1:
                 subset1[word] = pronunciation
             elif pronunciation[index] == target2:

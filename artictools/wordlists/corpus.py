@@ -1,9 +1,9 @@
 # coding=utf-8
 from nltk.corpus import cmudict as raw_cmudict
 
-from artictools.wordlists.frequency import build_frequency_dict
+from artictools.wordlists.frequency import frequency
 
-CUTOFF = 10
+FREQUENCY_CUTOFF = 10
 consonants = ("B", "CH", "D", "DH", "F", "G", "HH", "JH", "K", "L", "M", "N", "NG", "P", "R", "S", "SH", "T", "TH", "V",
               "W", "Y", "Z", "ZH")
 arpabet_to_ipa = {
@@ -49,6 +49,12 @@ arpabet_to_ipa = {
 }
 
 
+class Entry(object):
+    def __init__(self, frequency, pronunciations):
+        self.frequency = frequency
+        self.pronuncations = pronunciations
+
+
 def num_syllables(tokens):
     count = 0
     for token in tokens:
@@ -70,10 +76,5 @@ def convert_schwar(pronunciation):
 
 
 cmudict = raw_cmudict.dict()
-frequency = build_frequency_dict()
-common_words = [word for word in cmudict if word in frequency and frequency[word] >= CUTOFF]
-common_cmudict = {}
-for word in common_words:
-    pronunciations = [convert_schwar(pron) for pron in cmudict[word.lower()] if num_syllables(pron) > 0]
-    if pronunciations:
-        common_cmudict[word] = pronunciations
+wordset = cmudict.viewkeys() & {word for word in frequency.viewkeys() if frequency[word] >= FREQUENCY_CUTOFF}
+words = {word: Entry(frequency[word], cmudict[word]) for word in wordset}
