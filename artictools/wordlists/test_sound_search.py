@@ -1,5 +1,7 @@
 from unittest import TestCase
 
+import six
+
 from artictools.wordlists.sound_search import find_sound_sequence
 
 
@@ -34,7 +36,7 @@ class TestSoundSearch(TestCase):
         self.assertNotIn("walker", find_sound_sequence("final", "K", "R"))
 
     def test_triple_onsets(self):
-        for triple, example in self.TRIPLE_ONSETS.items():
+        for triple, example in six.iteritems(self.TRIPLE_ONSETS):
             result = find_sound_sequence("initial", *triple)
             self.assertIn(example, result)
             for word in result:

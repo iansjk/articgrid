@@ -1,5 +1,7 @@
 from __future__ import absolute_import, print_function
 
+import six
+
 from artictools.wordlists.corpus import words
 
 
@@ -12,7 +14,7 @@ def sublist_in_list(sublist, full_list):
 
 def find_sound_sequence(position, *targets):
     results = []
-    for word, entry in words.items():
+    for word, entry in six.iteritems(words):
         for pronunciation in entry.pronunciations:
             # ensure word is at least as long as the target sequence; this prevents weirdness like "str" initial
             # returning the word "st" (an abbreviation for "street" which does start with the "str" sequence)
