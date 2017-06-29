@@ -34,7 +34,7 @@ class TestSyllableCount(TestCase):
         # we expect the smallest one
         for word, expected in self.different_syllable_count_prons:
             self.assertIn(word, words)
-            self.assertTrue(any([num_syllables(pron) == expected for pron in words[word].pronuncations]))
+            self.assertTrue(any([num_syllables(pron) == expected for pron in words[word].pronunciations]))
 
     def test_num_syllables_same_count(self):
         for word, expected in self.same_syllable_count_prons:

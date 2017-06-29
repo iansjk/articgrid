@@ -21,7 +21,7 @@ class TestCorpus(TestCase):
     def test_words_schwars(self):
         """Test if all schwars have been converted in the words dictionary."""
         for word, entry in six.iteritems(words):
-            for pronunciation in entry.pronuncations:
+            for pronunciation in entry.pronunciations:
                 # convert_schwar is idempotent and should be a NOOP if has already been called
                 self.assertEquals(pronunciation, convert_schwar(pronunciation))
 

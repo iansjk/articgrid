@@ -54,7 +54,7 @@ ARPABET_TO_IPA = {
 class Entry(object):
     def __init__(self, frequency, pronunciations):
         self.frequency = frequency
-        self.pronuncations = pronunciations
+        self.pronunciations = pronunciations
 
 
 def num_syllables(tokens):
