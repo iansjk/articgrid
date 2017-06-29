@@ -79,4 +79,7 @@ def convert_schwar(pronunciation):
 
 cmudict = raw_cmudict.dict()
 wordset = cmudict.viewkeys() & {word for word in frequency.viewkeys() if frequency[word] >= FREQUENCY_CUTOFF}
-words = {word: Entry(frequency[word], cmudict[word]) for word in wordset}
+words = {}
+for word in wordset:
+    pronunciations = [convert_schwar(pron) for pron in cmudict[word] if num_syllables(pron) > 0]
+    words[word] = Entry(frequency[word], pronunciations)
