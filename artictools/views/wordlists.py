@@ -41,6 +41,7 @@ def sound_search():
 def syllables():
     return render_template("wordlists/syllables.html")
 
+
 @bp.route("/syllables/search")
 def syllable_search():
     count = int(request.args["count"])
