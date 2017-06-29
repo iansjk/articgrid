@@ -6,9 +6,9 @@ from nltk.corpus import cmudict as raw_cmudict
 from artictools.wordlists.frequency import frequency
 
 FREQUENCY_CUTOFF = 10
-consonants = ("B", "CH", "D", "DH", "F", "G", "HH", "JH", "K", "L", "M", "N", "NG", "P", "R", "S", "SH", "T", "TH", "V",
+CONSONANTS = ("B", "CH", "D", "DH", "F", "G", "HH", "JH", "K", "L", "M", "N", "NG", "P", "R", "S", "SH", "T", "TH", "V",
               "W", "Y", "Z", "ZH")
-arpabet_to_ipa = {
+ARPABET_TO_IPA = {
     "AA": "ɑ",
     "AE": "æ",
     "AH1": "ʌ",
