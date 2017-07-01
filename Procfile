@@ -1,2 +1,1 @@
-web: gunicorn artictools:app
-
+web: gunicorn artictools:app --preload
