@@ -1,9 +1,8 @@
-from __future__ import print_function, absolute_import
-
 import re
 from collections import defaultdict
 
 import requests
+import six
 from bs4 import BeautifulSoup
 from six.moves.urllib.parse import urlsplit, parse_qsl
 
@@ -48,5 +47,5 @@ def find_pictograms(query, page):
         last_page_url_params = dict(parse_qsl(urlsplit(last_page_url).query))
         max_pages = int(last_page_url_params["pg"])
 
-    result = [[term, list(resultdict[term])] for term in resultdict.viewkeys()]
+    result = [[term, list(resultdict[term])] for term in six.viewkeys(resultdict)]
     return ArasaacResponse(result, page, max_pages)

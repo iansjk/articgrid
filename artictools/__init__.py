@@ -1,14 +1,16 @@
+from __future__ import absolute_import
+
 from flask import Flask, url_for
 
-from artictools.wordlists.corpus import consonants, arpabet_to_ipa
+from artictools.wordlists.corpus import CONSONANTS, ARPABET_TO_IPA
 
 app = Flask(__name__)
 app.config["MINIMUM_PICTOGRAM_QUERY_LENGTH"] = 3
 app.config["S3_PICTOGRAM_URL"] = "https://images.artic.tools/pictograms"
 
-from views import general
-from views import pictograms
-from views import wordlists
+from artictools.views import general
+from artictools.views import pictograms
+from artictools.views import wordlists
 
 app.register_blueprint(general.bp)
 app.register_blueprint(pictograms.bp)
@@ -31,8 +33,8 @@ def inject_constants():
             ("Grid Builder", url_for("general.grid_builder")),
             ("About", url_for("general.about")),
         ),
-        "consonants": consonants,
-        "arpabet_to_ipa": arpabet_to_ipa
+        "CONSONANTS": CONSONANTS,
+        "ARPABET_TO_IPA": ARPABET_TO_IPA
     }
 
 

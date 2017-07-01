@@ -1,53 +1,69 @@
 # coding=utf-8
-from nltk.corpus import cmudict as raw_cmudict
-from nltk.corpus import words
+from __future__ import unicode_literals
 
-consonants = ("B", "CH", "D", "DH", "F", "G", "HH", "JH", "K", "L", "M", "N", "NG", "P", "R", "S", "SH", "T", "TH", "V",
+import six
+from nltk.corpus import cmudict as raw_cmudict
+
+from artictools.wordlists.frequency import frequency
+
+FREQUENCY_CUTOFF = 10
+CONSONANTS = ("B", "CH", "D", "DH", "F", "G", "HH", "JH", "K", "L", "M", "N", "NG", "P", "R", "S", "SH", "T", "TH", "V",
               "W", "Y", "Z", "ZH")
-arpabet_to_ipa = {
-    "AA": u"ɑ",
-    "AE": u"æ",
-    "AH1": u"ʌ",
-    "AH0": u"ə",
-    "AO": u"ɔ",
-    "B": u"b",
-    "CH": u"t͡ʃ",
-    "D": u"d",
-    "DH": u"ð",
-    "EH": u"ɛ",
-    "ER1": u"ɝ",
-    "ER0": u"ɚ",
-    "EY": u"aɪ",
-    "F": u"f",
-    "G": u"g",
-    "HH": u"h",
-    "IH": u"ɪ",
-    "IY": u"i",
-    "JH": u"d͡ʒ",
-    "K": u"k",
-    "L": u"l",
-    "M": u"m",
-    "N": u"n",
-    "NG": u"ŋ",
-    "OW": u"oʊ",
-    "OY": u"ɔɪ",
-    "P": u"p",
-    "R": u"ɹ",
-    "S": u"s",
-    "SH": u"ʃ",
-    "T": u"t",
-    "TH": u"θ",
-    "UH": u"ʊ",
-    "UW": u"u",
-    "V": u"v",
-    "W": u"w",
-    "Y": u"j",
-    "Z": u"z",
-    "ZH": u"ʒ"
+ARPABET_TO_IPA = {
+    "AA": "ɑ",
+    "AE": "æ",
+    "AH1": "ʌ",
+    "AH0": "ə",
+    "AO": "ɔ",
+    "B": "b",
+    "CH": "tʃ",
+    "D": "d",
+    "DH": "ð",
+    "EH": "ɛ",
+    "ER1": "ɝ",
+    "ER0": "ɚ",
+    "EY": "aɪ",
+    "F": "f",
+    "G": "g",
+    "HH": "h",
+    "IH": "ɪ",
+    "IY": "i",
+    "JH": "dʒ",
+    "K": "k",
+    "L": "l",
+    "M": "m",
+    "N": "n",
+    "NG": "ŋ",
+    "OW": "oʊ",
+    "OY": "ɔɪ",
+    "P": "p",
+    "R": "ɹ",
+    "S": "s",
+    "SH": "ʃ",
+    "T": "t",
+    "TH": "θ",
+    "UH": "ʊ",
+    "UW": "u",
+    "V": "v",
+    "W": "w",
+    "Y": "j",
+    "Z": "z",
+    "ZH": "ʒ"
 }
 
-cmudict = raw_cmudict.dict()
-unix_words = set(words.words())
+
+class Entry(object):
+    def __init__(self, frequency, pronunciations):
+        self.frequency = frequency
+        self.pronunciations = pronunciations
+
+
+def num_syllables(tokens):
+    count = 0
+    for token in tokens:
+        if token[-1].isdigit():
+            count += 1
+    return count
 
 
 def convert_schwar(pronunciation):
@@ -62,6 +78,9 @@ def convert_schwar(pronunciation):
     return new_pronunciation
 
 
-common_words = [word for word in unix_words if
-                word.lower() in cmudict and (word.istitle() or word.title() not in unix_words)]
-common_cmudict = {word: [convert_schwar(pron) for pron in cmudict[word.lower()]] for word in common_words}
+cmudict = raw_cmudict.dict()
+wordset = six.viewkeys(cmudict) & {word for word in six.viewkeys(frequency) if frequency[word] >= FREQUENCY_CUTOFF}
+words = {}
+for word in wordset:
+    pronunciations = [convert_schwar(pron) for pron in cmudict[word] if num_syllables(pron) > 0]
+    words[word] = Entry(frequency[word], pronunciations)

@@ -3,7 +3,7 @@
 {% set subpage = "By Syllable Count" %}
 
 {% block content %}
-<p class="lead">Create a wordlist based on word syllable count</p>
+  <p class="lead">Create a wordlist based on word syllable count</p>
 
   <form class="form-inline" action="{{ url_for('wordlists.syllable_search') }}" method="get">
     <label class="form-control-label" for="count">Syllable count:</label>
@@ -12,10 +12,11 @@
   </form>
   <hr>
 
-  <table id="results" class="table">
+  <table id="results" class="table" data-order="[[1, &quot;desc&quot;]]">
     <thead>
     <tr>
-      <th>Word</th>
+      <th data-data="word">Word</th>
+      <th data-data="frequency" data-searchable="false">Frequency</th>
     </tr>
     </thead>
     <tbody></tbody>

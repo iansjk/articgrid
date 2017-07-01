@@ -1,17 +1,11 @@
-from artictools.wordlists.corpus import common_cmudict
+import six
 
-
-def num_syllables(tokens):
-    count = 0
-    for token in tokens:
-        if token[-1].isdigit():
-            count += 1
-    return count
+from artictools.wordlists.corpus import words, num_syllables
 
 
 def find_by_syllable_count(count):
     results = []
-    for word, pronunciations in common_cmudict.items():
-        if min([num_syllables(pron) for pron in pronunciations]) == count:
+    for word, entry in six.iteritems(words):
+        if entry.pronunciations and min([num_syllables(pron) for pron in entry.pronunciations]) == count:
             results.append(word)
     return results

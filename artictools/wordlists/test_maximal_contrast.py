@@ -1,4 +1,6 @@
 # coding=utf-8
+from __future__ import unicode_literals
+
 from unittest import TestCase
 
 import six
@@ -9,25 +11,25 @@ from artictools.wordlists.maximal_contrast import segments, calculate_feature_di
 class TestMaximalContrast(TestCase):
     def setUp(self):
         self.all = set(segments.keys())
-        self.nasals = {u"m", u"n", u"ŋ"}
-        self.semivowels = {u"j", u"w"}
-        self.liquids = {u"l", u"ɹ"}
-        self.affricates = {u"t͡ʃ", u"d͡ʒ"}
-        self.labials = {u"p", u"b", u"f", u"v", u"m"}
-        self.alveolars = {u"t", u"d", u"s", u"z", u"n", u"l", u"ɹ"}
-        self.palatals = {u"ʃ", u"ʒ", u"t͡ʃ", u"d͡ʒ", u"j"}
-        self.alveolopalatals = self.palatals - {u"j"}
-        self.interdentals = {u"θ", u"ð"}
+        self.nasals = {"m", "n", "ŋ"}
+        self.semivowels = {"j", "w"}
+        self.liquids = {"l", "ɹ"}
+        self.affricates = {"tʃ", "dʒ"}
+        self.labials = {"p", "b", "f", "v", "m"}
+        self.alveolars = {"t", "d", "s", "z", "n", "l", "ɹ"}
+        self.palatals = {"ʃ", "ʒ", "tʃ", "dʒ", "j"}
+        self.alveolopalatals = self.palatals - {"j"}
+        self.interdentals = {"θ", "ð"}
         self.sonorants = self.nasals | self.semivowels | self.liquids
         lookup_oneway = {
-            u"p": u"b",
-            u"t": u"d",
-            u"k": u"g",
-            u"f": u"v",
-            u"θ": u"ð",
-            u"s": u"z",
-            u"ʃ": u"ʒ",
-            u"t͡ʃ": u"d͡ʒ",
+            "p": "b",
+            "t": "d",
+            "k": "g",
+            "f": "v",
+            "θ": "ð",
+            "s": "z",
+            "ʃ": "ʒ",
+            "tʃ": "dʒ",
         }
         lookup_T = dict((v, k) for (k, v) in six.iteritems(lookup_oneway))
         self.voice_lookup = dict(lookup_T, **lookup_oneway)
@@ -42,16 +44,16 @@ class TestMaximalContrast(TestCase):
 
     def test_sonorants_voiced(self):
         self._test_feature_for_class("sonorant", self.sonorants)
-        voiced = self.sonorants | {u"b", u"d", u"g", u"v", u"d͡ʒ", u"z", u"ʒ", u"ð"}
+        voiced = self.sonorants | {"b", "d", "g", "v", "dʒ", "z", "ʒ", "ð"}
         self._test_feature_for_class("voiced", voiced)
 
     def test_consonantal(self):
-        non_consonants = self.semivowels | {u"h"}
+        non_consonants = self.semivowels | {"h"}
         consonants = self.all - non_consonants
         self._test_feature_for_class("consonantal", consonants)
 
     def test_continuants(self):
-        continuants = self.all - self.semivowels - self.liquids - self.affricates - {u"p", u"b", u"t", u"d", u"k", u"g"}
+        continuants = self.all - self.semivowels - self.liquids - self.affricates - {"p", "b", "t", "d", "k", "g"}
         self._test_feature_for_class("continuant", continuants)
 
     def test_nasals(self):
@@ -67,7 +69,7 @@ class TestMaximalContrast(TestCase):
         self._test_feature_for_class("palatal", self.palatals)
 
     def test_velars(self):
-        velars = {u"k", u"g", u"ŋ"}
+        velars = {"k", "g", "ŋ"}
         self._test_feature_for_class("velar", velars)
 
     def test_anteriors(self):
@@ -79,7 +81,7 @@ class TestMaximalContrast(TestCase):
         self._test_feature_for_class("coronal", coronals)
 
     def test_sibilants(self):
-        sibilants = self.alveolopalatals | {u"s", u"z"}
+        sibilants = self.alveolopalatals | {"s", "z"}
         self._test_feature_for_class("sibilant", sibilants)
 
     def test_feature_distinctiveness(self):
@@ -88,7 +90,7 @@ class TestMaximalContrast(TestCase):
                 self.assertNotEqual(segments[segment], segments[other])
 
     def _voicing_counterpart(self, segment):
-        if segment in self.sonorants | {u"h"}:
+        if segment in self.sonorants | {"h"}:
             raise ValueError("No counterpart exists")
         return self.voice_lookup[segment]
 

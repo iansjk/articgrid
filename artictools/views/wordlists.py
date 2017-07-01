@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, json
 
+from artictools.wordlists.corpus import frequency
 from artictools.wordlists.minimal_pairs import find_minimal_pairs
 from artictools.wordlists.sound_search import find_sound_sequence
 from artictools.wordlists.syllable_count import find_by_syllable_count
@@ -31,9 +32,8 @@ def sounds():
 def sound_search():
     targets = request.args["targets"].split()
     position = request.args["position"]
-    # the nested array is necessary for datatables to work
     return json.jsonify({
-        "data": [[word] for word in find_sound_sequence(position, *targets)]
+        "data": [{"word": word, "frequency": frequency[word]} for word in find_sound_sequence(position, *targets)]
     })
 
 
@@ -41,9 +41,10 @@ def sound_search():
 def syllables():
     return render_template("wordlists/syllables.html")
 
+
 @bp.route("/syllables/search")
 def syllable_search():
     count = int(request.args["count"])
     return json.jsonify({
-        "data": [[word] for word in find_by_syllable_count(count)]
+        "data": [{"word": word, "frequency": frequency[word]} for word in find_by_syllable_count(count)]
     })

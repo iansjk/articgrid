@@ -1,10 +1,10 @@
 {% extends "page.html" %}
 {% set active_page = "Wordlists" %}
 {% set subpage = "By Sounds" %}
-{% from "consonant-select.html" import consonant_select with context %}
+{% from "macros.html" import consonant_select with context %}
 
 {% block content %}
-<p class="lead">Create a wordlist based on chosen target sounds</p>
+  <p class="lead">Create a wordlist based on chosen target sounds</p>
 
   <form class="form-inline" action="{{ url_for('wordlists.sound_search') }}" method="get">
     <label class="form-control-label" for="target1">Target 1:</label>
@@ -26,10 +26,11 @@
   </form>
   <hr>
 
-  <table id="results" class="table">
+  <table id="results" class="table" data-order="[[1, &quot;desc&quot;]]">
     <thead>
     <tr>
-      <th>Word</th>
+      <th data-data="word">Word</th>
+      <th data-data="frequency" data-searchable="false">Frequency</th>
     </tr>
     </thead>
     <tbody></tbody>

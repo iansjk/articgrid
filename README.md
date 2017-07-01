@@ -1,4 +1,4 @@
-# ArticTools
+# ArticTools [![Build Status](https://travis-ci.org/iansjk/artictools.svg?branch=master)](https://travis-ci.org/iansjk/artictools.svg?branch=master)
 **ArticTools** is a collection of free tools for speech therapy for articulation.
 
 ## Features
