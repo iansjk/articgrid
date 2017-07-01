@@ -1,9 +1,10 @@
-import csv
+import codecs
 import os
 from io import BytesIO
 from zipfile import ZipFile
 
 import requests
+from backports import csv
 
 import artictools
 
@@ -32,8 +33,8 @@ def _is_row_excluded(row):
 
 
 frequency = {}
-with open(get_anc_data(), "r") as csvfile:
-    reader = csv.DictReader(csvfile, fieldnames=ANC_FIELDNAMES, delimiter="\t")
+with codecs.open(get_anc_data(), "r", encoding="latin-1") as csvfile:
+    reader = csv.DictReader(csvfile, fieldnames=ANC_FIELDNAMES, dialect="excel-tab")
     for row in reader:
         if _is_row_excluded(row):
             continue
