@@ -23,7 +23,7 @@ def inject_constants():
         "project_name": "ArticTools",
         "active_page": "Home",
         "navigation": (
-            ("Home", "general.index"),
+            ("Home", url_for("general.index")),
             ("Pictograms", url_for("pictograms.index")),
             ("Wordlists", (
                 ("By Syllable Count", url_for("wordlists.syllables")),
