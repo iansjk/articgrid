@@ -43,13 +43,3 @@ with open(get_anc_data(), "r") as csvfile:
             frequency[word] = count
         else:
             frequency[word] = max(count, frequency[word])
-
-    # for cases where derived forms (-ing, -ed) are rare but base forms are common,
-    # use the base form as the frequency. this means "said" and "say" will be considered equally common
-    csvfile.seek(0)
-    for row in reader:
-        if _is_row_excluded(row):
-            continue
-        word, lemma = row["word"], row["lemma"]
-        if word in frequency and lemma in frequency and frequency[word] < frequency[lemma]:
-            frequency[word] = frequency[lemma]
