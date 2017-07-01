@@ -1,2 +1,2 @@
 from artictools import app
-app.run()
+app.run(debug=True)
