@@ -3,6 +3,9 @@
     {% if kwargs["allow_empty"] %}
       <option value="">--</option>
     {% endif %}
+    {% if kwargs["allow_wildcard"] %}
+      <option value="*">* (wildcard)</option>
+    {% endif %}
     {% for consonant in CONSONANTS %}
       <option value="{{ consonant }}"
               {% if kwargs["selected"] == consonant %}selected{% endif %}>{{ ARPABET_TO_IPA[consonant] }}</option>

@@ -8,13 +8,13 @@
 
   <form class="form-inline" action="{{ url_for('wordlists.sound_search') }}" method="get">
     <label class="form-control-label" for="target1">Target 1:</label>
-    {{ consonant_select("target") }}
+    {{ consonant_select("target", allow_wildcard=True, selected="B") }}
 
     <label class="form-control-label" for="target2">Target 2:</label>
-    {{ consonant_select("target2", allow_empty=True) }}
+    {{ consonant_select("target2", allow_empty=True, allow_wildcard=True) }}
 
     <label class="form-control-label" for="target3">Target 3:</label>
-    {{ consonant_select("target3", allow_empty=True) }}
+    {{ consonant_select("target3", allow_empty=True, allow_wildcard=True) }}
 
     <label class="form-control-label" for="position">Position:</label>
     <select class="form-control mx-2" id="position" name="position">
