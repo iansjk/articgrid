@@ -1,6 +1,7 @@
 (function () {
     "use strict";
 
+    var ENTER_KEYCODE = 13;
     var TYPING_TIMEOUT = 100; // ms
     var SCROLL_PADDING = 50; // px
     var imageSearchXHR;
@@ -13,12 +14,15 @@
         var $gridsize = $("#grid-size");
         var $gridtitle = $("#grid-title");
         var $imageResults = $("#image-results");
-        var $imageSearchQuery = $("#image-search-query");
+        var $imageSearchForm = $("#image-search").on("submit", function (e) {
+            e.preventDefault();
+        });
+        var $imageSearchQuery = $imageSearchForm.find("#image-search-query");
         var $prototype = $("#prototype").children();
         var $targetImage;
         var MINIMUM_QUERY_LENGTH = parseInt($("#minimum-query-length").val());
         var S3_PICTOGRAM_URL = $("#s3-pictogram-url").val();
-        var pictogramIndex = 0; // this is never reset to 0, even after new searches
+        var pictogramIndex = 0; // this should not be reset to 0, even after new searches
 
         function init(savedJson) {
             $gridtitle.trigger("titleChanged");
@@ -101,12 +105,11 @@
         }
 
         function search() {
-            var $form = $imageSearchQuery.parents("form");
             var params = {
                 "query": $("#image-search-query").val().trim(),
                 "page": 0
             };
-            imageSearchXHR = $.get($form.attr("action") + "?" + $.param(params), function (json) {
+            imageSearchXHR = $.get($imageSearchForm.attr("action") + "?" + $.param(params), function (json) {
                 $imageResults.siblings(".placeholder").hide();
                 if (json.data.length === 0) {
                     $imageResults.html('<span class="no-results">No image results found.</span>');
@@ -128,7 +131,7 @@
                             } else {
                                 params.page++;
                                 $imageResults.siblings(".placeholder").show();
-                                $.get($form.attr("action") + "?" + $.param(params), function (json) {
+                                $.get($imageSearchForm.attr("action") + "?" + $.param(params), function (json) {
                                     renderPictogramResponse(json);
                                 }).done(function () {
                                     $imageResults.siblings(".placeholder").hide();
@@ -177,8 +180,8 @@
                 $this.closest(".cell").trigger("cellChanged");
             }
         }).on("keypress", "#grid-title, .cell-title", function (e) {
-            // disallow newline (enter key)
-            return e.which !== 13;
+            // disallow newlines
+            return e.which !== ENTER_KEYCODE;
         });
 
         $gridsize.change(function () {
@@ -217,7 +220,7 @@
             $targetImage = $(e.relatedTarget);
             var $cellTitle = $targetImage.siblings(".cell-title");
             var cellTitleText = $cellTitle.text().trim();
-            var $imageSearchQuery = $imagePicker.find("#image-search-query");
+
             if (cellTitleText !== "" && cellTitleText !== $cellTitle.attr("data-placeholder")) {
                 $imageSearchQuery.val(cellTitleText);
                 $imageResults.empty().siblings(".placeholder").show();
@@ -225,6 +228,8 @@
             } else {
                 $imageSearchQuery.val("");
             }
+        }).on("shown.bs.modal", function () {
+            $imageSearchQuery.focus();
         });
 
         $("#save").click(function (e) {

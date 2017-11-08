@@ -43,10 +43,9 @@
           </button>
         </div>
         <div class="modal-body">
-          <form action="{{ url_for('pictograms.search') }}" method="get" class="form">
+          <form id="image-search" action="{{ url_for('pictograms.search') }}" method="get" class="form">
             <label for="image-search-query" class="sr-only">Query:</label>
-            <input id="image-search-query" name="query" class="form-control" placeholder="Enter search keywords..."
-                   autofocus>
+            <input id="image-search-query" name="query" class="form-control" placeholder="Enter search keywords...">
           </form>
           <div id="image-results" class="row"></div>
           <div class="placeholder text-center text-muted"><i class="fa fa-spin fa-spinner fa-5x"></i></div>
