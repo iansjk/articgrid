@@ -7,7 +7,7 @@ module.exports = function(grunt) {
             options: {
                 jshintrc: '.jshintrc'
             },
-            all: ['static/*.js']
+            all: ['artictools/static/*.js']
         },
         bowercopy: {
             scripts: {
