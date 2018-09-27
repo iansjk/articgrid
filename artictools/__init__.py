@@ -6,7 +6,7 @@ from artictools.wordlists.corpus import CONSONANTS, ARPABET_TO_IPA
 
 app = Flask(__name__)
 app.config["MINIMUM_PICTOGRAM_QUERY_LENGTH"] = 3
-app.config["S3_PICTOGRAM_URL"] = "https://images.artic.tools/pictograms"
+app.config["S3_PICTOGRAM_URL"] = "https://s3.amazonaws.com/images.artic.tools/pictograms"
 
 from artictools.views import general
 from artictools.views import pictograms
@@ -29,6 +29,7 @@ def inject_constants():
                 ("By Syllable Count", url_for("wordlists.syllables")),
                 ("By Sounds", url_for("wordlists.sounds")),
                 ("Minimal Pairs", url_for("wordlists.minimal_pairs")),
+                ("Moving Across Syllables", url_for("wordlists.moving_across_syllables"))
             )),
             ("Grid Builder", url_for("general.grid_builder")),
             ("About", url_for("general.about")),

@@ -2,7 +2,7 @@ from __future__ import absolute_import, print_function
 
 import re
 
-from .corpus import common_cmudict
+from artictools.wordlists.corpus import cmudict
 
 BILABIAL = ("P", "B", "M", "W")
 ALVEOLAR = ("T", "D", "S", "Z", "N", "L")
@@ -62,10 +62,10 @@ def num_syllables(tokens):
     return count
 
 
-def search_sequences(start, end, syllables):
+def find_sequences(start, end, syllables):
     s = Sequence(start, end, syllables)
     results = []
-    for word, pronunciations in common_cmudict.items():
+    for word, pronunciations in cmudict.items():
         # check each pronunciation, if word has alternative pronunciations
         if any([s.matches(tokens) for tokens in pronunciations]):
             results.append(word)

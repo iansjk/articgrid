@@ -4,6 +4,7 @@ from artictools.wordlists.corpus import frequency
 from artictools.wordlists.minimal_pairs import find_minimal_pairs
 from artictools.wordlists.sound_search import find_sound_sequence
 from artictools.wordlists.syllable_count import find_by_syllable_count
+from artictools.wordlists.moving_across_syllables import find_sequences
 
 bp = Blueprint("wordlists", __name__, url_prefix="/wordlists")
 
@@ -47,4 +48,17 @@ def syllable_search():
     count = int(request.args["count"])
     return json.jsonify({
         "data": [{"word": word, "frequency": frequency[word]} for word in find_by_syllable_count(count)]
+    })
+
+
+@bp.route("/moving-across-syllables")
+def moving_across_syllables():
+    return render_template("wordlists/moving-across-syllables.html")
+
+
+@bp.route("/moving-across-syllables/search")
+def moving_across_syllables_search():
+    syllables = int(request.args["syllables"])
+    return json.jsonify({
+        "data": [{"word": word} for word in find_sequences(request.args["start"], request.args["end"], syllables)]
     })

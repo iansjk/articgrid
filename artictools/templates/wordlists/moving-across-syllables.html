@@ -1,0 +1,45 @@
+{% extends "page.html" %}
+{% set active_page = "Wordlists" %}
+{% set subpage = "Moving Across Syllables" %}
+
+{% macro place_of_artic_select(id) %}
+  <select class="form-control ml-2 mr-3" name="{{ id }}" id="{{ id }}">
+    <option value="B">B (bilabial)</option>
+    <option value="D">D (dental)</option>
+    <option value="A">A (alveolar)</option>
+    <option value="P">P (palatal)</option>
+    <option value="V">V (velar)</option>
+  </select>
+{% endmacro %}
+
+{% block content %}
+  <p class="lead">Find words matching Moving Across Syllables sequences</p>
+
+  <form class="form-inline" method="get" action="{{ url_for('wordlists.moving_across_syllables_search') }}">
+    <label class="form-control-label" for="start">Sequence start:</label>
+    {{ place_of_artic_select("start") }}
+    
+    <label class="form-control-label" for="end">Sequence end:</label>
+    {{ place_of_artic_select("end") }}
+    
+    <label class="form-control-label">Number of syllables:
+      <input id="syllables" name="syllables" class="form-control mx-2">
+    </label>
+
+    <button class="btn btn-primary" type="submit">Search</button>
+  </form>
+  <br>
+  <table id="results" class="table">
+    <thead>
+    <tr>
+      <th data-data="word">Word</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+{% endblock %}
+
+{% block footer %}
+  {{ super() }}
+  <script src="{{ url_for('static', filename='basic-search.js') }}"></script>
+{% endblock %}
